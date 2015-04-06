@@ -1,9 +1,16 @@
 package com.example.softwareengineering.softwareengineering;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class solutionTypes extends ActionBarActivity {
@@ -12,6 +19,24 @@ public class solutionTypes extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
+
+        String[] solutionTypes = {"Solution", "Dilution", "Serial Dilution", "External Standards", "Internal Standards"};
+        ListAdapter soluAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, solutionTypes);
+
+        ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
+
+        soluTypes.setAdapter(soluAdapter);
+
+        soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tvShowPicked = "You selected " + String.valueOf(parent.getItemAtPosition(position));
+
+                Intent nextScreen = new Intent(solutionTypes.this, solutionQuestions.class);
+                startActivity(nextScreen);
+                Toast.makeText(solutionTypes.this, tvShowPicked, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
