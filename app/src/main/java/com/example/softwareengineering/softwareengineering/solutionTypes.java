@@ -25,6 +25,8 @@ public class solutionTypes extends ActionBarActivity {
 
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
 
+
+
         soluTypes.setAdapter(soluAdapter);
 
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -33,7 +35,9 @@ public class solutionTypes extends ActionBarActivity {
                 String tvShowPicked = "You selected " + String.valueOf(parent.getItemAtPosition(position));
 
                 Intent nextScreen = new Intent(solutionTypes.this, solutionQuestions.class);
-                startActivity(nextScreen);
+                final int result = 1;
+                nextScreen.putExtra("callingActivity", "SolutionQuestions");
+                startActivityForResult(nextScreen, result);
                 Toast.makeText(solutionTypes.this, tvShowPicked, Toast.LENGTH_SHORT).show();
             }
         });
