@@ -4,10 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 
 public class solutionQuestions extends ActionBarActivity {
@@ -16,18 +12,6 @@ public class solutionQuestions extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
-        String[] solutionTypes = {"Solution", "Dilution", "Serial Dilution", ""};
-        ListAdapter soluAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, solutionTypes);
-
-        ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
-
-        soluTypes.setAdapter(soluAdapter);
-
-        soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener) {
-
-        }
-
-
     }
 
 
