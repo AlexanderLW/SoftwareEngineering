@@ -10,10 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
-public class TypesActivity extends Activity {
+public class solutionTypes extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +29,12 @@ public class TypesActivity extends Activity {
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tvShowPicked = "You selected " + String.valueOf(parent.getItemAtPosition(position));
+                String type = "You selected " + String.valueOf(parent.getItemAtPosition(position));
 
-                Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
+                Intent nextScreen = new Intent(solutionTypes.this, solutionQuestions.class);
+                nextScreen.putExtra("id", type);
                 startActivity(nextScreen);
-                Toast.makeText(TypesActivity.this, tvShowPicked, Toast.LENGTH_SHORT).show();
+
             }
         });
     }

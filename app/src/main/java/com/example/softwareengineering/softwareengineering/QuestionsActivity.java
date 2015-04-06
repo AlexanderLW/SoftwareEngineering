@@ -2,9 +2,9 @@ package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class QuestionsActivity extends Activity {
@@ -13,6 +13,15 @@ public class QuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
+        TextView text = (TextView)findViewById(R.id.text);
+        Bundle type = getIntent().getExtras();
+
+        if(type != null)
+        {
+
+            String soluType = type.getString("id");
+            text.setText(soluType);
+        }
     }
 
 
