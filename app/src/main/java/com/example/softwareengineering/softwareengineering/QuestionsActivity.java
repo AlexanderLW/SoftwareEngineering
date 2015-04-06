@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class solutionQuestions extends Activity {
+public class QuestionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

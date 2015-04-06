@@ -3,7 +3,6 @@ package com.example.softwareengineering.softwareengineering;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +39,7 @@ public class MainActivity extends Activity {
     }
 
     public void onBegin(View view) {
-        Intent nextScreen = new Intent(this, solutionTypes.class);
+        Intent nextScreen = new Intent(this, TypesActivity.class);
         startActivity(nextScreen);
         finish();
     }

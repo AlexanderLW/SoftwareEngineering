@@ -2,7 +2,6 @@ package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class solutionTypes extends Activity {
+public class TypesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class solutionTypes extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String tvShowPicked = "You selected " + String.valueOf(parent.getItemAtPosition(position));
 
-                Intent nextScreen = new Intent(solutionTypes.this, solutionQuestions.class);
+                Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                 startActivity(nextScreen);
-                Toast.makeText(solutionTypes.this, tvShowPicked, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TypesActivity.this, tvShowPicked, Toast.LENGTH_SHORT).show();
             }
         });
     }
