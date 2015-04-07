@@ -19,7 +19,7 @@ public class QuestionsActivity extends Activity {
     String serialDilution = "Would you like to dilute again?";
 
 
-    TextView text = (TextView)findViewById(R.id.text);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class QuestionsActivity extends Activity {
 
         if(type != null) {
             String soluType = type.getString("id");
-            makeList(solution);
-            createQuestion(questions[count]);
+            TextView text = (TextView)findViewById(R.id.text);
+            text.setText(solution[count]);
         }
     }
 
@@ -62,27 +62,18 @@ public class QuestionsActivity extends Activity {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
         } else {
             count--;
-            createQuestion(questions[count]);
+            TextView text = (TextView)findViewById(R.id.text);
+            text.setText(solution[count]);
         }
     }
 
     public void onContinue(View view) {
-        if(count == solution.length) {
-            Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
+        if(count == solution.length-1) {
+            Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
         } else {
             count++;
-            createQuestion(questions[count]);
+            TextView text = (TextView)findViewById(R.id.text);
+            text.setText(solution[count]);
         }
-    }
-
-    public void makeList(String[] questionList) {
-        for(int i = 0; i < questionList.length; i++) {
-            this.questions[j] = questionList[i];
-            j++;
-        }
-    }
-    
-    public void createQuestion(String question) {
-        text.setText(question);
     }
 }
