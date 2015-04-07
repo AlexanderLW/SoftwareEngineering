@@ -16,7 +16,7 @@ import java.util.List;
 public class QuestionsActivity extends Activity {
     int count = 0;
     int j = 0;
-    List<String> questions = new ArrayList<String>();
+    List<String> questions;
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String[] serialDilution = {"Would you like to dilute again?"};
@@ -68,6 +68,7 @@ public class QuestionsActivity extends Activity {
     public void onPrevious(View view) {
         if(count == 0) {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
+            questions = null;
             finish();
         } else {
             count--;
@@ -77,8 +78,9 @@ public class QuestionsActivity extends Activity {
     }
 
     public void onContinue(View view) {
-        if(count == solution.length-1) {
+        if(count == questions.size()-1) {
             Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
+            questions = null;
             finish();
         } else {
             count++;
