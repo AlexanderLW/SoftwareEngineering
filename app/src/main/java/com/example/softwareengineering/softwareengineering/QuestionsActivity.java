@@ -4,27 +4,33 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class QuestionsActivity extends Activity {
+    int count = 0;
+    int j = 0;
+
+    String[] questions;
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String serialDilution = "Would you like to dilute again?";
 
 
+    TextView text = (TextView)findViewById(R.id.text);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
-        TextView text = (TextView)findViewById(R.id.text);
         Bundle type = getIntent().getExtras();
 
-        if(type != null)
-        {
-
+        if(type != null) {
             String soluType = type.getString("id");
-            text.setText(soluType);
+            makeList(solution);
+            createQuestion(questions[count]);
         }
     }
 
@@ -49,5 +55,34 @@ public class QuestionsActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onPrevious(View view) {
+        if(count == 0) {
+            Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
+        } else {
+            count--;
+            createQuestion(questions[count]);
+        }
+    }
+
+    public void onContinue(View view) {
+        if(count == solution.length) {
+            Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
+        } else {
+            count++;
+            createQuestion(questions[count]);
+        }
+    }
+
+    public void makeList(String[] questionList) {
+        for(int i = 0; i < questionList.length; i++) {
+            this.questions[j] = questionList[i];
+            j++;
+        }
+    }
+    
+    public void createQuestion(String question) {
+        text.setText(question);
     }
 }
