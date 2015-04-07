@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 
 public class QuestionsActivity extends Activity {
+    String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
+    String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
+    String serialDilution = "Would you like to dilute again?";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
