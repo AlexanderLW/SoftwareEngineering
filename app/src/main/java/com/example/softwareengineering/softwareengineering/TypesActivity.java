@@ -12,7 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
-public class solutionTypes extends Activity {
+public class TypesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class solutionTypes extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String type = "You selected " + String.valueOf(parent.getItemAtPosition(position));
 
-                Intent nextScreen = new Intent(solutionTypes.this, solutionQuestions.class);
+                Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                 nextScreen.putExtra("id", type);
                 startActivity(nextScreen);
 
