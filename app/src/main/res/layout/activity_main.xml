@@ -10,7 +10,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="bottom|center"
-    android:background="@drawable/solution">
+    android:background="@drawable/solution" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,5 +27,4 @@
         android:layout_centerHorizontal="true"
         android:onClick="onBegin"
         android:layout_marginBottom="57dp" />
-
 </LinearLayout>
