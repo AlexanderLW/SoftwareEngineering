@@ -16,8 +16,9 @@ import java.util.Arrays;
 public class QuestionsActivity extends Activity {
     int count = 0;
     boolean file = false;
-    ArrayList<String> questions = new ArrayList<String>();
-    ArrayList<String> answers = new ArrayList<String>();
+    Bundle type;
+    ArrayList<String> questions = new ArrayList<>();
+    ArrayList<String> answers = new ArrayList<>();
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String[] serialDilution = {"Would you like to dilute again?"};
@@ -28,7 +29,7 @@ public class QuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
-        Bundle type = getIntent().getExtras();
+        type = getIntent().getExtras();
 
         if(type != null) {
             String soluType = type.getString("id");
@@ -115,27 +116,38 @@ public class QuestionsActivity extends Activity {
     }
 
     public void makeQuestions(String id) {
-        if(id.equals("Solution"))
-            questions.addAll(Arrays.asList(solution));
-        else if (id.equals("Dilution")) {
-            questions.addAll(Arrays.asList(solution));
-            questions.addAll(Arrays.asList(dilution));
+        if(file) {
+
         }
-        else if (id.equals("Serial Dilution")) {
-            questions.addAll(Arrays.asList(solution));
-            questions.addAll(Arrays.asList(dilution));
-            questions.addAll(Arrays.asList(serialDilution));
+        else{
+            if (id.equals("Solution"))
+                questions.addAll(Arrays.asList(solution));
+            else if (id.equals("Dilution")) {
+                questions.addAll(Arrays.asList(solution));
+                questions.addAll(Arrays.asList(dilution));
+            } else if (id.equals("Serial Dilution")) {
+                questions.addAll(Arrays.asList(solution));
+                questions.addAll(Arrays.asList(dilution));
+                questions.addAll(Arrays.asList(serialDilution));
+            } else if (id.equals("External Standards")) {
+                questions.addAll(Arrays.asList(solution));
+                questions.addAll(Arrays.asList(dilution));
+                questions.addAll(Arrays.asList(externalStandards));
+            } else if (id.equals("Internal Standards")) {
+                questions.addAll(Arrays.asList(solution));
+                questions.addAll(Arrays.asList(dilution));
+                questions.addAll(Arrays.asList(internalStandards));
+                questions.addAll(Arrays.asList(externalStandards));
+            }
         }
-        else if (id.equals("External Standards")) {
-            questions.addAll(Arrays.asList(solution));
-            questions.addAll(Arrays.asList(dilution));
-            questions.addAll(Arrays.asList(externalStandards));
-        }
-        else if (id.equals("Internal Standards")) {
-            questions.addAll(Arrays.asList(solution));
-            questions.addAll(Arrays.asList(dilution));
-            questions.addAll(Arrays.asList(internalStandards));
-            questions.addAll(Arrays.asList(externalStandards));
+    }
+
+    public void computeSolution(){
+        if (type.equals("Solution")) {
+        } else if (type.equals("Dilution")) {
+        } else if (type.equals("Serial Dilution")) {
+        } else if (type.equals("External Standards")) {
+        } else if (type.equals("Internal Standards")) {
         }
     }
 }
