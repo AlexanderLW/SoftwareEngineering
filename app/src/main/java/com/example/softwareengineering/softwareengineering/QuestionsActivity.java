@@ -8,15 +8,20 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class QuestionsActivity extends Activity {
     int count = 0;
     int j = 0;
-
-    String[] questions;
+    List<String> questions = new ArrayList<String>();
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
-    String serialDilution = "Would you like to dilute again?";
+    String[] serialDilution = {"Would you like to dilute again?"};
+    String[] externalStandards = {};
+    String[] internalStandards = {};
 
 
 
@@ -29,8 +34,11 @@ public class QuestionsActivity extends Activity {
 
         if(type != null) {
             String soluType = type.getString("id");
+
+            makeQuestions(soluType);
+
             TextView text = (TextView)findViewById(R.id.text);
-            text.setText(solution[count]);
+            text.setText(questions.get(count));
         }
     }
 
@@ -60,20 +68,30 @@ public class QuestionsActivity extends Activity {
     public void onPrevious(View view) {
         if(count == 0) {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
             count--;
             TextView text = (TextView)findViewById(R.id.text);
-            text.setText(solution[count]);
+            text.setText(questions.get(count));
         }
     }
 
     public void onContinue(View view) {
         if(count == solution.length-1) {
             Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
             count++;
             TextView text = (TextView)findViewById(R.id.text);
-            text.setText(solution[count]);
+            text.setText(questions.get(count));
         }
+    }
+
+    public void makeQuestions(String id) {
+        if(id.equals("Solution")) questions = Arrays.asList(solution);
+        else if (id.equals("Dilution")) questions = Arrays.asList(dilution);
+        else if (id.equals("Serial Dilution")) questions = Arrays.asList(serialDilution);
+        else if (id.equals("External Standards")) questions = Arrays.asList(externalStandards);
+        else if (id.equals("Internal Standards")) questions = Arrays.asList(internalStandards);
     }
 }

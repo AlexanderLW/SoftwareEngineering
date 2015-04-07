@@ -29,7 +29,7 @@ public class TypesActivity extends Activity {
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String type = "You selected " + String.valueOf(parent.getItemAtPosition(position));
+                    String type = String.valueOf(parent.getItemAtPosition(position));
 
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                     nextScreen.putExtra("id", type);
