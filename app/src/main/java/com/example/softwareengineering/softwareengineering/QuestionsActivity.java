@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,8 +19,8 @@ public class QuestionsActivity extends Activity {
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String[] serialDilution = {"Would you like to dilute again?"};
-    String[] externalStandards = {};
-    String[] internalStandards = {};
+    String[] externalStandards = {"Would you create another standard?"};
+    String[] internalStandards = {"What is the volume of the internal standard that you are transferring?", "What is the molarity of the internal standard in the new standard?"};
 
 
 
