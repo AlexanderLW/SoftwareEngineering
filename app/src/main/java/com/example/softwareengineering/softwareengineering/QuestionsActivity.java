@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class QuestionsActivity extends Activity {
     int count = 0;
-    int j = 0;
+    boolean file = false;
     ArrayList<String> questions = new ArrayList<String>();
     ArrayList<String> answers = new ArrayList<String>();
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
@@ -23,9 +23,6 @@ public class QuestionsActivity extends Activity {
     String[] serialDilution = {"Would you like to dilute again?"};
     String[] externalStandards = {"Would you create another standard?"};
     String[] internalStandards = {"What is the volume of the internal standard that you are transferring?", "What is the molarity of the internal standard in the new standard?"};
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +35,10 @@ public class QuestionsActivity extends Activity {
 
             makeQuestions(soluType);
 
-            j = questions.size();
-
             TextView text = (TextView)findViewById(R.id.text);
             text.setText(questions.get(count));
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,10 +67,14 @@ public class QuestionsActivity extends Activity {
         EditText answer = (EditText)findViewById(R.id.answer);
         if(count == 0) {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(QuestionsActivity.this, Integer.toString(questions.size()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuestionsActivity.this, Integer.toString(answers.size()), Toast.LENGTH_SHORT).show();
         }
         else {
-            //answers.add(count, answer.getText().toString());
+            if(answers.size() > count)
+                answers.set(count, answer.getText().toString());
+            else
+                answers.add(count, answer.getText().toString());
             count--;
             answer.setText(answers.get(count));
             text.setText(questions.get(count));
@@ -87,22 +85,38 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView)findViewById(R.id.text);
         EditText answer = (EditText)findViewById(R.id.answer);
         if(count == questions.size()-1) {
+            if(answers.size() != questions.size())
+                answers.add(count, answer.getText().toString());
             Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(QuestionsActivity.this, Integer.toString(questions.size()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuestionsActivity.this, Integer.toString(answers.size()), Toast.LENGTH_SHORT).show();
         }
         else if(answer.getText().toString().trim().equals("")) {
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         }
         else {
-            answers.add(count, answer.getText().toString());
-            count++;
-            answer.setText("");
+            if(answers.size() > count+1) {
+                answers.set(count, answer.getText().toString());
+                count++;
+                answer.setText(answers.get(count));
+            }
+            else if(answers.size() == count+1) {
+                answers.set(count, answer.getText().toString());
+                answer.setText("");
+                count++;
+            }
+            else {
+                answers.add(count, answer.getText().toString());
+                answer.setText("");
+                count++;
+            }
             text.setText(questions.get(count));
         }
     }
 
     public void makeQuestions(String id) {
-        if(id.equals("Solution")) questions.addAll(Arrays.asList(solution));
+        if(id.equals("Solution"))
+            questions.addAll(Arrays.asList(solution));
         else if (id.equals("Dilution")) {
             questions.addAll(Arrays.asList(solution));
             questions.addAll(Arrays.asList(dilution));
