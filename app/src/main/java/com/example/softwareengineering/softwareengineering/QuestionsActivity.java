@@ -5,17 +5,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class QuestionsActivity extends Activity {
     int count = 0;
     int j = 0;
-    List<String> questions;
+    ArrayList<String> questions = new ArrayList<String>();
+    ArrayList<String> answers = new ArrayList<String>();
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
     String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String[] serialDilution = {"Would you like to dilute again?"};
@@ -35,6 +37,8 @@ public class QuestionsActivity extends Activity {
             String soluType = type.getString("id");
 
             makeQuestions(soluType);
+
+            j = questions.size();
 
             TextView text = (TextView)findViewById(R.id.text);
             text.setText(questions.get(count));
@@ -65,34 +69,59 @@ public class QuestionsActivity extends Activity {
     }
 
     public void onPrevious(View view) {
+        TextView text = (TextView)findViewById(R.id.text);
+        EditText answer = (EditText)findViewById(R.id.answer);
         if(count == 0) {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
-            questions = null;
             finish();
-        } else {
+        }
+        else {
+            //answers.add(count, answer.getText().toString());
             count--;
-            TextView text = (TextView)findViewById(R.id.text);
+            answer.setText(answers.get(count));
             text.setText(questions.get(count));
         }
     }
 
     public void onContinue(View view) {
+        TextView text = (TextView)findViewById(R.id.text);
+        EditText answer = (EditText)findViewById(R.id.answer);
         if(count == questions.size()-1) {
             Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
-            questions = null;
             finish();
-        } else {
+        }
+        else if(answer.getText().toString().trim().equals("")) {
+            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            answers.add(count, answer.getText().toString());
             count++;
-            TextView text = (TextView)findViewById(R.id.text);
+            answer.setText("");
             text.setText(questions.get(count));
         }
     }
 
     public void makeQuestions(String id) {
-        if(id.equals("Solution")) questions = Arrays.asList(solution);
-        else if (id.equals("Dilution")) questions = Arrays.asList(dilution);
-        else if (id.equals("Serial Dilution")) questions = Arrays.asList(serialDilution);
-        else if (id.equals("External Standards")) questions = Arrays.asList(externalStandards);
-        else if (id.equals("Internal Standards")) questions = Arrays.asList(internalStandards);
+        if(id.equals("Solution")) questions.addAll(Arrays.asList(solution));
+        else if (id.equals("Dilution")) {
+            questions.addAll(Arrays.asList(solution));
+            questions.addAll(Arrays.asList(dilution));
+        }
+        else if (id.equals("Serial Dilution")) {
+            questions.addAll(Arrays.asList(solution));
+            questions.addAll(Arrays.asList(dilution));
+            questions.addAll(Arrays.asList(serialDilution));
+        }
+        else if (id.equals("External Standards")) {
+            questions.addAll(Arrays.asList(solution));
+            questions.addAll(Arrays.asList(dilution));
+            questions.addAll(Arrays.asList(externalStandards));
+        }
+        else if (id.equals("Internal Standards")) {
+            questions.addAll(Arrays.asList(solution));
+            questions.addAll(Arrays.asList(dilution));
+            questions.addAll(Arrays.asList(internalStandards));
+            questions.addAll(Arrays.asList(externalStandards));
+        }
     }
 }
