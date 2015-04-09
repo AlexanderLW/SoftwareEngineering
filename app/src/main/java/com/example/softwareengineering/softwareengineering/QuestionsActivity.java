@@ -16,23 +16,26 @@ import java.util.Arrays;
 public class QuestionsActivity extends Activity {
     int count = 0;
     boolean file = false;
-    Bundle type;
+    double vol, molecW, molarity, mol, mass, vol2, volT, molarity2, molarity3, volT2, answ;
+    String solvent, solute;
+    boolean again;
+    String soluType;
     ArrayList<String> questions = new ArrayList<>();
     ArrayList<String> answers = new ArrayList<>();
     String[] solution = {"What is the volume of your flask?", "What is the solvent you are using?", "What solute are you using?", "What is the molecular weight of your solute?", "What is the molarity of the solution?", "What is the mass of the solute that you are adding?"};
-    String[] dilution = {"What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
+    String[] dilution = {"What is the volume of the new dilution?", "What is the volume of the stock solution you are transferring?", "What is the molarity of the new dilution?"};
     String[] serialDilution = {"Would you like to dilute again?"};
-    String[] externalStandards = {"Would you create another standard?"};
+    String[] externalStandards = {"What is the volume of the new standard?", "What is the volume of the stock solution you are transferring?", "What is the molarity of the new standard?", "Would you like create another standard?"};
     String[] internalStandards = {"What is the volume of the internal standard that you are transferring?", "What is the molarity of the internal standard in the new standard?"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
-        type = getIntent().getExtras();
+        Bundle type = getIntent().getExtras();
 
         if(type != null) {
-            String soluType = type.getString("id");
+            this.soluType = type.getString("id");
 
             makeQuestions(soluType);
 
@@ -68,8 +71,7 @@ public class QuestionsActivity extends Activity {
         EditText answer = (EditText)findViewById(R.id.answer);
         if(count == 0) {
             Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
-            Toast.makeText(QuestionsActivity.this, Integer.toString(questions.size()), Toast.LENGTH_SHORT).show();
-            Toast.makeText(QuestionsActivity.this, Integer.toString(answers.size()), Toast.LENGTH_SHORT).show();
+            finish();
         }
         else {
             if(answers.size() > count)
@@ -89,8 +91,8 @@ public class QuestionsActivity extends Activity {
             if(answers.size() != questions.size())
                 answers.add(count, answer.getText().toString());
             Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
-            Toast.makeText(QuestionsActivity.this, Integer.toString(questions.size()), Toast.LENGTH_SHORT).show();
-            Toast.makeText(QuestionsActivity.this, Integer.toString(answers.size()), Toast.LENGTH_SHORT).show();
+            computeSolution();
+            Toast.makeText(QuestionsActivity.this, String.valueOf(answ), Toast.LENGTH_SHORT).show();
         }
         else if(answer.getText().toString().trim().equals("")) {
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
@@ -131,11 +133,9 @@ public class QuestionsActivity extends Activity {
                 questions.addAll(Arrays.asList(serialDilution));
             } else if (id.equals("External Standards")) {
                 questions.addAll(Arrays.asList(solution));
-                questions.addAll(Arrays.asList(dilution));
                 questions.addAll(Arrays.asList(externalStandards));
             } else if (id.equals("Internal Standards")) {
                 questions.addAll(Arrays.asList(solution));
-                questions.addAll(Arrays.asList(dilution));
                 questions.addAll(Arrays.asList(internalStandards));
                 questions.addAll(Arrays.asList(externalStandards));
             }
@@ -143,11 +143,131 @@ public class QuestionsActivity extends Activity {
     }
 
     public void computeSolution(){
-        if (type.equals("Solution")) {
-        } else if (type.equals("Dilution")) {
-        } else if (type.equals("Serial Dilution")) {
-        } else if (type.equals("External Standards")) {
-        } else if (type.equals("Internal Standards")) {
+        if (soluType.equals("Solution")) {
+            for(int i = 0; i < answers.size(); i++) {
+                if(i == 0) {
+                    this.vol = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 1) {
+                    this.solvent = answers.get(i);
+                } else if(i == 2) {
+                    this.solute = answers.get(i);
+                } else if(i == 3) {
+                    this.molecW = Double.parseDouble(answers.get(i));
+                } else if(i == 4) {
+                    this.molarity = Double.parseDouble(answers.get(i));
+                } else if(i == 5) {
+                    this.mass = Double.parseDouble(answers.get(i));
+                }
+            }
+            calcMol(vol, molarity);
+            calcMass(mol, molecW);
+        } else if (soluType.equals("Dilution")) {
+            for(int i = 0; i < answers.size(); i++) {
+                if(i == 0) {
+                    this.vol2 = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 1) {
+                    this.solvent = answers.get(i);
+                } else if(i == 2) {
+                    this.solute = answers.get(i);
+                } else if(i == 3) {
+                    this.molecW = Double.parseDouble(answers.get(i));
+                } else if(i == 4) {
+                    this.molarity2 = Double.parseDouble(answers.get(i));
+                } else if(i == 5) {
+                    this.mass = Double.parseDouble(answers.get(i));
+                } else if(i == 6) {
+                    this.vol = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 7) {
+                    this.volT = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 8) {
+                    this.molarity = Double.parseDouble(answers.get(i));
+                }
+            }
+            calcDilMolarity(molarity2, molarity, volT);
+        } else if (soluType.equals("Serial Dilution")) {
+            for(int i = 0; i < answers.size(); i++) {
+                if(i == 0) {
+                    this.vol2 = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 1) {
+                    this.solvent = answers.get(i);
+                } else if(i == 2) {
+                    this.solute = answers.get(i);
+                } else if(i == 3) {
+                    this.molecW = Double.parseDouble(answers.get(i));
+                } else if(i == 4) {
+                    this.molarity2 = Double.parseDouble(answers.get(i));
+                } else if(i == 5) {
+                    this.mass = Double.parseDouble(answers.get(i));
+                } else if(i == 6) {
+                    this.vol = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 7) {
+                    this.volT = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 8) {
+                    this.molarity = Double.parseDouble(answers.get(i));
+                }
+            }
+            calcDilMolarity(molarity2, volT, vol);
+        } else if (soluType.equals("External Standards")) {
+            for(int i = 0; i < answers.size(); i++) {
+                if(i == 0) {
+                    this.vol2 = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 1) {
+                    this.solvent = answers.get(i);
+                } else if(i == 2) {
+                    this.solute = answers.get(i);
+                } else if(i == 3) {
+                    this.molecW = Double.parseDouble(answers.get(i));
+                } else if(i == 4) {
+                    this.molarity2 = Double.parseDouble(answers.get(i));
+                } else if(i == 5) {
+                    this.mass = Double.parseDouble(answers.get(i));
+                } else if(i == 6) {
+                    this.vol = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 7) {
+                    this.volT = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 8) {
+                    this.molarity = Double.parseDouble(answers.get(i));
+                }
+            }
+            calcDilMolarity(molarity2, volT, vol);
+        } else if (soluType.equals("Internal Standards")) {
+            for(int i = 0; i < answers.size(); i++) {
+                if(i == 0) {
+                    this.vol2 = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 1) {
+                    this.solvent = answers.get(i);
+                } else if(i == 2) {
+                    this.solute = answers.get(i);
+                } else if(i == 3) {
+                    this.molecW = Double.parseDouble(answers.get(i));
+                } else if(i == 4) {
+                    this.molarity3 = Double.parseDouble(answers.get(i));
+                } else if(i == 5) {
+                    this.mass = Double.parseDouble(answers.get(i));
+                } else if(i == 6) {
+                    this.vol = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 7) {
+                    this.volT = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 8) {
+                    this.molarity = Double.parseDouble(answers.get(i));
+                }else if(i == 9) {
+                    this.volT2 = Double.parseDouble(answers.get(i))/1000;
+                } else if(i == 10) {
+                    this.molarity2 = Double.parseDouble(answers.get(i));
+                }
+            }
         }
+    }
+
+    public void calcMol(double molar, double volume) {
+        mol = molar*volume;
+    }
+
+    public void calcMass(double mols, double molecularW) {
+        this.answ = mols*molecularW;
+    }
+
+    public void calcDilMolarity(double molar1, double volumeT, double volume) {
+        this.answ = molar1 * (volumeT/volume);
     }
 }
