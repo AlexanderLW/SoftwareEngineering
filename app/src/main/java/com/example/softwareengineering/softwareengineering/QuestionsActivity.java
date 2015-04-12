@@ -1,6 +1,7 @@
 package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,17 @@ public class QuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
+
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
+        TextView mytextView = (TextView)findViewById(R.id.text);
+        mytextView.setTypeface(myTypeface);
+        TextView myeditText = (TextView)findViewById(R.id.answer);
+        myeditText.setTypeface(myTypeface);
+        TextView myprevButton = (TextView)findViewById(R.id.prev);
+        myprevButton.setTypeface(myTypeface);
+        TextView mycontButton = (TextView)findViewById(R.id.cont);
+        mycontButton.setTypeface(myTypeface);
+
         Bundle type = getIntent().getExtras();
 
         if(type != null) {
@@ -70,7 +82,6 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView)findViewById(R.id.text);
         EditText answer = (EditText)findViewById(R.id.answer);
         if(count == 0) {
-            Toast.makeText(QuestionsActivity.this, "This is the first question", Toast.LENGTH_SHORT).show();
             finish();
         }
         else {
@@ -90,7 +101,6 @@ public class QuestionsActivity extends Activity {
         if(count == questions.size()-1) {
             if(answers.size() != questions.size())
                 answers.add(count, answer.getText().toString());
-            Toast.makeText(QuestionsActivity.this, "This is the last question", Toast.LENGTH_SHORT).show();
             computeSolution();
             Toast.makeText(QuestionsActivity.this, String.valueOf(answ), Toast.LENGTH_SHORT).show();
         }
