@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 
@@ -17,9 +18,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "KGTenThousandReasons.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView mytextView = (TextView)findViewById(R.id.textView);
         mytextView.setTypeface(myTypeface);
+        Button mybutton = (Button)findViewById(R.id.begin);
+        mybutton.setTypeface(myTypeface);
     }
 
 

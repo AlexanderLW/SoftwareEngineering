@@ -26,5 +26,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="onBegin"
-        android:layout_marginBottom="57dp" />
+        android:layout_marginBottom="57dp"
+        android:id="@+id/begin" />
 </LinearLayout>
