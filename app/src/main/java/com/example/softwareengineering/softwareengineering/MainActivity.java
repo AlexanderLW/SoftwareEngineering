@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
         mytextView.setTypeface(myTypeface);
         Button mybutton = (Button)findViewById(R.id.begin);
         mybutton.setTypeface(myTypeface);
+
     }
 
 
