@@ -20,7 +20,7 @@ public class TypesActivity extends Activity {
         setContentView(R.layout.activity_solution_types);
 
         String[] solutionTypes = {"Solution", "Dilution", "Serial Dilution", "External Standards", "Internal Standards"};
-        ListAdapter soluAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, solutionTypes);
+        ListAdapter soluAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, solutionTypes);
 
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
 
