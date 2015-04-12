@@ -18,7 +18,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Solution Application"
         android:id="@+id/textView"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
 
     <Button
@@ -29,5 +29,6 @@
         android:layout_centerHorizontal="true"
         android:onClick="onBegin"
         android:layout_marginBottom="57dp"
-        android:id="@+id/begin" />
+        android:id="@+id/begin"
+        android:textColor="@color/white" />
 </LinearLayout>
