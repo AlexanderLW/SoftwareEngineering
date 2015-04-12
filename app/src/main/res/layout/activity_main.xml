@@ -10,14 +10,16 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="bottom|center"
-    android:background="@drawable/solution" >
+    android:backgroundColor="@color/black">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Solution Application"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:textColor="@color/white"/>
+
 
     <Button
         android:text="Begin"
