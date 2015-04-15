@@ -270,14 +270,14 @@ public class QuestionsActivity extends Activity {
     }
 
     public void calcMol(double molar, double volume) {
-        mol = molar*volume;
+        this.mol = molar*volume;
     }
 
     public void calcMass(double mols, double molecularW) {
-        this.answ = mols*molecularW;
+        this.answ = (double)Math.round((mols*molecularW) * 100) / 100;
     }
 
     public void calcDilMolarity(double molar1, double volumeT, double volume) {
-        this.answ = molar1 * (volumeT/volume);
+        this.answ = (double)Math.round((molar1 * (volumeT/volume)) * 100) / 100;;
     }
 }
