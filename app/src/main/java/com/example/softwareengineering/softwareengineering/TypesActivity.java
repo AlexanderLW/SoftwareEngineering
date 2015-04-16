@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import domain.SolutionSet;
 
 
 public class TypesActivity extends Activity {
@@ -18,9 +19,7 @@ public class TypesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
 
-        String[] solutionTypes = {"Solution", "Dilution", "Serial Dilution", "External Standards", "Internal Standards"};
-
-        ListAdapter soluAdapter = new typeAdapter(this, solutionTypes);
+        ListAdapter soluAdapter = new typeAdapter(this, SolutionSet.SOLUTIONTYPES);
 
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
 
