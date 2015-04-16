@@ -51,7 +51,7 @@ public abstract class SolutionSet {
         return c;
     }
 
-    public abstract void compute(ArrayList<String>);
+    public abstract void compute();
 
 
 
