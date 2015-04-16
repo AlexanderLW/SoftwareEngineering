@@ -14,7 +14,8 @@ public class Dilution extends SolutionSet {
     private double stockSolVol = 0.0;
     private double dilutionMolarity = 0.0;
 
-    public Dilution(Solution solution){
+
+    public Dilution(Solution solution, boolean flag){
 
         super("Dilution");
 
@@ -26,6 +27,7 @@ public class Dilution extends SolutionSet {
         });
 
         super.setQUESTIONS(questions);
+        isSerial(flag);
     }
 
 
@@ -64,7 +66,7 @@ public class Dilution extends SolutionSet {
         this.dilutionMolarity = dilutionMolarity;
     }
 
-    public boolean isSerial(boolean flag){
+    private boolean isSerial(boolean flag){
         if (flag) {
             String[] newQuestions = super.concat(this.getQuestions(), new String[]{"Would you like to dilute again?"});
             this.setQUESTIONS(newQuestions);
@@ -72,6 +74,4 @@ public class Dilution extends SolutionSet {
         }
         return flag;
     }
-
-
 }
