@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Created by User on 4/11/15.
  */
@@ -19,22 +16,30 @@ public class Dilution extends SolutionSet {
 
         super("Dilution");
 
-        String[] questions = super.concat(solution.getQuestions(), new String[]{
+        String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
                 "What is the volume of the new dilution?",
                 "What is the volume of the stock solution you are transferring?",
                 "What is the molarity of the new dilution?"
 
         });
 
+        Answer[] answers = super.concatAnsw(solution.getANSWERS(), new Answer[]{
+                new Answer("double"),
+                new Answer("double"),
+                new Answer("double")
+
+        });
+
         super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
         isSerial(flag);
     }
 
 
 
     @Override
-    public void compute() {
-
+    public double compute() {
+        return 0;
     }
 
 
@@ -68,8 +73,10 @@ public class Dilution extends SolutionSet {
 
     private boolean isSerial(boolean flag){
         if (flag) {
-            String[] newQuestions = super.concat(this.getQuestions(), new String[]{"Would you like to dilute again?"});
+            String[] newQuestions = super.concat(this.getQUESTIONS(), new String[]{"Would you like to dilute again?"});
+            Answer[] newAnswers = super.concatAnsw(this.getANSWERS(), new Answer[]{new Answer("boolean")});
             this.setQUESTIONS(newQuestions);
+            this.setANSWERS(newAnswers);
             return flag;
         }
         return flag;

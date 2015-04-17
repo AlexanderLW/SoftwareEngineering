@@ -9,6 +9,10 @@ public abstract class SolutionSet {
 
     private String[] QUESTIONS = {};
 
+    private Answer[] ANSWERS;
+
+    double answ;
+
     public static final String[] SOLUTIONTYPES = {
       "Solution",
       "Dilution",
@@ -21,9 +25,10 @@ public abstract class SolutionSet {
         setNAME(name);
     }
 
-    public SolutionSet(String name, String[] questions){
+    public SolutionSet(String name, String[] questions, Answer[] answers){
         setNAME(name);
         setQUESTIONS(questions);
+        setANSWERS(answers);
     }
 
     public void setNAME(String name){
@@ -38,8 +43,8 @@ public abstract class SolutionSet {
         QUESTIONS = questions;
     }
 
-    public String[] getQuestions(){
-     return QUESTIONS;
+    public String[] getQUESTIONS() {
+        return QUESTIONS;
     }
 
     public String[] concat(String[] a, String[] b) {
@@ -51,8 +56,47 @@ public abstract class SolutionSet {
         return c;
     }
 
-    public abstract void compute();
+    public String getQuestion(int id) {
+        return QUESTIONS[id];
+    }
 
+    public void setANSWERS(Answer[] ANSWERS) {
+        this.ANSWERS = ANSWERS;
+    }
 
+    public Answer[] getANSWERS() {
+        return ANSWERS;
+    }
+
+    public Answer[] concatAnsw(Answer[] a, Answer[] b) {
+        int aLen = a.length;
+        int bLen = b.length;
+        Answer[] c= new Answer[aLen+bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
+
+    public void setAnswerValue(int id, String value) {
+        ANSWERS[id].setVALUE(value);
+    }
+
+    public String getAnswerValue(int id) {
+        return ANSWERS[id].getVALUE();
+    }
+
+    public double getAnsw() {
+        return answ;
+    }
+
+    public void setAnsw(double answ) {
+        this.answ = answ;
+    }
+
+    public abstract double compute();
+
+//    public abstract void setAnswer(int id, String answer);
+//
+//    public abstract String getANSWER();
 
 }

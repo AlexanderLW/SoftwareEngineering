@@ -14,20 +14,26 @@ public class ExternalStandards extends SolutionSet {
 
         super("External Standards");
 
-        String[] questions = super.concat(solution.getQuestions(), new String[]{
+        String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
                 "What is the volume of the new standard?",
                 "What is the volume of the stock solution you are transferring?",
-                "What is the molarity of the new standard?",
-                "Would you like create another standard?"
+                "What is the molarity of the new standard?"
+        });
+
+        Answer[] answers = super.concatAnsw(solution.getANSWERS(), new Answer[]{
+                new Answer("double"),
+                new Answer("double"),
+                new Answer("double")
         });
 
         super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
 
     }
 
     @Override
-    public void compute() {
-
+    public double compute() {
+        return 0;
     }
 
     public double getVolStandard() {

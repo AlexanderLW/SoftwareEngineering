@@ -28,10 +28,9 @@ public class TypesActivity extends Activity {
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String type = String.valueOf(parent.getItemAtPosition(position));
 
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
-                    nextScreen.putExtra("id", type);
+                    nextScreen.putExtra("id", position);
                     startActivity(nextScreen);
             }
         });

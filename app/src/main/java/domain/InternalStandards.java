@@ -11,18 +11,25 @@ public class InternalStandards extends SolutionSet {
     public InternalStandards(ExternalStandards externalStandards){
         super("Internal Standards");
 
-        String[] questions = super.concat(externalStandards.getQuestions(),
+        String[] questions = super.concat(externalStandards.getQUESTIONS(),
                 new String[]{
                 "What is the volume of the internal standard that you are transferring?",
                 "What is the molarity of the internal standard in the new standard?"
         } );
 
+        Answer[] answers = super.concatAnsw(externalStandards.getANSWERS(), new Answer[]{
+                new Answer("double"),
+                new Answer("double"),
+                new Answer("double")
+        });
+
         super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
     }
 
     @Override
-    public void compute() {
-
+    public double compute() {
+        return 0;
     }
 
     public double getVolInternalStandard() {

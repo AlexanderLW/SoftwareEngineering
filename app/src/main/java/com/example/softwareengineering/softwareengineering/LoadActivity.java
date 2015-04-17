@@ -1,35 +1,24 @@
 package com.example.softwareengineering.softwareengineering;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
-import android.view.View;
 
 
-public class MainActivity extends Activity {
+public class LoadActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
-        TextView mytextView = (TextView)findViewById(R.id.textView);
-        mytextView.setTypeface(myTypeface);
-        Button mybutton = (Button)findViewById(R.id.begin);
-        mybutton.setTypeface(myTypeface);
+        setContentView(R.layout.activity_load);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_load, menu);
         return true;
     }
 
@@ -46,11 +35,5 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onBegin(View view) {
-        Intent nextScreen = new Intent(this, TypesActivity.class);
-        startActivity(nextScreen);
-        finish();
     }
 }
