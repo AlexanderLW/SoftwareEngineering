@@ -7,13 +7,19 @@ import android.view.MenuItem;
 
 
 public class SaveActivity extends ActionBarActivity {
+    String[] details, data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
-    }
 
+        Bundle type = getIntent().getExtras();
+        if(type != null) {
+            details = type.getStringArray("solutionDetails");
+            data = type.getStringArray("solutionData");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

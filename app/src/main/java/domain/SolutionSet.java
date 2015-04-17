@@ -13,6 +13,10 @@ public abstract class SolutionSet {
 
     double answ;
 
+    private String[] DETAILS = {};
+
+    private String[] DATA = {};
+
     public static final String[] SOLUTIONTYPES = {
       "Solution",
       "Dilution",
@@ -93,10 +97,23 @@ public abstract class SolutionSet {
         this.answ = answ;
     }
 
-    public abstract double compute();
+    public abstract void compute();
 
-//    public abstract void setAnswer(int id, String answer);
-//
-//    public abstract String getANSWER();
+    public abstract double getCompare();
 
+    public String[] getDETAILS() {
+        return DETAILS;
+    }
+
+    public void setDETAILS(String[] DETAILS) {
+        this.DETAILS = DETAILS;
+    }
+
+    public String[] getDATA() {
+        return DATA;
+    }
+
+    public void setDATA(String[] DATA) {
+        this.DATA = DATA;
+    }
 }

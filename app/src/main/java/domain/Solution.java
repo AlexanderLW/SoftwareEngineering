@@ -36,35 +36,57 @@ public class Solution extends SolutionSet {
     }
 
     @Override
-    public double compute() {
-        Answer[] answers = super.getANSWERS();
+    public void compute() {
+        setValue(super.getANSWERS());
+
+        calcMol(solMolarity, volFlask);
+        calcMass(solMol, soluteMolWeight);
+
+        setDETAILS(new String[]{
+                (volFlask * 100) + "ml",
+                solMolarity + " molar solution",
+                solvent + " as the solvent",
+                solMass + "g of " + solute + " as a solute"
+        });
+
+        setDATA(new String[]{
+                String.valueOf(volFlask),
+                solvent,
+                solute,
+                String.valueOf(soluteMolWeight),
+                String.valueOf(solMolarity),
+                String.valueOf(solMol),
+                String.valueOf(solMass)
+        });
+    }
+
+    public double getCompare(){
+        return solMass;
+    }
+
+    public void setValue(Answer[] answers) {
         for(int i = 0; i < answers.length; i++) {
             switch(i) {
                 case 0:
-                    volFlask = Double.parseDouble(answers[i].getVALUE());
+                    setVolFlask(Double.parseDouble(answers[i].getVALUE())/100);
                     break;
                 case 1:
-                    solvent = answers[i].getVALUE();
+                    setSolvent(answers[i].getVALUE());
                     break;
                 case 2:
-                    solute = answers[i].getVALUE();
+                    setSolute(answers[i].getVALUE());
                     break;
                 case 3:
-                    soluteMolWeight = Double.parseDouble(answers[i].getVALUE());
+                    setSoluteMolWeight(Double.parseDouble(answers[i].getVALUE()));
                     break;
                 case 4:
-                    solMolarity = Double.parseDouble(answers[i].getVALUE());
+                    setSolMolarity(Double.parseDouble(answers[i].getVALUE()));
                     break;
                 case 5:
                     super.setAnsw(Double.parseDouble(answers[i].getVALUE()));
                     break;
             }
         }
-
-        calcMol(solMolarity, volFlask);
-        calcMass(solMol, soluteMolWeight);
-
-        return solMass;
     }
 
     public void calcMol(double molarity, double volume) {

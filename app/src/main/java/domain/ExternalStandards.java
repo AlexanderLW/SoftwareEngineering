@@ -32,8 +32,12 @@ public class ExternalStandards extends SolutionSet {
     }
 
     @Override
-    public double compute() {
-        return 0;
+    public void compute() {
+
+    }
+
+    public double getCompare(){
+        return molStandard;
     }
 
     public double getVolStandard() {

@@ -1,6 +1,7 @@
 package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,7 +42,6 @@ public class QuestionsActivity extends Activity {
         mycontButton.setTypeface(myTypeface);
 
         Bundle type = getIntent().getExtras();
-
         if(type != null) {
             this.id = type.getInt("id");
             createSolutionType();
@@ -94,7 +94,11 @@ public class QuestionsActivity extends Activity {
                 Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
-                Toast.makeText(QuestionsActivity.this, String.valueOf(soluType.compute()), Toast.LENGTH_SHORT).show();
+                Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+                nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
+                nextScreen.putExtra("solutionData", soluType.getDATA());
+                startActivity(nextScreen);
+                //Toast.makeText(QuestionsActivity.this, String.valueOf(soluType.getCompare()), Toast.LENGTH_SHORT).show();
             }
         }
         else if(answer.getText().toString().trim().equals("")) {

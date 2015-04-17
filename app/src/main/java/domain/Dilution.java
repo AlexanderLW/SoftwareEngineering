@@ -27,8 +27,9 @@ public class Dilution extends SolutionSet {
                 new Answer("double"),
                 new Answer("double"),
                 new Answer("double")
-
         });
+
+        this.solution = solution;
 
         super.setQUESTIONS(questions);
         super.setANSWERS(answers);
@@ -38,10 +39,37 @@ public class Dilution extends SolutionSet {
 
 
     @Override
-    public double compute() {
-        return 0;
+    public void compute() {
+//        setValues(super.getANSWERS());
+//
+//        calcMol(solMolarity, volFlask);
+//        calcMass(solMol, soluteMolWeight);
+//
+//        setDETAILS(new String[]{
+//                (volFlask * 100) + "ml",
+//                solMolarity + " molar solution",
+//                solvent + " as the solvent",
+//                solMass + "g of " + solute + " as a solute"
+//        });
+//
+//        setDATA(new String[]{
+//                String.valueOf(volFlask),
+//                solvent,
+//                solute,
+//                String.valueOf(soluteMolWeight),
+//                String.valueOf(solMolarity),
+//                String.valueOf(solMol),
+//                String.valueOf(solMass)
+//        });
     }
 
+    public double getCompare(){
+        return dilutionMolarity;
+    }
+
+    public void calcMolarity() {
+
+    }
 
     public Solution getSolution() {
         return solution;

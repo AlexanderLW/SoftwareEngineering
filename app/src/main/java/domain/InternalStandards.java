@@ -28,8 +28,12 @@ public class InternalStandards extends SolutionSet {
     }
 
     @Override
-    public double compute() {
-        return 0;
+    public void compute() {
+
+    }
+
+    public double getCompare(){
+        return molarityInternalStandard;
     }
 
     public double getVolInternalStandard() {
