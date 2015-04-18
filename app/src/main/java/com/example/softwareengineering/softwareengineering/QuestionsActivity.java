@@ -89,6 +89,7 @@ public class QuestionsActivity extends Activity {
             soluType.setAnswerValue(count, answer.getText().toString());
             count--;
             answer.setText(soluType.getAnswerValue(count));
+            answer.setSelection(answer.getText().length());
             text.setText(soluType.getQuestion(count));
         }
     }

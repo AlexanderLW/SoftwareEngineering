@@ -18,6 +18,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Solution Application"
         android:id="@+id/textView"
+        android:textSize="30sp"
         android:textColor="@color/white" />
 
 
@@ -30,5 +31,6 @@
         android:onClick="onBegin"
         android:layout_marginBottom="57dp"
         android:id="@+id/begin"
+        android:textSize="15sp"
         android:textColor="@color/white" />
 </LinearLayout>
