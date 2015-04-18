@@ -32,6 +32,10 @@ public class InternalStandards extends SolutionSet {
 
     }
 
+    public void setValues(Answer[] answers) {
+
+    }
+
     public double getCompare(){
         return molarityInternalStandard;
     }

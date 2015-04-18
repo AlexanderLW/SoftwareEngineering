@@ -40,35 +40,39 @@ public class Dilution extends SolutionSet {
 
     @Override
     public void compute() {
-//        setValues(super.getANSWERS());
-//
-//        calcMol(solMolarity, volFlask);
-//        calcMass(solMol, soluteMolWeight);
-//
-//        setDETAILS(new String[]{
-//                (volFlask * 100) + "ml",
-//                solMolarity + " molar solution",
-//                solvent + " as the solvent",
-//                solMass + "g of " + solute + " as a solute"
-//        });
-//
-//        setDATA(new String[]{
-//                String.valueOf(volFlask),
-//                solvent,
-//                solute,
-//                String.valueOf(soluteMolWeight),
-//                String.valueOf(solMolarity),
-//                String.valueOf(solMol),
-//                String.valueOf(solMass)
-//        });
+        calcMolarity(solution.getSolMolarity(), stockSolVol, dilutionVol);
+
+        Solution newSolution = new Solution("Dilution", dilutionVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
+        newSolution.compute();
+
+        setDETAILS(newSolution.getDETAILS());
+
+        setDATA(newSolution.getDATA());
     }
 
     public double getCompare(){
         return dilutionMolarity;
     }
 
-    public void calcMolarity() {
+    public void setValues(Answer[] answers) {
+        solution.setValues(answers);
+        for(int i = 6; i < answers.length; i++) {
+            switch(i) {
+                case 6:
+                    setDilutionVol(Double.parseDouble(answers[i].getVALUE())/100);
+                    break;
+                case 7:
+                    setStockSolVol(Double.parseDouble(answers[i].getVALUE())/100);
+                    break;
+                case 8:
+                    setAnsw(Double.parseDouble(answers[i].getVALUE()));
+                    break;
+            }
+        }
+    }
 
+    public void calcMolarity(double solutionMolarity, double volTran, double vol) {
+        dilutionMolarity = solutionMolarity * (volTran/vol);
     }
 
     public Solution getSolution() {

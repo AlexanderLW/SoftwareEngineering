@@ -17,7 +17,7 @@ public class typeAdapter extends ArrayAdapter<String> {
     public typeAdapter(Context context, String[] values){
         super(context, R.layout.row_layout, values);
         AssetManager assets = context.getAssets();
-        myTypeface = Typeface.createFromAsset(assets, "fonts/KGTenThousandReasons.ttf");
+        myTypeface = Typeface.createFromAsset(assets, "fonts/DK Cool Crayon.ttf");
     }
 
     @Override

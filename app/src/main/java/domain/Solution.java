@@ -35,10 +35,17 @@ public class Solution extends SolutionSet {
                });
     }
 
+    public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
+        super(type);
+        setVolFlask(volFlask);
+        setSolvent(solvent);
+        setSolute(solute);
+        setSoluteMolWeight(soluteMolWeight);
+        setSolMolarity(solMolarity);
+    }
+
     @Override
     public void compute() {
-        setValue(super.getANSWERS());
-
         calcMol(solMolarity, volFlask);
         calcMass(solMol, soluteMolWeight);
 
@@ -64,7 +71,7 @@ public class Solution extends SolutionSet {
         return solMass;
     }
 
-    public void setValue(Answer[] answers) {
+    public void setValues(Answer[] answers) {
         for(int i = 0; i < answers.length; i++) {
             switch(i) {
                 case 0:

@@ -31,7 +31,7 @@ public class QuestionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
         EditText answer = (EditText) findViewById(R.id.answer);
@@ -71,6 +71,13 @@ public class QuestionsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==2){
+            finish();
+        }
+    }
+
     public void onPrevious(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
@@ -90,14 +97,16 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
         if(count == (soluType.getQUESTIONS().length - 1)) {
-            if(soluType.getANSWERS()[count].getVALUE()== null)
+            if(answer.getText().toString().trim().equals(""))
                 Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
+                soluType.setValues(soluType.getANSWERS());
+                soluType.compute();
                 Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
                 nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
                 nextScreen.putExtra("solutionData", soluType.getDATA());
-                startActivity(nextScreen);
+                startActivityForResult(nextScreen, 1);
                 //Toast.makeText(QuestionsActivity.this, String.valueOf(soluType.getCompare()), Toast.LENGTH_SHORT).show();
             }
         }

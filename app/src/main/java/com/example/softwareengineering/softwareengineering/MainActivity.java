@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
         TextView mytextView = (TextView)findViewById(R.id.textView);
         mytextView.setTypeface(myTypeface);
         Button mybutton = (Button)findViewById(R.id.begin);

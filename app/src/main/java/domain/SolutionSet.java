@@ -99,6 +99,8 @@ public abstract class SolutionSet {
 
     public abstract void compute();
 
+    public abstract void setValues(Answer[] answers);
+
     public abstract double getCompare();
 
     public String[] getDETAILS() {

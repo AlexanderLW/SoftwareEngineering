@@ -36,6 +36,10 @@ public class ExternalStandards extends SolutionSet {
 
     }
 
+    public void setValues(Answer[] answers) {
+
+    }
+
     public double getCompare(){
         return molStandard;
     }
