@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -46,29 +45,10 @@ public class QuestionsActivity extends Activity {
             this.id = type.getInt("id");
             createSolutionType();
             text.setText(soluType.getQuestion(count));
+            if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+                answer.setInputType(InputType.TYPE_CLASS_TEXT);
+            else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_solution_questions, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -90,6 +70,9 @@ public class QuestionsActivity extends Activity {
             count--;
             answer.setText(soluType.getAnswerValue(count));
             answer.setSelection(answer.getText().length());
+            if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+                answer.setInputType(InputType.TYPE_CLASS_TEXT);
+            else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
             text.setText(soluType.getQuestion(count));
         }
     }
@@ -120,11 +103,17 @@ public class QuestionsActivity extends Activity {
                 count++;
                 answer.setText(soluType.getAnswerValue(count));
                 answer.setSelection(answer.getText().length());
+                if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+                    answer.setInputType(InputType.TYPE_CLASS_TEXT);
+                else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
                 answer.setText("");
+                if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+                    answer.setInputType(InputType.TYPE_CLASS_TEXT);
+                else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
             text.setText(soluType.getQuestion(count));
         }
