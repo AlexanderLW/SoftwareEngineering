@@ -83,7 +83,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         c.moveToFirst();
         for (int i = 0; i < c.getCount(); i++) {
-            listNames.add(c.getString(1));
+            listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_NAME)));
             c.moveToNext();
         }
 
