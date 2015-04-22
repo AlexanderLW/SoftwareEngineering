@@ -17,7 +17,7 @@ public final class MyDBHandler{
         public static final String COLUMN_NAME_VOLUME = "Volume";
         public static final String COLUMN_NAME_SOLVENT = "Solvent";
         public static final String COLUMN_NAME_SOLUTE = "Solute";
-        public static final String COLUMN_NAME_MOLECWEIGHT = "Molecular Weight";
+        public static final String COLUMN_NAME_MOLECWEIGHT = "MolecularWeight";
         public static final String COLUMN_NAME_MOLARITY = "Molarity";
         public static final String COLUMN_NAME_MOLES = "Moles";
         public static final String COLUMN_NAME_MASS = "Mass";

@@ -20,6 +20,18 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     private static final String TEXT_TYPE = " TEXT ";
     private static final String COMMA = ", ";
 
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + MyDBHandler.SolutionEntry.TABLE_NAME + "(" +
+                    MyDBHandler.SolutionEntry._ID + " INTEGER PRIMARY KEY, " +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES + TEXT_TYPE + COMMA +
+                    MyDBHandler.SolutionEntry.COLUMN_NAME_MASS + TEXT_TYPE +
+                    ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME;
@@ -28,18 +40,6 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db) {
-        final String SQL_CREATE_ENTRIES =
-                "CREATE TABLE " + MyDBHandler.SolutionEntry.TABLE_NAME + "(" +
-                        MyDBHandler.SolutionEntry._ID + " INTEGER PRIMARY KEY, " +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES + TEXT_TYPE + COMMA +
-                        MyDBHandler.SolutionEntry.COLUMN_NAME_MASS + TEXT_TYPE +
-                        ")";
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
