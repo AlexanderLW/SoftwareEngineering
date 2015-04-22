@@ -24,10 +24,6 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME;
 
-    public SolutionDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-    }
-
     public SolutionDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

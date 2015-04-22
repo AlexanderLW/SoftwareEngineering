@@ -14,7 +14,7 @@ import database.SolutionDBHelper;
 
 
 public class SaveActivity extends Activity {
-    private SolutionDBHelper mDbHelper = new SolutionDBHelper(this, null, null, 1);
+    private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     String[] details, data;
 
     @Override

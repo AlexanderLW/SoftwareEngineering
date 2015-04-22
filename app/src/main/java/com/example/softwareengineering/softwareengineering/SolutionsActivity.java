@@ -12,7 +12,7 @@ import database.SolutionDBHelper;
 
 
 public class SolutionsActivity extends Activity {
-    private SolutionDBHelper mDbHelper = new SolutionDBHelper(this, null, null, 1);
+    private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     boolean file;
     int id;
 
