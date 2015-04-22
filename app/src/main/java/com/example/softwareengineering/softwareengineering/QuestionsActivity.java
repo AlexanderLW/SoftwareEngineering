@@ -43,6 +43,7 @@ public class QuestionsActivity extends Activity {
         Bundle type = getIntent().getExtras();
         if(type != null) {
             this.id = type.getInt("id");
+            this.file = type.getBoolean("file");
             createSolutionType();
             text.setText(soluType.getQuestion(count));
             if(soluType.getANSWERS()[count].getTYPE().equals("String"))
@@ -110,7 +111,7 @@ public class QuestionsActivity extends Activity {
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
-                answer.setText("");
+                answer.setText("1");
                 if(soluType.getANSWERS()[count].getTYPE().equals("String"))
                     answer.setInputType(InputType.TYPE_CLASS_TEXT);
                 else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);

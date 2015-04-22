@@ -30,7 +30,7 @@ public class TypesActivity extends Activity {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
+                    Intent nextScreen = new Intent(TypesActivity.this, LoadActivity.class);
                     nextScreen.putExtra("id", position);
                     startActivity(nextScreen);
             }
