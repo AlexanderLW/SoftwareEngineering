@@ -12,7 +12,7 @@ public class Dilution extends SolutionSet {
     private double dilutionMolarity = 0.0;
 
 
-    public Dilution(Solution solution, boolean flag){
+    public Dilution(boolean flag){
 
         super("Dilution");
 
@@ -29,14 +29,34 @@ public class Dilution extends SolutionSet {
                 new Answer("double")
         });
 
+        super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
+        isSerial(flag);
+    }
+
+    public Dilution(Solution solution, boolean flag){
+
+        super("Dilution");
+
+        String[] questions = new String[]{
+                "What is the volume of the new dilution?",
+                "What is the volume of the stock solution you are transferring?",
+                "What is the molarity of the new dilution?"
+
+        };
+
+        Answer[] answers = new Answer[]{
+                new Answer("double"),
+                new Answer("double"),
+                new Answer("double")
+        };
+
         this.solution = solution;
 
         super.setQUESTIONS(questions);
         super.setANSWERS(answers);
         isSerial(flag);
     }
-
-
 
     @Override
     public void compute() {

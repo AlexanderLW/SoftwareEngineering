@@ -18,12 +18,12 @@ import domain.SolutionSet;
 
 
 public class QuestionsActivity extends Activity {
-    int count = 0, current = 0;
+    int count = 0, current = 0, trys = 0;
     boolean file = false;
     int id;
     SolutionSet soluType;
-
-
+    String[] data;
+    Solution sol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,10 @@ public class QuestionsActivity extends Activity {
         if(type != null) {
             this.id = type.getInt("id");
             this.file = type.getBoolean("file");
+            if(this.file) {
+                this.data = type.getStringArray("data");
+                this.sol = new Solution(data);
+            }
             createSolutionType();
             text.setText(soluType.getQuestion(count));
             if(soluType.getANSWERS()[count].getTYPE().equals("String"))
@@ -82,17 +86,48 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
         if(count == (soluType.getQUESTIONS().length - 1)) {
-            if(answer.getText().toString().trim().equals(""))
-                Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+            if(trys < 3) {
+                if (answer.getText().toString().trim().equals(""))
+                    Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+                else {
+                    if(soluType.getCompare() == soluType.getAnsw()) {
+                        soluType.setAnswerValue(count, answer.getText().toString());
+                        soluType.setValues(soluType.getANSWERS());
+                        soluType.compute();
+                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
+                        nextScreen.putExtra("solutionData", soluType.getDATA());
+                        startActivityForResult(nextScreen, 1);
+                        Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                trys++;
+            }
             else {
-                soluType.setAnswerValue(count, answer.getText().toString());
-                soluType.setValues(soluType.getANSWERS());
-                soluType.compute();
-                Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-                nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
-                nextScreen.putExtra("solutionData", soluType.getDATA());
-                startActivityForResult(nextScreen, 1);
-                //Toast.makeText(QuestionsActivity.this, String.valueOf(soluType.getCompare()), Toast.LENGTH_SHORT).show();
+                if (answer.getText().toString().trim().equals(""))
+                    Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+                else {
+                    if(soluType.getCompare() == soluType.getAnsw()) {
+                        soluType.setAnswerValue(count, answer.getText().toString());
+                        soluType.setValues(soluType.getANSWERS());
+                        soluType.compute();
+                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
+                        nextScreen.putExtra("solutionData", soluType.getDATA());
+                        startActivityForResult(nextScreen, 1);
+                        Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        soluType.setAnswerValue(count, answer.getText().toString());
+                        soluType.setValues(soluType.getANSWERS());
+                        soluType.compute();
+                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
+                        nextScreen.putExtra("solutionData", soluType.getDATA());
+                        startActivityForResult(nextScreen, 1);
+                        Toast.makeText(QuestionsActivity.this, "Incorrect correct answer is: " + soluType.getCompare(), Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
         else if(answer.getText().toString().trim().equals("")) {
@@ -124,16 +159,16 @@ public class QuestionsActivity extends Activity {
         if (file) {
             switch (id) {
                 case 1:
-                    //soluType = new Dilution(new Solution(), false);
+                    soluType = new Dilution(sol, false);
                     break;
                 case 2:
-                    //soluType = new Dilution(new Solution(), true);
+                    soluType = new Dilution(sol, true);
                     break;
                 case 3:
-                    //soluType = new ExternalStandards(new Solution());
+                    soluType = new ExternalStandards(sol);
                     break;
                 case 4:
-                    //soluType = new InternalStandards(new ExternalStandards(new Solution()));
+                    soluType = new InternalStandards(new ExternalStandards(sol));
             }
         } else {
             switch (id) {
@@ -141,10 +176,10 @@ public class QuestionsActivity extends Activity {
                     soluType = new Solution();
                     break;
                 case 1:
-                    soluType = new Dilution(new Solution(), false);
+                    soluType = new Dilution(false);
                     break;
                 case 2:
-                    soluType = new Dilution(new Solution(), true);
+                    soluType = new Dilution(true);
                     break;
                 case 3:
                     soluType = new ExternalStandards(new Solution());

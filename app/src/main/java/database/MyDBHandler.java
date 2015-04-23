@@ -1,4 +1,4 @@
-package com.example.softwareengineering.softwareengineering;
+package database;
 
 import android.provider.BaseColumns;
 

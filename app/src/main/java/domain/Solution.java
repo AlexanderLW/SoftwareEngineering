@@ -44,6 +44,17 @@ public class Solution extends SolutionSet {
         setSolMolarity(solMolarity);
     }
 
+    public Solution(String[] data) {
+        super("Solution");
+        setVolFlask(Double.parseDouble(data[0]));
+        setSolvent(data[1]);
+        setSolute(data[2]);
+        setSoluteMolWeight(Double.parseDouble(data[3]));
+        setSolMolarity(Double.parseDouble(data[4]));
+        setSolMol(Double.parseDouble(data[5]));
+        setSolMass(Double.parseDouble(data[6]));
+    }
+
     @Override
     public void compute() {
         calcMol(solMolarity, volFlask);
@@ -150,5 +161,13 @@ public class Solution extends SolutionSet {
 
     public void setSolMass(double solMass) {
         this.solMass = solMass;
+    }
+
+    public double getSolMol() {
+        return solMol;
+    }
+
+    public void setSolMol(double solMol) {
+        this.solMol = solMol;
     }
 }

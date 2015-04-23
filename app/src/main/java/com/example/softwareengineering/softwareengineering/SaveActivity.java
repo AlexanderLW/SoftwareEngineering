@@ -37,7 +37,7 @@ public class SaveActivity extends Activity {
             details = type.getStringArray("solutionDetails");
             data = type.getStringArray("solutionData");
 
-            ListAdapter soluAdapter = new typeAdapter(this, data);
+            ListAdapter soluAdapter = new typeAdapter(this, details);
 
             ListView soluDetails = (ListView) findViewById(R.id.details);
 
