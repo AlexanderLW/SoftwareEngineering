@@ -7,7 +7,7 @@
     tools:context="com.example.softwareengineering.softwareengineering.LoadActivity"
     android:background="@drawable/chalkboard" >
 
-    <TextView android:text="Would You like to load a previously saved solution?"
+    <TextView android:text="Creating this requires an existing solution, would you like to make a new one or load one that is saved?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text"
@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/buttons">
         <Button
-            android:text="Yes"
+            android:text="Load Solution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/yes"
@@ -29,7 +29,7 @@
             android:textColor="@color/white" />
 
         <Button
-            android:text="No"
+            android:text="New Solution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/no"

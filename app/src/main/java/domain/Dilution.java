@@ -6,7 +6,7 @@ package domain;
 public class Dilution extends SolutionSet {
 
 
-    private Solution solution;
+    private Solution solution = new Solution();
     private double dilutionVol = 0.0;
     private double stockSolVol = 0.0;
     private double dilutionMolarity = 0.0;
@@ -39,9 +39,9 @@ public class Dilution extends SolutionSet {
         super("Dilution");
 
         String[] questions = new String[]{
-                "What is the volume of the new dilution?(in mL)",
-                "What is the volume of the stock solution you are transferring?(in mL)",
-                "What is the molarity of the new dilution?(round to the 2nd Decimal)"
+                "What is the volume of the dilution? (in mL)",
+                "What is the volume of the stock solution you are transferring? (in mL)",
+                "What is the molarity of the dilution? (round to the 2nd Decimal)"
 
         };
 

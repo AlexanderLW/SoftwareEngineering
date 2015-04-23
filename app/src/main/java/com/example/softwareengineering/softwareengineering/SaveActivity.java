@@ -25,6 +25,8 @@ public class SaveActivity extends Activity {
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
         TextView text = (TextView) findViewById(R.id.show);
         text.setTypeface(myTypeface);
+        TextView text2 = (TextView) findViewById(R.id.summary);
+        text2.setTypeface(myTypeface);
         EditText name = (EditText) findViewById(R.id.soluname);
         name.setTypeface(myTypeface);
         TextView mysaveButton = (TextView) findViewById(R.id.save);

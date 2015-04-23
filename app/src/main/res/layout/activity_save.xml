@@ -9,18 +9,27 @@
     android:background="@drawable/chalkboard" >
 
     <TextView
-        android:text="Would you like to save this solution?"
+        android:text="Summary:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:id="@+id/show"
+        android:id="@+id/summary"
         android:layout_marginBottom="20dp"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/details" />
+
+    <TextView
+        android:text="Would you like to save this solution?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:id="@+id/show"
+        android:layout_marginBottom="20dp"/>
 
     <EditText
         android:layout_width="186dp"

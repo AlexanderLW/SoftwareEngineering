@@ -149,7 +149,7 @@ public class QuestionsActivity extends Activity {
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
-                answer.setText("1");
+                answer.setText("");
                 if(soluType.getANSWERS()[count].getTYPE().equals("String"))
                     answer.setInputType(InputType.TYPE_CLASS_TEXT);
                 else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);

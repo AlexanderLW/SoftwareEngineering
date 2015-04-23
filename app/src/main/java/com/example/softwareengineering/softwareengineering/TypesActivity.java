@@ -32,6 +32,7 @@ public class TypesActivity extends Activity {
                 if(position == 0) {
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                     nextScreen.putExtra("id", position);
+                    nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
                 else {
