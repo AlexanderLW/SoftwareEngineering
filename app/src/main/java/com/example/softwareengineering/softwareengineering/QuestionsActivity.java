@@ -163,15 +163,20 @@ public class QuestionsActivity extends Activity {
             switch (id) {
                 case 1:
                     soluType = new Dilution(sol, false);
+                    count = 6;
                     break;
                 case 2:
                     soluType = new Dilution(sol, true);
+                    count = 6;
                     break;
                 case 3:
                     soluType = new ExternalStandards(sol);
+                    count = 6;
                     break;
                 case 4:
                     soluType = new InternalStandards(new ExternalStandards(sol));
+                    count = 6;
+                    break;
             }
         } else {
             switch (id) {
@@ -179,10 +184,10 @@ public class QuestionsActivity extends Activity {
                     soluType = new Solution();
                     break;
                 case 1:
-                    soluType = new Dilution(false);
+                    soluType = new Dilution(new Solution(), false);
                     break;
                 case 2:
-                    soluType = new Dilution(true);
+                    soluType = new Dilution(new Solution(), true);
                     break;
                 case 3:
                     soluType = new ExternalStandards(new Solution());

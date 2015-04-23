@@ -92,11 +92,12 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     public String[] getSolutionData(int id) {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES, MyDBHandler.SolutionEntry.COLUMN_NAME_MASS};
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(MyDBHandler.SolutionEntry.TABLE_NAME, columns, null, null, null, null, null);
 
         String[] listData = new String[7];
 
-        c.moveToPosition(id);
+        Cursor c = db.query(MyDBHandler.SolutionEntry.TABLE_NAME,columns, MyDBHandler.SolutionEntry._ID + " = " + id,null,null,null,null);
+
+        c.moveToFirst();
         listData[0] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME));
         listData[1] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT));
         listData[2] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE));

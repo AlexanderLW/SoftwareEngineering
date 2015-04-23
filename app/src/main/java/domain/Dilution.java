@@ -6,15 +6,17 @@ package domain;
 public class Dilution extends SolutionSet {
 
 
-    private Solution solution = new Solution();
+    private Solution solution;
     private double dilutionVol = 0.0;
     private double stockSolVol = 0.0;
     private double dilutionMolarity = 0.0;
 
 
-    public Dilution(boolean flag){
+    public Dilution(Solution solution, boolean flag){
 
         super("Dilution");
+
+        this.solution = solution;
 
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
                 "What is the volume of the new dilution?",
@@ -28,30 +30,6 @@ public class Dilution extends SolutionSet {
                 new Answer("double"),
                 new Answer("double")
         });
-
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
-        isSerial(flag);
-    }
-
-    public Dilution(Solution solution, boolean flag){
-
-        super("Dilution");
-
-        String[] questions = new String[]{
-                "What is the volume of the dilution? (in mL)",
-                "What is the volume of the stock solution you are transferring? (in mL)",
-                "What is the molarity of the dilution? (round to the 2nd Decimal)"
-
-        };
-
-        Answer[] answers = new Answer[]{
-                new Answer("double"),
-                new Answer("double"),
-                new Answer("double")
-        };
-
-        this.solution = solution;
 
         super.setQUESTIONS(questions);
         super.setANSWERS(answers);

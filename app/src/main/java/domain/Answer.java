@@ -10,6 +10,11 @@ public class Answer {
         setTYPE(type);
     }
 
+    public Answer(String type, String value) {
+        setTYPE(type);
+        setVALUE(value);
+    }
+
     public String getVALUE() {
         return VALUE;
     }

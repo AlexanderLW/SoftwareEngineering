@@ -34,11 +34,18 @@ public class LoadActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==2){
+            finish();
+        }
+    }
+
     public void onYes(View view) {
         Intent nextScreen = new Intent(LoadActivity.this, SolutionsActivity.class);
         nextScreen.putExtra("id", id);
         nextScreen.putExtra("file", true);
-        startActivity(nextScreen);
+        startActivityForResult(nextScreen, 1);
     }
 
     public void onNo(View view) {
@@ -46,5 +53,6 @@ public class LoadActivity extends Activity {
         nextScreen.putExtra("id", id);
         nextScreen.putExtra("file", false);
         startActivity(nextScreen);
+        finish();
     }
 }

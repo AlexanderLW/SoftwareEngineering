@@ -16,7 +16,7 @@ import database.SolutionDBHelper;
 public class SolutionsActivity extends Activity {
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     boolean file;
-    int id;
+    int ids;
     String[] data;
 
     @Override
@@ -31,7 +31,7 @@ public class SolutionsActivity extends Activity {
         Bundle type = getIntent().getExtras();
 
         if(type != null) {
-            this.id = type.getInt("id");
+            this.ids = type.getInt("id");
             this.file = type.getBoolean("file");
         }
 
@@ -46,12 +46,14 @@ public class SolutionsActivity extends Activity {
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                data = mDbHelper.getSolutionData(position);
+                data = mDbHelper.getSolutionData(position+1);
                 Intent nextScreen = new Intent(SolutionsActivity.this, QuestionsActivity.class);
-                nextScreen.putExtra("id", id);
+                nextScreen.putExtra("id", ids);
                 nextScreen.putExtra("file", true);
                 nextScreen.putExtra("data", data);
                 startActivity(nextScreen);
+                setResult(2);
+                finish();
             }
         });
     }

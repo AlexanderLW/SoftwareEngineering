@@ -36,7 +36,24 @@ public class Solution extends SolutionSet {
     }
 
     public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
-        super(type);
+        super(type,
+                new String[] {
+
+                        "What is the volume of the solution you are preparing? (in mL)",
+                        "What is the solvent you are using?",
+                        "What is the solute?",
+                        "What is the molecular weight(g/mol) of your solute?",
+                        "What is the molarity of the solution?",
+                        "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
+                },
+                new Answer[] {
+                        new Answer("double", "" + volFlask),
+                        new Answer("String", solvent),
+                        new Answer("String", solute),
+                        new Answer("double", "" + soluteMolWeight),
+                        new Answer("double", "" + solMolarity),
+                        new Answer("double")
+                });
         setVolFlask(volFlask);
         setSolvent(solvent);
         setSolute(solute);
@@ -45,14 +62,23 @@ public class Solution extends SolutionSet {
     }
 
     public Solution(String[] data) {
-        super("Solution");
-        setVolFlask(Double.parseDouble(data[0]));
-        setSolvent(data[1]);
-        setSolute(data[2]);
-        setSoluteMolWeight(Double.parseDouble(data[3]));
-        setSolMolarity(Double.parseDouble(data[4]));
-        setSolMol(Double.parseDouble(data[5]));
-        setSolMass(Double.parseDouble(data[6]));
+        super("Solution",
+                new String[] {
+                        "What is the volume of the solution you are preparing? (in mL)",
+                        "What is the solvent you are using?",
+                        "What is the solute?",
+                        "What is the molecular weight(g/mol) of your solute?",
+                        "What is the molarity of the solution?",
+                        "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
+                },
+                new Answer[] {
+                        new Answer("double", data[0]),
+                        new Answer("String", data[1]),
+                        new Answer("String", data[2]),
+                        new Answer("double", data[3]),
+                        new Answer("double", data[4]),
+                        new Answer("double", data[6])
+                });
     }
 
     @Override
