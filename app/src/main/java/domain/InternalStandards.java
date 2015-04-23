@@ -13,8 +13,8 @@ public class InternalStandards extends SolutionSet {
 
         String[] questions = super.concat(externalStandards.getQUESTIONS(),
                 new String[]{
-                "What is the volume of the internal standard that you are transferring?",
-                "What is the molarity of the internal standard in the new standard?"
+                "What is the volume of the internal standard that you are transferring?(in mL)",
+                "What is the molarity of the internal standard in the new standard?(round to the 2nd Decimal)"
         } );
 
         Answer[] answers = super.concatAnsw(externalStandards.getANSWERS(), new Answer[]{

@@ -15,9 +15,9 @@ public class ExternalStandards extends SolutionSet {
         super("External Standards");
 
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
-                "What is the volume of the new standard?",
-                "What is the volume of the stock solution you are transferring?",
-                "What is the molarity of the new standard?"
+                "What is the volume of the new standard?(in mL)",
+                "What is the volume of the stock solution you are transferring?(in mL)",
+                "What is the molarity of the new standard?(round to the 2nd Decimal)"
         });
 
         Answer[] answers = super.concatAnsw(solution.getANSWERS(), new Answer[]{

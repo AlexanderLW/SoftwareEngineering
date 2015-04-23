@@ -18,12 +18,12 @@ public class Solution extends SolutionSet {
         super("Solution",
                 new String[] {
 
-                        "What is the volume of your flask?",
+                        "What is the volume of your flask?(in mL)",
                         "What is the solvent you are using?",
                         "What solute are you using?",
                         "What is the molecular weight of your solute?",
                         "What is the molarity of the solution?",
-                        "What is the mass of the solute that you are adding?"
+                        "What is the mass of the solute that you are adding?(round to the 2nd Decimal)"
         },
                new Answer[] {
                        new Answer("double"),
