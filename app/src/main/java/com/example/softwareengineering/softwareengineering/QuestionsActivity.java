@@ -90,15 +90,18 @@ public class QuestionsActivity extends Activity {
                 if (answer.getText().toString().trim().equals(""))
                     Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
                 else {
+                    soluType.setAnswerValue(count, answer.getText().toString());
+                    soluType.setValues(soluType.getANSWERS());
+                    soluType.compute();
                     if(soluType.getCompare() == soluType.getAnsw()) {
-                        soluType.setAnswerValue(count, answer.getText().toString());
-                        soluType.setValues(soluType.getANSWERS());
-                        soluType.compute();
                         Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
                         nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
                         nextScreen.putExtra("solutionData", soluType.getDATA());
                         startActivityForResult(nextScreen, 1);
                         Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
                     }
                 }
                 trys++;
@@ -107,10 +110,10 @@ public class QuestionsActivity extends Activity {
                 if (answer.getText().toString().trim().equals(""))
                     Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
                 else {
+                    soluType.setAnswerValue(count, answer.getText().toString());
+                    soluType.setValues(soluType.getANSWERS());
+                    soluType.compute();
                     if(soluType.getCompare() == soluType.getAnsw()) {
-                        soluType.setAnswerValue(count, answer.getText().toString());
-                        soluType.setValues(soluType.getANSWERS());
-                        soluType.compute();
                         Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
                         nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
                         nextScreen.putExtra("solutionData", soluType.getDATA());
