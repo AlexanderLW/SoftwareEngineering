@@ -29,7 +29,7 @@ public class ViewSolutionsActivity extends Activity {
         solutions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent nextScreen = new Intent(ViewSolutionsActivity.this, MainActivity.class);
+                Intent nextScreen = new Intent(ViewSolutionsActivity.this, DetailsActivity.class);
                 nextScreen.putExtra("id", position);
                 startActivity(nextScreen);
             }

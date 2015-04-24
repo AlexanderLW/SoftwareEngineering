@@ -11,5 +11,6 @@
     <string name="title_activity_solutions">SolutionsActivity</string>
     <string name="title_activity_view_solutions">ViewSolutionsActivity</string>
     <string name="title_activity_choose">ChooseActivity</string>
+    <string name="title_activity_details">DetailsActivity</string>
 
 </resources>

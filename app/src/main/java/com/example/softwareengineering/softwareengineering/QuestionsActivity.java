@@ -51,7 +51,7 @@ public class QuestionsActivity extends Activity {
             createSolutionType();
             text.setText(soluType.getQuestion(count));
             if(soluType.getANSWERS()[count].getTYPE().equals("String"))
-                answer.setInputType(InputType.TYPE_CLASS_TEXT);
+                answer.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
             else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
     }
