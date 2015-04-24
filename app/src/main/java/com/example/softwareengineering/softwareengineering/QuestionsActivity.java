@@ -2,6 +2,7 @@ package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -35,6 +36,7 @@ public class QuestionsActivity extends Activity {
         text.setTypeface(myTypeface);
         EditText answer = (EditText) findViewById(R.id.answer);
         answer.setTypeface(myTypeface);
+        answer.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         TextView myprevButton = (TextView) findViewById(R.id.prev);
         myprevButton.setTypeface(myTypeface);
         TextView mycontButton = (TextView) findViewById(R.id.cont);
@@ -50,9 +52,7 @@ public class QuestionsActivity extends Activity {
             }
             createSolutionType();
             text.setText(soluType.getQuestion(count));
-            if(soluType.getANSWERS()[count].getTYPE().equals("String"))
-                answer.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
-            else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            setEdit(answer, "");
         }
     }
 
@@ -73,11 +73,7 @@ public class QuestionsActivity extends Activity {
             if(current < count) current++;
             soluType.setAnswerValue(count, answer.getText().toString());
             count--;
-            answer.setText(soluType.getAnswerValue(count));
-            answer.setSelection(answer.getText().length());
-            if(soluType.getANSWERS()[count].getTYPE().equals("String"))
-                answer.setInputType(InputType.TYPE_CLASS_TEXT);
-            else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            setEdit(answer, soluType.getAnswerValue(count));
             text.setText(soluType.getQuestion(count));
         }
     }
@@ -85,77 +81,70 @@ public class QuestionsActivity extends Activity {
     public void onContinue(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
-        if(count == (soluType.getQUESTIONS().length - 1)) {
+        if(answer.getText().toString().trim().equals("")) {
+            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+        }
+        else if(count == (soluType.getQUESTIONS().length - 1)) {
             if(trys < 3) {
-                if (answer.getText().toString().trim().equals(""))
-                    Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+                soluType.setAnswerValue(count, answer.getText().toString());
+                compute();
+                if(soluType.getCompare() == soluType.getAnsw()) {
+                    save();
+                    Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                }
                 else {
-                    soluType.setAnswerValue(count, answer.getText().toString());
-                    soluType.setValues(soluType.getANSWERS());
-                    soluType.compute();
-                    if(soluType.getCompare() == soluType.getAnsw()) {
-                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
-                        nextScreen.putExtra("solutionData", soluType.getDATA());
-                        startActivityForResult(nextScreen, 1);
-                        Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
                 }
                 trys++;
             }
             else {
-                if (answer.getText().toString().trim().equals(""))
-                    Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+                soluType.setAnswerValue(count, answer.getText().toString());
+                compute();
+                if(soluType.getCompare() == soluType.getAnsw()) {
+                    save();
+                    Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                }
                 else {
                     soluType.setAnswerValue(count, answer.getText().toString());
-                    soluType.setValues(soluType.getANSWERS());
-                    soluType.compute();
-                    if(soluType.getCompare() == soluType.getAnsw()) {
-                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
-                        nextScreen.putExtra("solutionData", soluType.getDATA());
-                        startActivityForResult(nextScreen, 1);
-                        Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        soluType.setAnswerValue(count, answer.getText().toString());
-                        soluType.setValues(soluType.getANSWERS());
-                        soluType.compute();
-                        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-                        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
-                        nextScreen.putExtra("solutionData", soluType.getDATA());
-                        startActivityForResult(nextScreen, 1);
-                        Toast.makeText(QuestionsActivity.this, "Incorrect correct answer is: " + soluType.getCompare(), Toast.LENGTH_SHORT).show();
-                    }
+                    save();
+                    Toast.makeText(QuestionsActivity.this, "Incorrect correct answer is: " + soluType.getCompare(), Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        else if(answer.getText().toString().trim().equals("")) {
-            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         }
         else {
             if(current > count) {
                 soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
-                answer.setText(soluType.getAnswerValue(count));
-                answer.setSelection(answer.getText().length());
-                if(soluType.getANSWERS()[count].getTYPE().equals("String"))
-                    answer.setInputType(InputType.TYPE_CLASS_TEXT);
-                else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                setEdit(answer, soluType.getAnswerValue(count));
             }
             else {
                 soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
-                answer.setText("");
-                if(soluType.getANSWERS()[count].getTYPE().equals("String"))
-                    answer.setInputType(InputType.TYPE_CLASS_TEXT);
-                else answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                setEdit(answer, "");
             }
             text.setText(soluType.getQuestion(count));
         }
+    }
+
+    public void setEdit(EditText answer, String input) {
+        answer.setText(input);
+        answer.setSelection(answer.getText().length());
+        if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+            answer.setInputType(InputType.TYPE_CLASS_TEXT);
+        else
+            answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    }
+
+    public void compute() {
+        soluType.setValues(soluType.getANSWERS());
+        soluType.compute();
+    }
+
+    public void save() {
+        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
+        nextScreen.putExtra("solutionData", soluType.getDATA());
+        startActivityForResult(nextScreen, 1);
     }
 
     public void createSolutionType() {

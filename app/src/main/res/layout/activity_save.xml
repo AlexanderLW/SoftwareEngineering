@@ -32,6 +32,7 @@
         android:layout_marginBottom="20dp"/>
 
     <EditText
+        android:inputType="text"
         android:layout_width="186dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"

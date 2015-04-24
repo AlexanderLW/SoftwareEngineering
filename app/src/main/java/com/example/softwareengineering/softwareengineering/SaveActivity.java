@@ -1,6 +1,7 @@
 package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class SaveActivity extends Activity {
         text2.setTypeface(myTypeface);
         EditText name = (EditText) findViewById(R.id.soluname);
         name.setTypeface(myTypeface);
+        name.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         TextView mysaveButton = (TextView) findViewById(R.id.save);
         mysaveButton.setTypeface(myTypeface);
         TextView myfinishButton = (TextView) findViewById(R.id.finish);
