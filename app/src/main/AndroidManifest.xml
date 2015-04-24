@@ -38,6 +38,14 @@
             android:name=".SolutionsActivity"
             android:label="@string/title_activity_solutions" >
         </activity>
+        <activity
+            android:name=".ViewSolutionsActivity"
+            android:label="@string/title_activity_view_solutions" >
+        </activity>
+        <activity
+            android:name=".ChooseActivity"
+            android:label="@string/title_activity_choose" >
+        </activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/buttons">
+
         <Button
             android:text="Load Solution"
             android:layout_width="wrap_content"

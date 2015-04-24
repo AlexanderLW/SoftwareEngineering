@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
     }
 
     public void onBegin(View view) {
-        Intent nextScreen = new Intent(this, TypesActivity.class);
+        Intent nextScreen = new Intent(this, ChooseActivity.class);
         startActivity(nextScreen);
         finish();
     }

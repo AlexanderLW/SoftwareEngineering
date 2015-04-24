@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.softwareengineering.softwareengineering.ChooseActivity"
+    android:background="@drawable/chalkboard" >
+
+    <Button
+        android:text="Make new solution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/view"
+        android:onClick="onMake"
+        android:layout_marginBottom="57dp"
+        android:id="@+id/make"
+        android:textSize="15sp"
+        android:textColor="@color/white" />
+
+    <Button
+        android:text="View saved solutions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="onView"
+        android:layout_marginBottom="57dp"
+        android:id="@+id/view"
+        android:textSize="15sp"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
