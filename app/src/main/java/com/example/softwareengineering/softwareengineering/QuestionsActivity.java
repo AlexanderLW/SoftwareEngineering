@@ -167,7 +167,7 @@ public class QuestionsActivity extends Activity {
                     count = 6;
                     break;
                 case 4:
-                    soluType = new InternalStandards(new ExternalStandards(sol));
+                    soluType = new InternalStandards(new ExternalStandards(sol), new Solution());
                     count = 6;
                     break;
             }
@@ -186,7 +186,7 @@ public class QuestionsActivity extends Activity {
                     soluType = new ExternalStandards(new Solution());
                     break;
                 case 4:
-                    soluType = new InternalStandards(new ExternalStandards(new Solution()));
+                    soluType = new InternalStandards(new ExternalStandards(new Solution()), new Solution());
                     break;
             }
         }

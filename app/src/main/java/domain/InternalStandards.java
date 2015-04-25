@@ -10,7 +10,7 @@ public class InternalStandards extends SolutionSet {
     private double volInternalStandard = 0.0;
     private double molarityInternalStandard = 0.0;
 
-    public InternalStandards(Solution solution, ExternalStandards externalStandards){
+    public InternalStandards(ExternalStandards externalStandards, Solution solution){
         super("Internal Standards");
 
         this.solution = solution;
