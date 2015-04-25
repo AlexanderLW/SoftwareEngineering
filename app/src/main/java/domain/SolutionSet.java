@@ -97,11 +97,11 @@ public abstract class SolutionSet {
         this.answ = answ;
     }
 
-    public abstract void compute();
+    public abstract void compute(int count);
 
-    public abstract void setValues(Answer[] answers);
+    public abstract void setValues(Answer[] answers, int count);
 
-    public abstract double getCompare();
+    public abstract double getCompare(int count);
 
     public String[] getDETAILS() {
         return DETAILS;

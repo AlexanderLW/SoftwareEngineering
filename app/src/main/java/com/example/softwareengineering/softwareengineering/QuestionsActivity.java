@@ -20,7 +20,7 @@ import domain.SolutionSet;
 
 public class QuestionsActivity extends Activity {
     int count = 0, current = 0, trys = 0;
-    boolean file = false;
+    boolean file = false, correct = false;
     int id;
     SolutionSet soluType;
     String[] data;
@@ -70,7 +70,6 @@ public class QuestionsActivity extends Activity {
             finish();
         }
         else {
-            if(current < count) current++;
             soluType.setAnswerValue(count, answer.getText().toString());
             count--;
             setEdit(answer, soluType.getAnswerValue(count));
@@ -81,48 +80,29 @@ public class QuestionsActivity extends Activity {
     public void onContinue(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
+        soluType.setAnswerValue(count, answer.getText().toString());
         if(answer.getText().toString().trim().equals("")) {
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         }
-        else if(count == (soluType.getQUESTIONS().length - 1)) {
-            if(trys < 3) {
-                soluType.setAnswerValue(count, answer.getText().toString());
-                compute();
-                if(soluType.getCompare() == soluType.getAnsw()) {
-                    save();
-                    Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
-                }
-                trys++;
-            }
-            else {
-                soluType.setAnswerValue(count, answer.getText().toString());
-                compute();
-                if(soluType.getCompare() == soluType.getAnsw()) {
-                    save();
-                    Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    soluType.setAnswerValue(count, answer.getText().toString());
-                    save();
-                    Toast.makeText(QuestionsActivity.this, "Incorrect correct answer is: " + soluType.getCompare(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        else if(soluType.getANSWERS()[count].getCHECK()) {
+            compute();
+            check();
         }
         else {
-            if(current > count) {
-                soluType.setAnswerValue(count, answer.getText().toString());
-                count++;
-                setEdit(answer, soluType.getAnswerValue(count));
+            correct = true;
+        }
+
+        if(correct) {
+            if(count == (soluType.getQUESTIONS().length - 1)) {
+                save();
             }
             else {
-                soluType.setAnswerValue(count, answer.getText().toString());
                 count++;
-                setEdit(answer, "");
+                setEdit(answer, soluType.getAnswerValue(count));
+                text.setText(soluType.getQuestion(count));
             }
-            text.setText(soluType.getQuestion(count));
+            trys = 0;
+            correct = false;
         }
     }
 
@@ -135,12 +115,36 @@ public class QuestionsActivity extends Activity {
             answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
     }
 
+    public void check() {
+        if(trys < 3) {
+            if(soluType.getCompare(count) != soluType.getAnsw()) {
+                Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
+                trys++;
+            }
+            else {
+                Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                correct = true;
+            }
+        }
+        else {
+            if(soluType.getCompare(count) != soluType.getAnsw()) {
+                Toast.makeText(QuestionsActivity.this, "Incorrect the correct answer is: " + soluType.getCompare(count), Toast.LENGTH_SHORT).show();
+                soluType.setAnswerValue(count, String.valueOf(soluType.getCompare(count)));
+            }
+            else {
+                Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+            }
+            correct = true;
+        }
+    }
+
     public void compute() {
-        soluType.setValues(soluType.getANSWERS());
-        soluType.compute();
+        soluType.setValues(soluType.getANSWERS(), count);
+        soluType.compute(count);
     }
 
     public void save() {
+        compute();
         Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
         nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
         nextScreen.putExtra("solutionData", soluType.getDATA());

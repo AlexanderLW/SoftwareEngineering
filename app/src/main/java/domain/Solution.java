@@ -26,12 +26,12 @@ public class Solution extends SolutionSet {
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
         },
                new Answer[] {
-                       new Answer("double"),
-                       new Answer("String"),
-                       new Answer("String"),
-                       new Answer("double"),
-                       new Answer("double"),
-                       new Answer("double")
+                       new Answer("double", false),
+                       new Answer("String", false),
+                       new Answer("String", false),
+                       new Answer("double", false),
+                       new Answer("double", false),
+                       new Answer("double", true)
                });
     }
 
@@ -47,12 +47,12 @@ public class Solution extends SolutionSet {
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
-                        new Answer("double", "" + volFlask),
-                        new Answer("String", solvent),
-                        new Answer("String", solute),
-                        new Answer("double", "" + soluteMolWeight),
-                        new Answer("double", "" + solMolarity),
-                        new Answer("double")
+                        new Answer("double", false, String.valueOf(volFlask)),
+                        new Answer("String", false, solvent),
+                        new Answer("String", false, solute),
+                        new Answer("double", false, String.valueOf(soluteMolWeight)),
+                        new Answer("double", false, String.valueOf(solMolarity)),
+                        new Answer("double", true)
                 });
         setVolFlask(volFlask);
         setSolvent(solvent);
@@ -72,17 +72,17 @@ public class Solution extends SolutionSet {
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
-                        new Answer("double", data[0]),
-                        new Answer("String", data[1]),
-                        new Answer("String", data[2]),
-                        new Answer("double", data[3]),
-                        new Answer("double", data[4]),
-                        new Answer("double", data[6])
+                        new Answer("double", false, String.valueOf(Double.valueOf(data[0])*100)),
+                        new Answer("String", false, data[1]),
+                        new Answer("String", false, data[2]),
+                        new Answer("double", false, data[3]),
+                        new Answer("double", false, data[4]),
+                        new Answer("double", true, data[6])
                 });
     }
 
     @Override
-    public void compute() {
+    public void compute(int count) {
         calcMol(solMolarity, volFlask);
         calcMass(solMol, soluteMolWeight);
 
@@ -104,11 +104,11 @@ public class Solution extends SolutionSet {
         });
     }
 
-    public double getCompare(){
+    public double getCompare(int count){
         return solMass;
     }
 
-    public void setValues(Answer[] answers) {
+    public void setValues(Answer[] answers, int count) {
         for(int i = 0; i < answers.length; i++) {
             switch(i) {
                 case 0:

@@ -1,16 +1,16 @@
 package domain;
 
 /**
- * Created by User on 4/11/15.
+ * Created by Alex on 4/25/2015.
  */
-public class InternalStandards extends SolutionSet {
+public class StandardAddition extends SolutionSet {
 
     Solution solution;
     ExternalStandards externalStandards;
     private double volInternalStandard = 0.0;
     private double molarityInternalStandard = 0.0;
 
-    public InternalStandards(Solution solution, ExternalStandards externalStandards){
+    public StandardAddition(Solution solution, ExternalStandards externalStandards){
         super("Internal Standards");
 
         this.solution = solution;
