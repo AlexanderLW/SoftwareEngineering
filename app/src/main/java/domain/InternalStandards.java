@@ -88,4 +88,9 @@ public class InternalStandards extends SolutionSet {
     public void setMolarityInternalStandard(double molarityInternalStandard) {
         this.molarityInternalStandard = molarityInternalStandard;
     }
+
+    @Override
+    public int getTypeCode() {
+        return 5;
+    }
 }

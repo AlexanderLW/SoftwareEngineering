@@ -118,4 +118,9 @@ public class ExternalStandards extends SolutionSet {
     public void setAnotherStandard(boolean anotherStandard) {
         this.anotherStandard = anotherStandard;
     }
+
+    @Override
+    public int getTypeCode() {
+        return 4;
+    }
 }

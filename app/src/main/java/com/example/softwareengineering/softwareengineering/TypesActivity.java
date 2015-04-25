@@ -1,8 +1,8 @@
 package com.example.softwareengineering.softwareengineering;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +13,20 @@ import android.widget.ListView;
 import domain.SolutionSet;
 
 
-public class TypesActivity extends Activity {
+public class TypesActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
 
-        ListAdapter soluAdapter = new typeAdapter(this, SolutionSet.SOLUTIONTYPES);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        ListAdapter soluAdapter = new TypeAdapter(this, SolutionSet.SOLUTIONTYPES);
 
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
+
 
         soluTypes.setAdapter(soluAdapter);
 
@@ -49,6 +53,8 @@ public class TypesActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_solution_types, menu);
+
+
         return true;
     }
 
@@ -60,10 +66,26 @@ public class TypesActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_search:
+                openSearch();
+                return true;
+            case R.id.action_cards:
+                openCardsList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    /**
+     * The following methods redirect users to appropriate activities when
+     * using onOptionItemSelected in menu
+     */
+    private void openSearch(){}
+
+    private void openCardsList(){
+        Intent i = new Intent(this, ViewSavedActivity.class);
+        startActivity(i);
     }
 }

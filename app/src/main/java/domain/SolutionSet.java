@@ -118,4 +118,7 @@ public abstract class SolutionSet {
     public void setDATA(String[] DATA) {
         this.DATA = DATA;
     }
+
+    public abstract int getTypeCode();
+
 }

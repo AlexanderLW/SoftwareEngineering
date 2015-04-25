@@ -15,6 +15,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "MySolutions.db";
 
+
     private static final String TEXT_TYPE = " TEXT ";
     private static final String COMMA = ", ";
 
@@ -34,9 +35,12 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME;
 
+
     public SolutionDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
@@ -47,9 +51,12 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
+
+
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
 
     public void addSolution(String name, String [] data) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -67,6 +74,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.insert(MyDBHandler.SolutionEntry.TABLE_NAME, null, values);
         db.close();
     }
+
 
     public String[] getSolutionNames() {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_NAME};
@@ -88,6 +96,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         return lNames;
     }
+
 
     public String[] getSolutionData(int id) {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES, MyDBHandler.SolutionEntry.COLUMN_NAME_MASS};

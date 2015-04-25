@@ -28,7 +28,7 @@ public class ChooseActivity extends Activity {
     }
 
     public void onView(View view) {
-        Intent nextScreen = new Intent(this, ViewSolutionsActivity.class);
+        Intent nextScreen = new Intent(this, ViewSavedActivity.class);
         startActivity(nextScreen);
     }
 }

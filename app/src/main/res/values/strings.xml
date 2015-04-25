@@ -3,6 +3,8 @@
 
     <string name="app_name">SoluSim</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_search">Searchable Solutions</string>
+    <string name="action_cards">Saved Solutions</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_solution_types">solutionTypes</string>
     <string name="title_activity_solution_questions">solutionQuesitons</string>

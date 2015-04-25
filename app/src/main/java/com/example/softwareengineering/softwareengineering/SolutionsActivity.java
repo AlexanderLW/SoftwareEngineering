@@ -37,7 +37,7 @@ public class SolutionsActivity extends Activity {
 
         String[] names = mDbHelper.getSolutionNames();
 
-        ListAdapter adapter = new typeAdapter(this, names);
+        ListAdapter adapter = new TypeAdapter(this, names);
 
         ListView solutions = (ListView) findViewById(R.id.solutions);
 

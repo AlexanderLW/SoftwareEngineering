@@ -196,4 +196,9 @@ public class Solution extends SolutionSet {
     public void setSolMol(double solMol) {
         this.solMol = solMol;
     }
+
+    @Override
+    public int getTypeCode() {
+        return 0;
+    }
 }
