@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CardArrayAdapter extends ArrayAdapter<Card> {
     Typeface myTypeface;
-    private List<Card> cardList = new ArrayList();
+    private ArrayList<Card> cardList = new ArrayList();
 
     static class CardViewHolder{
         TextView solutionLabel;
@@ -47,9 +47,8 @@ public class CardArrayAdapter extends ArrayAdapter<Card> {
     }
 
     public void removeAll(){
-        for (Card c: cardList){
-            remove(c);
-        }
+        cardList.clear();
+        super.clear();
     }
 
     @Override

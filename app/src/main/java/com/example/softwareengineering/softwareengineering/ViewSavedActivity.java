@@ -3,14 +3,17 @@ package com.example.softwareengineering.softwareengineering;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import database.SolutionDBHelper;
 import domain.Card;
 
@@ -18,8 +21,6 @@ import domain.Card;
 public class ViewSavedActivity extends ActionBarActivity {
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     private CardArrayAdapter adapter;
-    private AlertDialog.Builder builder;
-    private AlertDialog removeAllDialog, removeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,34 +49,16 @@ public class ViewSavedActivity extends ActionBarActivity {
             adapter.add(card);
         }
 
+
         solutions.setAdapter(adapter);
-
-        builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.remove_all_dialog_message)
-
-                // Set the action buttons
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK, so save the mSelectedItems results somewhere
-                        // or return them to the component that opened the dialog
-
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-        removeAllDialog = builder.create();
 
 
 
         solutions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                cardDialog(position).show();
+                AlertDialog dialog = cardDialog(position);
+                dialog.show();
             }
         });
 
@@ -112,7 +95,8 @@ public class ViewSavedActivity extends ActionBarActivity {
     }
 
     private void removeAllCards() {
-        removeAllDialog.show();
+        removeAllCardsDialog()
+                .show();
     }
 
     private void openSolutionTypes() {
@@ -120,6 +104,29 @@ public class ViewSavedActivity extends ActionBarActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+    private AlertDialog removeAllCardsDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.remove_all_dialog_message)
+
+                // Set the action buttons
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+                        adapter.removeAll();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        return builder.create();
+    }
+
 
     private AlertDialog cardDialog(final int position){
         final int pos = position - 1;
