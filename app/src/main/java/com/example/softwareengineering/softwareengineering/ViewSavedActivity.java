@@ -116,6 +116,9 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         adapter.removeAll();
+                        for (int i = 0 ; i  < adapter.getCount();i++){
+                            mDbHelper.removeSolutionData(i+1);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -145,6 +148,7 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         adapter.remove(adapter.getItem(pos));
+                        mDbHelper.removeSolutionData(pos+1);
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
