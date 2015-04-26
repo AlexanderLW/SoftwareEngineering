@@ -117,10 +117,10 @@ public class Solution extends SolutionSet {
         calcMass(solMol, soluteMolWeight);
 
         setDETAILS(new String[]{
-                (volFlask * 100) + "ml",
-                solMolarity + " molar solution",
+                "" + (volFlask * 100) + "ml",
+                "" + solMolarity + " molar solution",
                 solvent + " as the solvent",
-                solMass + "g of " + solute + " as a solute"
+                "" + solMass + "g of " + solute + " as a solute"
         });
 
         setDATA(new String[]{
