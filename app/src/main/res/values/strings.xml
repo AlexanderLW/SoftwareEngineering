@@ -18,5 +18,7 @@
     <string name="confirm">I am sure</string>
     <string name="cancel">Cancel</string>
     <string name="remove_all_dialog_message">Are you sure you want to delete all saved solutions? (This will be permanent) </string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 
 </resources>

@@ -20,7 +20,7 @@ public class ViewSavedActivity extends ActionBarActivity {
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     private CardArrayAdapter adapter;
     private AlertDialog.Builder builder;
-    private AlertDialog dialog;
+    private AlertDialog removeAllDialog, removeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,8 @@ public class ViewSavedActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        Bundle solution = getIntent().getExtras();
-//        int id = solution.getInt("id") + 1;
 
-        String[] data = mDbHelper.getSolutionData(1);
-        String[] names = mDbHelper.getSolutionNames();
-
-        String[][] infos = {names, data};
         adapter = new CardArrayAdapter( getApplicationContext(), R.layout.list_item_card);
-
 
         ListView solutions = (ListView) findViewById(R.id.card_listView);
 
@@ -48,16 +41,11 @@ public class ViewSavedActivity extends ActionBarActivity {
         solutions.addHeaderView(new View(this));
         solutions.addFooterView(new View(this));
 
-        String print = "";
-        print += data[0] + " mL of solution volume\n";
-        print += "Using " + data[1] +  " as solvent\n";
-        print += "Using " + data[2] + " as solute\n";
-        print += data[3] + " g/mol of solute molecular weight\n";
-        print += data[4] + " g/mole of solution molarity\n";
-        print += data[5] + " g of solute mass";
+        String[] names = mDbHelper.getSolutionNames();
 
-        for (String name : names) {
-            Card card = new Card(name + "\n\n" + print);
+        for (int i = 0; i < names.length;i++) {
+            String[] data = mDbHelper.getSolutionData(i+1);
+            Card card = new Card(names[i] + "\n\n" + printSolution(data));
             adapter.add(card);
         }
 
@@ -81,7 +69,16 @@ public class ViewSavedActivity extends ActionBarActivity {
 
                     }
                 });
-        dialog = builder.create();
+        removeAllDialog = builder.create();
+
+
+
+        solutions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                cardDialog(position).show();
+            }
+        });
 
 
     }
@@ -116,13 +113,47 @@ public class ViewSavedActivity extends ActionBarActivity {
     }
 
     private void removeAllCards() {
-        dialog.show();
+        removeAllDialog.show();
     }
 
     private void openSolutionTypes() {
         Intent intent = new Intent(this, TypesActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private AlertDialog cardDialog(final int position){
+        final int pos = position - 1;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(adapter.getItem(pos).getData() + "\n\nWould you like to delete this solution?")
+
+                // Set the action buttons
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+                        adapter.remove(adapter.getItem(pos));
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        return builder.create();
+    }
+
+    private String printSolution(String[] data){
+        String print = "";
+        print += data[0] + " mL of solution volume\n";
+        print += "Using " + data[1] +  " as solvent\n";
+        print += "Using " + data[2] + " as solute\n";
+        print += data[3] + " g/mol of solute molecular weight\n";
+        print += data[4] + " g/mole of solution molarity\n";
+        print += data[5] + " g of solute mass";
+        return print;
     }
 
 }
