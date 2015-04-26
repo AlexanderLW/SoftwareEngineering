@@ -30,7 +30,7 @@ public class QuestionsActivity extends Activity {
     Solution sol;
 
     private AlertDialog.Builder builder;
-    private AlertDialog removeAllDialog;
+    private AlertDialog repeatDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +90,8 @@ public class QuestionsActivity extends Activity {
                                 finish();
                             }
                         });
-                removeAllDialog = builder.create();
-                removeAllDialog.show();
+                repeatDialog = builder.create();
+                repeatDialog.show();
             }
         }
         else if(resultCode == 3) finish();
