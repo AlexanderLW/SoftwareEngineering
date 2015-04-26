@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 import database.SolutionDBHelper;
 import domain.Card;
 
@@ -41,12 +42,19 @@ public class ViewSavedActivity extends ActionBarActivity {
         solutions.addHeaderView(new View(this));
         solutions.addFooterView(new View(this));
 
+
+
         String[] names = mDbHelper.getSolutionNames();
 
-        for (int i = 0; i < names.length;i++) {
-            String[] data = mDbHelper.getSolutionData(i+1);
-            Card card = new Card(names[i] + "\n\n" + printSolution(data));
-            adapter.add(card);
+        if (names.length > 0){
+            for (int i = 0; i < names.length; i++) {
+                String[] data = mDbHelper.getSolutionData(i + 1);
+                Card card = new Card(names[i] + "\n\n" + printSolution(data));
+                adapter.add(card);
+            }
+        }else{
+            Toast.makeText(this, "You have no saved solutions", Toast.LENGTH_SHORT)
+                    .show();
         }
 
 
@@ -116,6 +124,9 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         adapter.removeAll();
+                        for (int i = 0; i < adapter.getCount(); i++) {
+                            mDbHelper.removeSolutionData(i + 1);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -145,6 +156,7 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         adapter.remove(adapter.getItem(pos));
+                        mDbHelper.removeSolutionData(pos+1);
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

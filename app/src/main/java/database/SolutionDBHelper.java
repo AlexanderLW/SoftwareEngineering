@@ -118,5 +118,13 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.close();
         return listData;
     }
+
+    public void removeSolutionData(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(MyDBHandler.SolutionEntry.TABLE_NAME, MyDBHandler.SolutionEntry._ID + " = " + id,
+                null);
+        db.close();
+    }
+
 }
 
