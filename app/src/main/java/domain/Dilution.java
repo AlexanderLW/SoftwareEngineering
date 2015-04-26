@@ -55,11 +55,6 @@ public class Dilution extends SolutionSet {
         return dilutionMolarity;
     }
 
-    @Override
-    public int getTypeCode() {
-        return 0;
-    }
-
     public void setValues(Answer[] answers, int count) {
         solution.setValues(answers, count);
         setAnsw(solution.getAnsw());

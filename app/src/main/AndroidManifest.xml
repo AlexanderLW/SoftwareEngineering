@@ -44,14 +44,6 @@
             android:label="@string/title_activity_view_solutions"
                 android:parentActivityName=".TypesActivity">
         </activity>
-        <activity
-            android:name=".ChooseActivity"
-            android:label="@string/title_activity_choose" >
-        </activity>
-        <activity
-            android:name=".DetailsActivity"
-            android:label="@string/title_activity_details" >
-        </activity>
     </application>
 
 </manifest>

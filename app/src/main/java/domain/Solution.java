@@ -15,24 +15,54 @@ public class Solution extends SolutionSet {
     private double solMol = 0.0;
 
     public Solution(){
-        super("Solution",
-                new String[] {
+        super("Solution");
+        String[] questions = {
 
-                        "What is the volume of the solution you are preparing? (in mL)",
-                        "What is the solvent you are using?",
-                        "What is the solute?",
-                        "What is the molecular weight(g/mol) of your solute?",
-                        "What is the molarity of the solution?",
-                        "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
-        },
-               new Answer[] {
-                       new Answer("double", false),
-                       new Answer("String", false),
-                       new Answer("String", false),
-                       new Answer("double", false),
-                       new Answer("double", false),
-                       new Answer("double", true)
-               });
+            "What is the volume of the solution you are preparing? (in mL)",
+            "What is the solvent you are using?",
+            "What is the solute?",
+            "What is the molecular weight(g/mol) of your solute?",
+            "What is the molarity of the solution?",
+            "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
+        };
+
+        Answer[] answers = {
+            new Answer("double", false),
+            new Answer("String", false),
+            new Answer("String", false),
+            new Answer("double", false),
+            new Answer("double", false),
+            new Answer("double", true)
+        };
+
+        super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
+    }
+
+    public Solution(String type) {
+        super(type);
+
+        String[] questions = {
+
+                "What is the volume of the " + type + " you are preparing? (in mL)",
+                "What is the solvent you are using?",
+                "What is the solute?",
+                "What is the molecular weight(g/mol) of your solute?",
+                "What is the molarity of the solution?",
+                "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
+        };
+
+        Answer[] answers = {
+                new Answer("double", false),
+                new Answer("String", false),
+                new Answer("String", false),
+                new Answer("double", false),
+                new Answer("double", false),
+                new Answer("double", true)
+        };
+
+        super.setQUESTIONS(questions);
+        super.setANSWERS(answers);
     }
 
     public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
@@ -197,8 +227,4 @@ public class Solution extends SolutionSet {
         this.solMol = solMol;
     }
 
-    @Override
-    public int getTypeCode() {
-        return 0;
-    }
 }

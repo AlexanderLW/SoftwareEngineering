@@ -42,7 +42,7 @@ public class ExternalStandards extends SolutionSet {
         else {
             calcMolarity(solution.getSolMolarity(), stockSolVol, standardVol);
 
-            Solution newSolution = new Solution("Dilution", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
+            Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
             setDETAILS(newSolution.getDETAILS());
             setDATA(newSolution.getDATA());
@@ -117,10 +117,5 @@ public class ExternalStandards extends SolutionSet {
 
     public void setAnotherStandard(boolean anotherStandard) {
         this.anotherStandard = anotherStandard;
-    }
-
-    @Override
-    public int getTypeCode() {
-        return 4;
     }
 }

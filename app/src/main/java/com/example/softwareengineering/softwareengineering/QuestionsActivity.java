@@ -16,6 +16,7 @@ import domain.ExternalStandards;
 import domain.InternalStandards;
 import domain.Solution;
 import domain.SolutionSet;
+import domain.StandardAddition;
 
 
 public class QuestionsActivity extends Activity {
@@ -93,9 +94,8 @@ public class QuestionsActivity extends Activity {
         }
 
         if(correct) {
-            if(count == (soluType.getQUESTIONS().length - 1)) {
+            if(count == (soluType.getQUESTIONS().length - 1))
                 save();
-            }
             else {
                 count++;
                 setEdit(answer, soluType.getAnswerValue(count));
@@ -116,24 +116,17 @@ public class QuestionsActivity extends Activity {
     }
 
     public void check() {
-        if(trys < 3) {
-            if(soluType.getCompare(count) != soluType.getAnsw()) {
-                Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
-                trys++;
-            }
-            else {
-                Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                correct = true;
-            }
+        if(trys < 3 && soluType.getCompare(count) != soluType.getAnsw()) {
+            Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
+            trys++;
+        }
+        else if(soluType.getCompare(count) == soluType.getAnsw()) {
+            Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+            correct = true;
         }
         else {
-            if(soluType.getCompare(count) != soluType.getAnsw()) {
-                Toast.makeText(QuestionsActivity.this, "Incorrect the correct answer is: " + soluType.getCompare(count), Toast.LENGTH_SHORT).show();
-                soluType.setAnswerValue(count, String.valueOf(soluType.getCompare(count)));
-            }
-            else {
-                Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(QuestionsActivity.this, "Incorrect the correct answer is: " + soluType.getCompare(count), Toast.LENGTH_SHORT).show();
+            soluType.setAnswerValue(count, String.valueOf(soluType.getCompare(count)));
             correct = true;
         }
     }
@@ -170,6 +163,10 @@ public class QuestionsActivity extends Activity {
                     soluType = new InternalStandards(new ExternalStandards(sol), new Solution());
                     count = 6;
                     break;
+                case 5:
+                    soluType = new StandardAddition(new ExternalStandards(sol), new Solution());
+                    count = 6;
+                    break;
             }
         } else {
             switch (id) {
@@ -177,16 +174,20 @@ public class QuestionsActivity extends Activity {
                     soluType = new Solution();
                     break;
                 case 1:
-                    soluType = new Dilution(new Solution(), false);
+                    soluType = new Dilution(new Solution("stock solution"), false);
                     break;
                 case 2:
-                    soluType = new Dilution(new Solution(), true);
+                    soluType = new Dilution(new Solution("stock solution"), true);
                     break;
                 case 3:
-                    soluType = new ExternalStandards(new Solution());
+                    soluType = new ExternalStandards(new Solution("stock solution"));
                     break;
                 case 4:
-                    soluType = new InternalStandards(new ExternalStandards(new Solution()), new Solution());
+                    soluType = new InternalStandards(new ExternalStandards(new Solution("stock solution")), new Solution("internal standard"));
+                    break;
+                case 5:
+                    soluType = new StandardAddition(new ExternalStandards(new Solution("stock solution")), new Solution("standard"));
+                    count = 6;
                     break;
             }
         }

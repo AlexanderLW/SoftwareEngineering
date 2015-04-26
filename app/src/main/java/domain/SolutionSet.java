@@ -22,7 +22,8 @@ public abstract class SolutionSet {
       "Dilution",
       "Serial Dilution",
       "External Standards",
-      "Internal Standards"
+      "Internal Standards",
+      "Standard Addition"
     };
 
     public SolutionSet(String name){
@@ -118,7 +119,4 @@ public abstract class SolutionSet {
     public void setDATA(String[] DATA) {
         this.DATA = DATA;
     }
-
-    public abstract int getTypeCode();
-
 }
