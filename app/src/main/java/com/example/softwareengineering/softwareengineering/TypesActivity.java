@@ -13,12 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import database.SolutionDBHelper;
 import domain.SolutionSet;
 
 
 public class TypesActivity extends ActionBarActivity {
-
+    SolutionDBHelper mDbHelper;
     private SearchView mSearchView;
 
     @Override
@@ -42,7 +44,8 @@ public class TypesActivity extends ActionBarActivity {
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0) {
+
+                if(mDbHelper.getCount() == 0 || position == 0) {
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                     nextScreen.putExtra("id", position);
                     nextScreen.putExtra("file", false);
@@ -86,7 +89,9 @@ public class TypesActivity extends ActionBarActivity {
                 openSearch();
                 return true;
             case R.id.action_cards:
-                openCardsList();
+                if(mDbHelper.getCount() != 0)
+                    openCardsList();
+                else Toast.makeText(this, "You have no saved solutions", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

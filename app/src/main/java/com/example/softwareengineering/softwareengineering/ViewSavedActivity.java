@@ -3,18 +3,14 @@ package com.example.softwareengineering.softwareengineering;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import android.widget.TextView;
-import android.widget.Toast;
 import database.SolutionDBHelper;
 import domain.Card;
 
@@ -46,17 +42,11 @@ public class ViewSavedActivity extends ActionBarActivity {
 
         String[] names = mDbHelper.getSolutionNames();
 
-        if (names.length > 0){
-            for (int i = 0; i < names.length; i++) {
-                String[] data = mDbHelper.getSolutionData(i + 1);
-                Card card = new Card(names[i] + "\n\n" + printSolution(data));
-                adapter.add(card);
-            }
-        }else{
-            Toast.makeText(this, "You have no saved solutions", Toast.LENGTH_SHORT)
-                    .show();
+        for (int i = 0; i < names.length; i++) {
+            String[] data = mDbHelper.getSolutionData(i + 1);
+            Card card = new Card(names[i] + "\n\n" + printSolution(data));
+            adapter.add(card);
         }
-
 
         solutions.setAdapter(adapter);
 
