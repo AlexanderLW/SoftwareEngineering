@@ -125,7 +125,12 @@ public class ViewSavedActivity extends ActionBarActivity {
     private AlertDialog cardDialog(final int position){
         final int pos = position - 1;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(adapter.getItem(pos).getData() + "\n\nWould you like to delete this solution?")
+        builder
+                .setTitle("Would you like to delete this solution?")
+
+
+                .setMessage(adapter.getItem(pos).getData())
+
 
                 // Set the action buttons
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
