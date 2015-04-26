@@ -1,9 +1,13 @@
 package com.example.softwareengineering.softwareengineering;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +18,8 @@ import domain.SolutionSet;
 
 
 public class TypesActivity extends ActionBarActivity {
+
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +52,19 @@ public class TypesActivity extends ActionBarActivity {
                 }
             }
         });
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_solution_types, menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_solution_types, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) searchItem.getActionView();
+        setupSearchView(searchItem);
 
 
         return true;
@@ -82,10 +94,18 @@ public class TypesActivity extends ActionBarActivity {
      * The following methods redirect users to appropriate activities when
      * using onOptionItemSelected in menu
      */
-    private void openSearch(){}
+    private void openSearch(){
+        throw new UnsupportedOperationException();
+    }
 
     private void openCardsList(){
         Intent i = new Intent(this, ViewSavedActivity.class);
         startActivity(i);
     }
+
+    private void setupSearchView(MenuItem searchItem){
+
+
+    }
 }
+

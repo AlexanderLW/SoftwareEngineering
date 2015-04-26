@@ -52,6 +52,11 @@ public class StandardAddition extends SolutionSet {
         return molarityInternalStandard;
     }
 
+    @Override
+    public int getTypeCode() {
+        return 0;
+    }
+
     public void setValues(Answer[] answers, int count) {
         externalStandards.setValues(answers, count);
         setAnsw(externalStandards.getAnsw());

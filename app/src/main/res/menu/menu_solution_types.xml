@@ -9,7 +9,8 @@
           android:title="@string/action_search"
           app:showAsAction="ifRoom|collapseActionView"
           app:actionViewClass="android.support.v7.widget.SearchView" />
-    <!-- View card lits, should appear as action button -->
+
+    <!-- View card lists, should appear as action button -->
     <item
         android:id="@+id/action_cards"
         android:icon="@drawable/ic_action_view_as_list"
