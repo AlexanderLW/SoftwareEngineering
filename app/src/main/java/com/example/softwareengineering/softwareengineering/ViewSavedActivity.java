@@ -1,5 +1,7 @@
 package com.example.softwareengineering.softwareengineering;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +18,9 @@ import domain.Card;
 
 public class ViewSavedActivity extends ActionBarActivity {
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
+    private CardArrayAdapter adapter;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,7 @@ public class ViewSavedActivity extends ActionBarActivity {
         String[] names = mDbHelper.getSolutionNames();
 
         String[][] infos = {names, data};
-        CardArrayAdapter adapter = new CardArrayAdapter( getApplicationContext(), R.layout.list_item_card);
+        adapter = new CardArrayAdapter( getApplicationContext(), R.layout.list_item_card);
 
 
         ListView solutions = (ListView) findViewById(R.id.card_listView);
@@ -58,6 +63,26 @@ public class ViewSavedActivity extends ActionBarActivity {
 
 
         solutions.setAdapter(adapter);
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.remove_all_dialog_message)
+
+                // Set the action buttons
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        dialog = builder.create();
+
 
     }
 
@@ -91,7 +116,7 @@ public class ViewSavedActivity extends ActionBarActivity {
     }
 
     private void removeAllCards() {
-
+        dialog.show();
     }
 
     private void openSolutionTypes() {

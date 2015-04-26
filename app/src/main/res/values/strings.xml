@@ -15,5 +15,8 @@
     <string name="title_activity_view_solutions">ViewSolutionsActivity</string>
     <string name="title_activity_choose">ChooseActivity</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="confirm">I am sure</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove_all_dialog_message">Are you sure you want to delete all saved solutions? (This will be permanent) </string>
 
 </resources>

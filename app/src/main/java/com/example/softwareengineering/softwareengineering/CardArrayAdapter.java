@@ -41,6 +41,17 @@ public class CardArrayAdapter extends ArrayAdapter<Card> {
     }
 
 
+    public void remove(Card object){
+        cardList.remove(object);
+        super.remove(object);
+    }
+
+    public void removeAll(){
+        for (Card c: cardList){
+            remove(c);
+        }
+    }
+
     @Override
     public int getCount(){
         return this.cardList.size();
