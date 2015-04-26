@@ -1,8 +1,7 @@
 package com.example.softwareengineering.softwareengineering;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import domain.SolutionSet;
 
@@ -26,13 +26,16 @@ public class TypesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
 
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
+        TextView text = (TextView) findViewById(R.id.text);
+        text.setTypeface(myTypeface);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ListAdapter soluAdapter = new TypeAdapter(this, SolutionSet.SOLUTIONTYPES);
 
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
-
 
         soluTypes.setAdapter(soluAdapter);
 
