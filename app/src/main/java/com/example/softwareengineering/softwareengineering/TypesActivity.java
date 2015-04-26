@@ -95,7 +95,7 @@ public class TypesActivity extends ActionBarActivity {
      * using onOptionItemSelected in menu
      */
     private void openSearch(){
-        throw new UnsupportedOperationException();
+
     }
 
     private void openCardsList(){
