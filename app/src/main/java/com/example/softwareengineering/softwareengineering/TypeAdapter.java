@@ -18,6 +18,7 @@ import java.util.List;
 public class TypeAdapter extends ArrayAdapter<String> {
     Typeface myTypeface;
     List list = new ArrayList();
+
     public TypeAdapter(Context context, String[] values){
         super(context, R.layout.solution_types_listitem, values);
         AssetManager assets = context.getAssets();
