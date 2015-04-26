@@ -30,7 +30,7 @@
             android:id="@+id/yes"
             android:onClick="onYes"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginRight="5dp"/>
 
         <Button
@@ -40,7 +40,7 @@
             android:id="@+id/no"
             android:onClick="onNo"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginLeft="5dp"/>
         </LinearLayout>
 </LinearLayout>

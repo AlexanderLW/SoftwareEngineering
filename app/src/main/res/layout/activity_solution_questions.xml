@@ -42,7 +42,7 @@
             android:onClick="onPrevious"
             android:id="@+id/prev"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -52,7 +52,7 @@
             android:onClick="onContinue"
             android:id="@+id/cont"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginLeft="5dp" />
     </LinearLayout>
 </LinearLayout>

@@ -34,5 +34,5 @@
         android:id="@+id/begin"
         android:textSize="15sp"
         android:textColor="@color/white" style="@style/AppTheme" android:layout_gravity="center_horizontal"
-        android:background="#ff1b1b1b" />
+        android:background="#f9393939" />
 </LinearLayout>

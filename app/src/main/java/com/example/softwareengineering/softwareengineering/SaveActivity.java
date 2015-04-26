@@ -51,7 +51,7 @@ public class SaveActivity extends Activity {
 
     public void onSave(View view) {
         EditText name = (EditText) findViewById(R.id.soluname);
-        if(name.getText().toString().trim().equals("")) {
+        if(name.getText().toString().trim().equals("") || name.getText().toString().trim().equals("Enter Solution Name Here")) {
             Toast.makeText(SaveActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
         }
         else {

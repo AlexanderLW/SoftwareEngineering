@@ -35,11 +35,13 @@
         android:gravity="center" />
 
     <EditText
+        android:text="Enter Solution Name Here"
         android:inputType="text"
-        android:layout_width="186dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:id="@+id/soluname" />
+        android:id="@+id/soluname"
+        android:selectAllOnFocus="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -53,7 +55,7 @@
             android:onClick="onSave"
             android:id="@+id/save"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -63,7 +65,7 @@
             android:onClick="onfinish"
             android:id="@+id/finish"
             android:textColor="@color/white"
-            android:background="#ff1b1b1b"
+            android:background="#f9393939"
             android:layout_marginLeft="5dp" />
         </LinearLayout>
 </LinearLayout>
