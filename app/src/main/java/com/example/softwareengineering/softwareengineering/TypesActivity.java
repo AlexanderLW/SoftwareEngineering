@@ -20,7 +20,7 @@ import domain.SolutionSet;
 
 
 public class TypesActivity extends ActionBarActivity {
-    SolutionDBHelper mDbHelper;
+    SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     private SearchView mSearchView;
 
     @Override

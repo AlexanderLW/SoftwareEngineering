@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -129,12 +128,9 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
     public int getCount() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.v("lkfdasj", "pass");
         Cursor mCount= db.rawQuery("select count(*) from " + MyDBHandler.SolutionEntry.TABLE_NAME, null);
-        Log.v("lkfdasj", "pass 2");
         mCount.moveToFirst();
         int count= mCount.getInt(0);
-        Log.v("lkfdasj", "" + count);
         mCount.close();
         db.close();
 
