@@ -52,6 +52,14 @@ public class StandardAddition extends SolutionSet {
         return standardMolarity;
     }
 
+    public String getDialog() {
+        return "Would you like to create another standard additon method?";
+    }
+
+    public int getRestart() {
+        return 6;
+    }
+
     public void setValues(Answer[] answers, int count) {
         externalStandards.setValues(answers, count);
         setAnsw(externalStandards.getAnsw());

@@ -63,7 +63,7 @@ public class SaveActivity extends Activity {
     }
 
     public void onfinish(View view) {
-        setResult(2);
+        setResult(3);
         finish();
     }
 }

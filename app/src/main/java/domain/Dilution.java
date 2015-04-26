@@ -12,7 +12,7 @@ public class Dilution extends SolutionSet {
 
     public Dilution(Solution solution, boolean flag){
 
-        super("Dilution");
+        super("Single Dilution");
 
         this.solution = solution;
 
@@ -30,7 +30,7 @@ public class Dilution extends SolutionSet {
 
         super.setQUESTIONS(questions);
         super.setANSWERS(answers);
-        isSerial(flag);
+        if(flag) super.setNAME("Serial Dilution");
     }
 
     @Override
@@ -53,6 +53,14 @@ public class Dilution extends SolutionSet {
         if(count == 5)
             return solution.getCompare(count);
         return dilutionMolarity;
+    }
+
+    public String getDialog() {
+        return "Would you like to create another dilution?";
+    }
+
+    public int getRestart() {
+        return 6;
     }
 
     public void setValues(Answer[] answers, int count) {
@@ -105,16 +113,5 @@ public class Dilution extends SolutionSet {
 
     public void setDilutionMolarity(double dilutionMolarity) {
         this.dilutionMolarity = dilutionMolarity;
-    }
-
-    private boolean isSerial(boolean flag){
-        if (flag) {
-            String[] newQuestions = super.concat(this.getQUESTIONS(), new String[]{"Would you like to dilute again?"});
-            Answer[] newAnswers = super.concatAnsw(this.getANSWERS(), new Answer[]{new Answer("boolean", false)});
-            this.setQUESTIONS(newQuestions);
-            this.setANSWERS(newAnswers);
-            return flag;
-        }
-        return flag;
     }
 }

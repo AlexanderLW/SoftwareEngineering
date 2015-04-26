@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,8 +48,8 @@ public class ViewSavedActivity extends ActionBarActivity {
             adapter.add(card);
         }
 
-
         solutions.setAdapter(adapter);
+
         builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.remove_all_dialog_message)
 

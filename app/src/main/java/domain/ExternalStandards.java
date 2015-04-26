@@ -55,6 +55,14 @@ public class ExternalStandards extends SolutionSet {
         return standardMolarity;
     }
 
+    public String getDialog() {
+        return "Would you like to create another external standard?";
+    }
+
+    public int getRestart() {
+        return 6;
+    }
+
     public void setValues(Answer[] answers, int count) {
         solution.setValues(answers, count);
         setAnsw(solution.getAnsw());

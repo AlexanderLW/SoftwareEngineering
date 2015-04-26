@@ -1,6 +1,8 @@
 package com.example.softwareengineering.softwareengineering;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -20,12 +22,15 @@ import domain.StandardAddition;
 
 
 public class QuestionsActivity extends Activity {
-    int count = 0, current = 0, trys = 0;
-    boolean file = false, correct = false;
+    int count = 0, trys = 0;
+    boolean file = false, repeat = false, correct = false;
     int id;
     SolutionSet soluType;
     String[] data;
     Solution sol;
+
+    private AlertDialog.Builder builder;
+    private AlertDialog removeAllDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +51,12 @@ public class QuestionsActivity extends Activity {
         Bundle type = getIntent().getExtras();
         if(type != null) {
             this.id = type.getInt("id");
+            if(id > 1) repeat = true;
             this.file = type.getBoolean("file");
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
+                count = 6;
             }
             createSolutionType();
             text.setText(soluType.getQuestion(count));
@@ -59,9 +66,35 @@ public class QuestionsActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final TextView text = (TextView) findViewById(R.id.text);
+        final EditText answer = (EditText) findViewById(R.id.answer);
+
         if(resultCode==2){
-            finish();
+            if(repeat) {
+                builder = new AlertDialog.Builder(this);
+                builder.setMessage(soluType.getDialog())
+
+                        // Set the action buttons
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                count = soluType.getRestart();
+                                soluType.eraseAnswers(count);
+                                setEdit(answer, soluType.getAnswerValue(count));
+                                text.setText(soluType.getQuestion(count));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                            }
+                        });
+                removeAllDialog = builder.create();
+                removeAllDialog.show();
+            }
         }
+        else if(resultCode == 3) finish();
     }
 
     public void onPrevious(View view) {
@@ -149,23 +182,18 @@ public class QuestionsActivity extends Activity {
             switch (id) {
                 case 1:
                     soluType = new Dilution(sol, false);
-                    count = 6;
                     break;
                 case 2:
                     soluType = new Dilution(sol, true);
-                    count = 6;
                     break;
                 case 3:
                     soluType = new ExternalStandards(sol);
-                    count = 6;
                     break;
                 case 4:
                     soluType = new InternalStandards(new ExternalStandards(sol), new Solution());
-                    count = 6;
                     break;
                 case 5:
                     soluType = new StandardAddition(new ExternalStandards(sol), new Solution());
-                    count = 6;
                     break;
             }
         } else {
@@ -187,7 +215,6 @@ public class QuestionsActivity extends Activity {
                     break;
                 case 5:
                     soluType = new StandardAddition(new ExternalStandards(new Solution("stock solution")), new Solution("standard"));
-                    count = 6;
                     break;
             }
         }

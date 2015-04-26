@@ -18,8 +18,8 @@ public abstract class SolutionSet {
     private String[] DATA = {};
 
     public static final String[] SOLUTIONTYPES = {
-      "Solution",
-      "Dilution",
+      "Single Solution",
+      "Single Dilution",
       "Serial Dilution",
       "External Standards",
       "Internal Standards",
@@ -73,6 +73,12 @@ public abstract class SolutionSet {
         return ANSWERS;
     }
 
+    public void eraseAnswers(int j) {
+        for(int i = j; i < ANSWERS.length; i++) {
+            ANSWERS[i].setVALUE(null);
+        }
+    }
+
     public Answer[] concatAnsw(Answer[] a, Answer[] b) {
         int aLen = a.length;
         int bLen = b.length;
@@ -103,6 +109,10 @@ public abstract class SolutionSet {
     public abstract void setValues(Answer[] answers, int count);
 
     public abstract double getCompare(int count);
+
+    public abstract String getDialog();
+
+    public abstract int getRestart();
 
     public String[] getDETAILS() {
         return DETAILS;

@@ -138,6 +138,14 @@ public class Solution extends SolutionSet {
         return solMass;
     }
 
+    public String getDialog() {
+        return "Would you like to add another solute?";
+    }
+
+    public int getRestart() {
+        return 2;
+    }
+
     public void setValues(Answer[] answers, int count) {
         for(int i = 0; i < answers.length; i++) {
             switch(i) {
