@@ -20,7 +20,6 @@ import domain.Solution;
 import domain.SolutionSet;
 import domain.StandardAddition;
 
-
 public class QuestionsActivity extends Activity {
     int count = 0, trys = 0;
     boolean file = false, repeat = false, correct = false;
@@ -93,6 +92,7 @@ public class QuestionsActivity extends Activity {
                 repeatDialog = builder.create();
                 repeatDialog.show();
             }
+            else finish();
         }
         else if(resultCode == 3) finish();
     }
