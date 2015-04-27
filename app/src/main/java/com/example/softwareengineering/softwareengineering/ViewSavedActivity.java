@@ -50,8 +50,6 @@ public class ViewSavedActivity extends ActionBarActivity {
 
         solutions.setAdapter(adapter);
 
-
-
         solutions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -59,8 +57,6 @@ public class ViewSavedActivity extends ActionBarActivity {
                 dialog.show();
             }
         });
-
-
     }
 
     @Override
