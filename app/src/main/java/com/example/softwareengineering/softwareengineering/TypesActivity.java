@@ -28,7 +28,7 @@ public class TypesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
 

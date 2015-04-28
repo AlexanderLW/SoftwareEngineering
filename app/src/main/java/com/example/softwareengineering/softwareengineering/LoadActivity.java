@@ -19,7 +19,7 @@ public class LoadActivity extends Activity {
 
         appContext = getApplicationContext();
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
         TextView myYesButton = (TextView) findViewById(R.id.yes);

@@ -22,7 +22,7 @@ public class TypeAdapter extends ArrayAdapter<String> {
     public TypeAdapter(Context context, String[] values){
         super(context, R.layout.solution_types_listitem, values);
         AssetManager assets = context.getAssets();
-        myTypeface = Typeface.createFromAsset(assets, "fonts/DK Cool Crayon.ttf");
+        myTypeface = Typeface.createFromAsset(assets, "fonts/KGTenThousandReasons.ttf");
     }
 
     @Override

@@ -23,7 +23,7 @@ public class SaveActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
 
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/DK Cool Crayon.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.show);
         text.setTypeface(myTypeface);
         TextView text2 = (TextView) findViewById(R.id.summary);
