@@ -115,9 +115,10 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
         soluType.setAnswerValue(count, answer.getText().toString());
-        if(answer.getText().toString().trim().equals("")) {
+        if(answer.getText().toString().trim().equals(""))
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
-        }
+        else if(answer.getText().toString().trim().equals("0") || answer.getText().toString().trim().equals("."))
+            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getANSWERS()[count].getCHECK()) {
             compute();
             check();
