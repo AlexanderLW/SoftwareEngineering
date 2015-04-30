@@ -17,7 +17,6 @@ public class Solution extends SolutionSet {
     public Solution(){
         super("Solution");
         String[] questions = {
-
             "What is the volume of the solution you are preparing? (in mL)",
             "What is the solvent you are using?",
             "What is the solute?",
@@ -41,9 +40,7 @@ public class Solution extends SolutionSet {
 
     public Solution(String type) {
         super(type);
-
         String[] questions = {
-
                 "What is the volume of the " + type + " you are preparing? (in mL)",
                 "What is the solvent you are using?",
                 "What is the solute?",
@@ -150,7 +147,7 @@ public class Solution extends SolutionSet {
         for(int i = 0; i < answers.length; i++) {
             switch(i) {
                 case 0:
-                    setVolFlask(Double.parseDouble(answers[i].getVALUE())/100);
+                    setVolFlask(Double.parseDouble(answers[i].getVALUE())/1000);
                     break;
                 case 1:
                     setSolvent(answers[i].getVALUE());
@@ -234,5 +231,4 @@ public class Solution extends SolutionSet {
     public void setSolMol(double solMol) {
         this.solMol = solMol;
     }
-
 }
