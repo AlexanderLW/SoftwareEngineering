@@ -31,6 +31,7 @@ public class LoadActivity extends Activity {
 
         if(type != null) {
             this.id = type.getInt("id");
+            changeHeader();
         }
     }
 
@@ -54,5 +55,26 @@ public class LoadActivity extends Activity {
         nextScreen.putExtra("file", false);
         startActivity(nextScreen);
         finish();
+    }
+
+    public void changeHeader() {
+        TextView head = (TextView) findViewById(R.id.text);
+        switch (id) {
+            case 1:
+                head.setText("Creating a dilution requires an existing stock solution, would you like to make a new one or load one that is saved?");
+                break;
+            case 2:
+                head.setText("Creating serial dilutions requires an existing stock solution, would you like to make a new one or load one that is saved?");
+                break;
+            case 3:
+                head.setText("Creating a set of external standards requires an existing stock analyte solution, would you like to make a new one or load one that is saved?");
+                break;
+            case 4:
+                head.setText("Creating a set of internal standards requires an existing stock analyte solution, would you like to make a new one or load one that is saved?");
+                break;
+            case 5:
+                head.setText("Creating a set of standards using the standard addition method requires an existing stock analyte solution, would you like to make a new one or load one that is saved?");
+                break;
+        }
     }
 }

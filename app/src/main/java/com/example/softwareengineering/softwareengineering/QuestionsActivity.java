@@ -37,6 +37,10 @@ public class QuestionsActivity extends Activity {
         setContentView(R.layout.activity_solution_questions);
 
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
+        TextView head = (TextView) findViewById(R.id.header);
+        head.setTypeface(myTypeface);
+        TextView head2 = (TextView) findViewById(R.id.subheader);
+        head2.setTypeface(myTypeface);
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
         EditText answer = (EditText) findViewById(R.id.answer);
@@ -63,6 +67,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
+    //needs work 2
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final TextView text = (TextView) findViewById(R.id.text);
@@ -108,9 +113,12 @@ public class QuestionsActivity extends Activity {
             count--;
             setEdit(answer, soluType.getAnswerValue(count));
             text.setText(soluType.getQuestion(count));
+            changeHeader();
+            changeSubHeader();
         }
     }
 
+    //needs work 2
     public void onContinue(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
@@ -134,6 +142,8 @@ public class QuestionsActivity extends Activity {
                 count++;
                 setEdit(answer, soluType.getAnswerValue(count));
                 text.setText(soluType.getQuestion(count));
+                changeHeader();
+                changeSubHeader();
             }
             trys = 0;
             correct = false;
@@ -219,5 +229,34 @@ public class QuestionsActivity extends Activity {
                     break;
             }
         }
+    }
+
+    public void changeHeader() {
+        TextView head = (TextView) findViewById(R.id.header);
+        switch (id) {
+            case 0:
+                head.setText("Creating Solution");
+                break;
+            case 1:
+                head.setText("Creating Dilution");
+                break;
+            case 2:
+                head.setText("Creating Serial Dilutions");
+                break;
+            case 3:
+                head.setText("Creating External Standards");
+                break;
+            case 4:
+                head.setText("Creating Internal Standards");
+                break;
+            case 5:
+                head.setText("Creating Standard Using Standard Addition Method");
+                break;
+        }
+    }
+
+    public void changeSubHeader() {
+        TextView head2 = (TextView) findViewById(R.id.subheader);
+        head2.setText("Step " + (count + 1) + ":");
     }
 }

@@ -9,7 +9,7 @@
     tools:context="com.example.softwareengineering.softwareengineering.LoadActivity"
     android:background="@drawable/chalkboard" >
 
-    <TextView android:text="Creating this requires an existing solution, would you like to make a new one or load one that is saved?"
+    <TextView android:text="Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text"
