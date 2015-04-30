@@ -70,10 +70,10 @@ public class ExternalStandards extends SolutionSet {
             for (int i = 6; i < answers.length; i++) {
                 switch (i) {
                     case 6:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 100);
+                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 7:
-                        setStockSolVol(Double.parseDouble(answers[i].getVALUE()) / 100);
+                        setStockSolVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 8:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()));

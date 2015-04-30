@@ -67,10 +67,10 @@ public class InternalStandards extends SolutionSet {
             for (int i = 9; i < answers.length; i++) {
                 switch (i) {
                     case 9:
-                        setStandardSolVol(Double.parseDouble(answers[i].getVALUE()) / 100);
+                        setStandardSolVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 10:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 100);
+                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                 }
             }
