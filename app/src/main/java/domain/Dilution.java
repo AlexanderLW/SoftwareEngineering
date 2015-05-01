@@ -22,7 +22,7 @@ public class Dilution extends SolutionSet {
                 "What is the molarity of the new dilution?"
         });
 
-        Answer[] answers = super.concatAnsw(solution.getANSWERS(), new Answer[]{
+        Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
                 new Answer("double", false),
                 new Answer("double", false),
                 new Answer("double", true)

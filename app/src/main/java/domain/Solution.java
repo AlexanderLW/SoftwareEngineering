@@ -39,13 +39,13 @@ public class Solution extends SolutionSet {
     }
 
     public Solution(String type) {
-        super(type);
+        super("Solution");
         String[] questions = {
                 "What is the volume of the " + type + " you are preparing? (in mL)",
                 "What is the solvent you are using?",
                 "What is the solute?",
                 "What is the molecular weight(g/mol) of your solute?",
-                "What is the molarity of the solution?",
+                "What is the molarity of the " + type + "?",
                 "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
         };
 
@@ -65,7 +65,6 @@ public class Solution extends SolutionSet {
     public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
         super(type,
                 new String[] {
-
                         "What is the volume of the solution you are preparing? (in mL)",
                         "What is the solvent you are using?",
                         "What is the solute?",
@@ -91,7 +90,7 @@ public class Solution extends SolutionSet {
     public Solution(String[] data) {
         super("Solution",
                 new String[] {
-                        "What is the volume of the solution you are preparing? (in mL)",
+                        "What is the volume of the stock solution you are preparing? (in mL)",
                         "What is the solvent you are using?",
                         "What is the solute?",
                         "What is the molecular weight(g/mol) of your solute?",
@@ -99,7 +98,7 @@ public class Solution extends SolutionSet {
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
-                        new Answer("double", false, String.valueOf(Double.valueOf(data[0])*100)),
+                        new Answer("double", false, String.valueOf(Double.valueOf(data[0])*1000)),
                         new Answer("String", false, data[1]),
                         new Answer("String", false, data[2]),
                         new Answer("double", false, data[3]),

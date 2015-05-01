@@ -64,6 +64,8 @@ public class QuestionsActivity extends Activity {
             createSolutionType();
             text.setText(soluType.getQuestion(count));
             setEdit(answer, "");
+            changeHeader();
+            changeSubHeader();
         }
     }
 
@@ -201,10 +203,10 @@ public class QuestionsActivity extends Activity {
                     soluType = new ExternalStandards(sol);
                     break;
                 case 4:
-                    soluType = new InternalStandards(new ExternalStandards(sol), new Solution());
+                    soluType = new InternalStandards(sol, new Solution("internal standard"));
                     break;
                 case 5:
-                    soluType = new StandardAddition(new ExternalStandards(sol), new Solution());
+                    soluType = new StandardAddition(sol, new Solution("internal standard"));
                     break;
             }
         } else {
@@ -219,13 +221,13 @@ public class QuestionsActivity extends Activity {
                     soluType = new Dilution(new Solution("stock solution"), true);
                     break;
                 case 3:
-                    soluType = new ExternalStandards(new Solution("stock solution"));
+                    soluType = new ExternalStandards(new Solution("stock analyte solution"));
                     break;
                 case 4:
-                    soluType = new InternalStandards(new ExternalStandards(new Solution("stock solution")), new Solution("internal standard"));
+                    soluType = new InternalStandards(new Solution("stock analyte solution"), new Solution("internal standard"));
                     break;
                 case 5:
-                    soluType = new StandardAddition(new ExternalStandards(new Solution("stock solution")), new Solution("standard"));
+                    soluType = new StandardAddition(new Solution("stock analyte solution"), new Solution("internal standard"));
                     break;
             }
         }

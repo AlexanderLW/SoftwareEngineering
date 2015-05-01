@@ -44,7 +44,7 @@
         android:inputType="text"
         android:layout_width="186dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/answer"
         android:textColor="@color/white" />
@@ -61,8 +61,6 @@
             android:layout_height="wrap_content"
             android:onClick="onPrevious"
             android:id="@+id/prev"
-            android:textColor="@color/white"
-            android:background="#f9393939"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -71,8 +69,6 @@
             android:layout_height="wrap_content"
             android:onClick="onContinue"
             android:id="@+id/cont"
-            android:textColor="@color/white"
-            android:background="#f9393939"
             android:layout_marginLeft="5dp" />
     </LinearLayout>
 </LinearLayout>

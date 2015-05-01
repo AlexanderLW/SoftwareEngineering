@@ -47,14 +47,20 @@ public class SolutionsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 data = mDbHelper.getSolutionData(position + 1);
-                Intent nextScreen = new Intent(SolutionsActivity.this, QuestionsActivity.class);
+                Intent nextScreen = new Intent(SolutionsActivity.this, DetailsActivity.class);
                 nextScreen.putExtra("id", ids);
                 nextScreen.putExtra("file", true);
                 nextScreen.putExtra("data", data);
-                startActivity(nextScreen);
-                setResult(2);
-                finish();
+                startActivityForResult(nextScreen, 0);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==2){
+            setResult(2);
+            finish();
+        }
     }
 }

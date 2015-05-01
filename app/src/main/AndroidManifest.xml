@@ -21,7 +21,6 @@
             android:label="@string/title_activity_solution_types"
             android:theme="@style/AppTheme" >
         </activity>
-
         <activity
             android:name=".QuestionsActivity"
             android:label="@string/title_activity_solution_questions"
@@ -42,7 +41,12 @@
         <activity
             android:name=".ViewSavedActivity"
             android:label="@string/title_activity_view_solutions"
-                android:parentActivityName=".TypesActivity">
+            android:parentActivityName=".TypesActivity" >
+        </activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/title_activity_details" >
         </activity>
     </application>
+
 </manifest>

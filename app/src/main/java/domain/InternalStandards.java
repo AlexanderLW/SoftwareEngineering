@@ -5,27 +5,35 @@ package domain;
  */
 public class InternalStandards extends SolutionSet {
 
-    Solution solution;
-    ExternalStandards externalStandards;
-    private double standardSolVol;
+    Solution internalStandard, analyte;
     private double standardVol = 0.0;
+    private double standardVolT = 0.0;
     private double standardMolarity = 0.0;
+    private double analyteVolT = 0.0;
+    private double analyteMolarity = 0.0;
 
-    public InternalStandards(ExternalStandards externalStandards, Solution solution){
+    public InternalStandards(Solution analyte, Solution internalStandard){
         super("Internal Standards");
 
-        this.solution = solution;
-        this.externalStandards = externalStandards;
+        this.analyte = analyte;
+        this.internalStandard = internalStandard;
 
-        String[] questions = super.concat(externalStandards.getQUESTIONS(), solution.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
         questions = super.concat(questions, new String[]{
-                "What is the volume of the internal standard that you are transferring? (in mL)",
-                "What is the molarity of the internal standard in the standard? (round to the 2nd Decimal)"
+                "What is the volume of the new standard? (in mL)",
+                "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
+                "What is the molarity of the internal standard in the new standard? (round to the 2nd Decimal)",
+                "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
+                "What is the molarity of the stock analyte in the new standard? (round to the 2nd Decimal)"
         } );
 
-        Answer[] answers = super.concatAnsw(externalStandards.getANSWERS(), new Answer[]{
+        Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
+        answers = super.concat(answers, new Answer[]{
+                new Answer("double", false),
                 new Answer("double", false),
                 new Answer("double", true),
+                new Answer("double", false),
+                new Answer("double", true)
         });
 
         super.setQUESTIONS(questions);
@@ -34,14 +42,21 @@ public class InternalStandards extends SolutionSet {
 
     @Override
     public void compute(int count) {
-        if(count <= 8) {
-            externalStandards.setANSWERS(getANSWERS());
-            externalStandards.compute(count);
+        if(count == 5) {
+            analyte.setANSWERS(getANSWERS());
+            analyte.compute(count);
+        }
+        if(count == 11){
+            internalStandard.setANSWERS(getANSWERS());
+            internalStandard.compute(count);
+        }
+        if(count == 14) {
+            calcStandardMolarity(internalStandard.getSolMolarity(), standardVolT, standardVol);
         }
         else {
-            calcMolarity(externalStandards.getSolution().getSolMolarity(), standardSolVol, externalStandards.getStandardVol());
+            calcAnalyteMolarity(analyte.getSolMolarity(), analyteVolT, standardVol);
 
-            Solution newSolution = new Solution("Internal Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
+            Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
             setDETAILS(newSolution.getDETAILS());
             setDATA(newSolution.getDATA());
@@ -53,40 +68,53 @@ public class InternalStandards extends SolutionSet {
     }
 
     public String getDialog() {
-        return "Would you like to create another internal standard?";
+        return "Would you like to create another standard?";
     }
 
     public int getRestart() {
-        return 6;
+        return 18;
     }
 
     public void setValues(Answer[] answers, int count) {
-        externalStandards.setValues(answers, count);
-        setAnsw(externalStandards.getAnsw());
-        if(count == 9) {
+        analyte.setValues(answers, count);
+        setAnsw(analyte.getAnsw());
+        if(count == 11) {
+            internalStandard.setValues(answers, count);
+            setAnsw(internalStandard.getAnsw());
+        }
+        else if (count == 14) {
+            for(int i = 14; i < 17; i++) {
+                switch(i) {
+                    case 14:
+                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        break;
+                    case 15:
+                        setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        break;
+                    case 16:
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        break;
+                }
+            }
+        }
+        else if(count == 17) {
             for (int i = 9; i < answers.length; i++) {
                 switch (i) {
-                    case 9:
-                        setStandardSolVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        break;
+                    case 17:
+                        setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
                     case 10:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                 }
             }
         }
     }
 
-    public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = solutionMolarity * (volTran/vol);
+    public void calcStandardMolarity(double solutionMolarity, double volTran, double vol) {
+        standardMolarity = solutionMolarity * (volTran / vol);
     }
-
-    public double getStandardSolVol() {
-        return standardSolVol;
-    }
-
-    public void setStandardSolVol(double standardSolVol) {
-        this.standardSolVol = standardSolVol;
+    public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
+        analyteMolarity = solutionMolarity * (volTran/vol);
     }
 
     public double getStandardVol() {
@@ -97,11 +125,35 @@ public class InternalStandards extends SolutionSet {
         this.standardVol = standardVol;
     }
 
+    public double getStandardVolT() {
+        return standardVolT;
+    }
+
+    public void setStandardVolT(double standardVolT) {
+        this.standardVolT = standardVolT;
+    }
+
     public double getStandardMolarity() {
         return standardMolarity;
     }
 
     public void setStandardMolarity(double standardMolarity) {
         this.standardMolarity = standardMolarity;
+    }
+
+    public double getAnalyteVolT() {
+        return analyteVolT;
+    }
+
+    public void setAnalyteVolT(double analyteVolT) {
+        this.analyteVolT = analyteVolT;
+    }
+
+    public double getAnalyteMolarity() {
+        return analyteMolarity;
+    }
+
+    public void setAnalyteMolarity(double analyteMolarity) {
+        this.analyteMolarity = analyteMolarity;
     }
 }

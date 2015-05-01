@@ -79,7 +79,7 @@ public abstract class SolutionSet {
         }
     }
 
-    public Answer[] concatAnsw(Answer[] a, Answer[] b) {
+    public Answer[] concat(Answer[] a, Answer[] b) {
         int aLen = a.length;
         int bLen = b.length;
         Answer[] c= new Answer[aLen+bLen];
