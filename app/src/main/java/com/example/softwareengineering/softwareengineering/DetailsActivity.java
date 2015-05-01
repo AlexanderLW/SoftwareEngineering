@@ -36,7 +36,7 @@ public class DetailsActivity extends Activity {
         }
 
         String[] details = {
-                "The Volume of the solution is: " + Double.parseDouble(data[0])/1000 + "mL",
+                "The Volume of the solution is: " + Double.parseDouble(data[0])*1000 + "mL",
                 "The solvent in the solution is: " + data[1],
                 "The solute in the solution is:: " + data[2],
                 "The molecular weight of the " + data[2] + " is: " + data[3] + "g/mol",
