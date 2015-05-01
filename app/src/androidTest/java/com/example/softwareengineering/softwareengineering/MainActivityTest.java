@@ -1,6 +1,8 @@
-package com.example.softwareengineering.softwareengineering.tests;
+package com.example.softwareengineering.softwareengineering;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.LargeTest;
+import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
 import com.example.softwareengineering.softwareengineering.MainActivity;
@@ -31,6 +33,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
                 (Button) getActivity()
                         .findViewById(R.id.begin);
         Assert.assertNotNull(beginButton);
+    }
+
+
+    @LargeTest
+    public void testSavedSolutionSequence(){
+        testBeginButtonNotNull();
+
+
+
     }
 
     @Override
