@@ -107,6 +107,7 @@ public class Solution extends SolutionSet {
                         new Answer("double", false, data[4]),
                         new Answer("double", true, data[6])
                 });
+        setValues(getANSWERS(), 5);
     }
 
     @Override
