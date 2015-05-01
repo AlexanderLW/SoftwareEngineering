@@ -65,12 +65,12 @@ public class Solution extends SolutionSet {
     public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
         super(type,
                 new String[] {
-                        "What is the volume of the solution you are preparing? (in mL)",
-                        "What is the solvent you are using?",
-                        "What is the solute?",
-                        "What is the molecular weight(g/mol) of your solute?",
-                        "What is the molarity of the solution?",
-                        "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
+                        "Change the vol of the last Dilution? (in mL)",
+                        "Change the solvent?",
+                        "Change the solute?",
+                        "Change the molecular weight(g/mol) of your solute?",
+                        "Change the molarity of the solution?",
+                        "Change the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
                         new Answer("double", false, String.valueOf(volFlask)),
@@ -85,6 +85,10 @@ public class Solution extends SolutionSet {
         setSolute(solute);
         setSoluteMolWeight(soluteMolWeight);
         setSolMolarity(solMolarity);
+        calcMol(solMolarity, volFlask);
+        calcMass(solMol, soluteMolWeight);
+
+        setAnswerValue(5, String.valueOf(solMass));
     }
 
     public Solution(String[] data) {
@@ -134,6 +138,10 @@ public class Solution extends SolutionSet {
         return solMass;
     }
 
+    public double getCompare2() {
+        return volFlask;
+    }
+
     public String getDialog() {
         return "Would you like to add another solute?";
     }
@@ -143,7 +151,7 @@ public class Solution extends SolutionSet {
     }
 
     public void setValues(Answer[] answers, int count) {
-        for(int i = 0; i < answers.length; i++) {
+        for(int i = 0; i <= count; i++) {
             switch(i) {
                 case 0:
                     setVolFlask(Double.parseDouble(answers[i].getVALUE())/1000);

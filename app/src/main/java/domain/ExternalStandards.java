@@ -7,7 +7,7 @@ public class ExternalStandards extends SolutionSet {
 
     private Solution solution;
     private double standardVol = 0.0;
-    private double stockSolVol = 0.0;
+    private double stockVolT = 0.0;
     private double standardMolarity = 0.0;
     private boolean anotherStandard = false;
 
@@ -25,7 +25,7 @@ public class ExternalStandards extends SolutionSet {
 
         Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
                 new Answer("double", false),
-                new Answer("double", false),
+                new Answer("double", true, true),
                 new Answer("double", true)
         });
 
@@ -40,7 +40,7 @@ public class ExternalStandards extends SolutionSet {
             solution.compute(count);
         }
         else {
-            calcMolarity(solution.getSolMolarity(), stockSolVol, standardVol);
+            calcMolarity(solution.getSolMolarity(), stockVolT, standardVol);
 
             Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
@@ -52,7 +52,13 @@ public class ExternalStandards extends SolutionSet {
     public double getCompare(int count){
         if(count == 5)
             return solution.getCompare(count);
+        else if(count == 7)
+            return solution.getVolFlask();
         return standardMolarity;
+    }
+
+    public double getCompare2(int count) {
+        return standardVol;
     }
 
     public String getDialog() {
@@ -66,14 +72,15 @@ public class ExternalStandards extends SolutionSet {
     public void setValues(Answer[] answers, int count) {
         solution.setValues(answers, count);
         setAnsw(solution.getAnsw());
-        if(count == 8) {
-            for (int i = 6; i < answers.length; i++) {
+        if(count <= 8) {
+            for (int i = 6; i <= count; i++) {
                 switch (i) {
                     case 6:
                         setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 7:
-                        setStockSolVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStockVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 8:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()));
@@ -103,12 +110,12 @@ public class ExternalStandards extends SolutionSet {
         this.standardVol = standardVol;
     }
 
-    public double getStockSolVol() {
-        return stockSolVol;
+    public double getStockVolT() {
+        return stockVolT;
     }
 
-    public void setStockSolVol(double stockSolVol) {
-        this.stockSolVol = stockSolVol;
+    public void setStockVolT(double stockVolT) {
+        this.stockVolT = stockVolT;
     }
 
     public double getStandardMolarity() {

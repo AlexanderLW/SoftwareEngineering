@@ -125,12 +125,9 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
         soluType.setAnswerValue(count, answer.getText().toString());
-        if(answer.getText().toString().trim().equals(""))
-            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
-        else if(answer.getText().toString().trim().equals("0") || answer.getText().toString().trim().equals("."))
+        if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals(".")||Double.parseDouble(answer.getText().toString().trim()) == 0)
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getANSWERS()[count].getCHECK()) {
-            compute();
             check();
         }
         else {
@@ -162,23 +159,32 @@ public class QuestionsActivity extends Activity {
     }
 
     public void check() {
-        if(trys < 3 && soluType.getCompare(count) != soluType.getAnsw()) {
-            Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
-            trys++;
-        }
-        else if(soluType.getCompare(count) == soluType.getAnsw()) {
-            Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-            correct = true;
+        soluType.setValues(soluType.getANSWERS(), count);
+        if(soluType.getANSWERS()[count].getTRANSFER()) {
+            if(soluType.getAnsw() > soluType.getCompare(count))
+                Toast.makeText(QuestionsActivity.this, "Cannot transfer more than you have", Toast.LENGTH_SHORT).show();
+            else if(soluType.getAnsw() > soluType.getCompare2())
+                Toast.makeText(QuestionsActivity.this, "Need a bigger flask", Toast.LENGTH_SHORT).show();
+            else
+                correct = true;
         }
         else {
-            Toast.makeText(QuestionsActivity.this, "Incorrect the correct answer is: " + soluType.getCompare(count), Toast.LENGTH_SHORT).show();
-            soluType.setAnswerValue(count, String.valueOf(soluType.getCompare(count)));
-            correct = true;
+            compute();
+            if (trys < 3 && soluType.getCompare(count) != soluType.getAnsw()) {
+                Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
+                trys++;
+            } else if (soluType.getCompare(count) == soluType.getAnsw()) {
+                Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                correct = true;
+            } else {
+                Toast.makeText(QuestionsActivity.this, "Incorrect the correct answer is: " + soluType.getCompare(count), Toast.LENGTH_SHORT).show();
+                soluType.setAnswerValue(count, String.valueOf(soluType.getCompare(count)));
+                correct = true;
+            }
         }
     }
 
     public void compute() {
-        soluType.setValues(soluType.getANSWERS(), count);
         soluType.compute(count);
     }
 

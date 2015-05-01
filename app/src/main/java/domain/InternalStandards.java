@@ -30,9 +30,9 @@ public class InternalStandards extends SolutionSet {
         Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
         answers = super.concat(answers, new Answer[]{
                 new Answer("double", false),
-                new Answer("double", false),
+                new Answer("double", true, true),
                 new Answer("double", true),
-                new Answer("double", false),
+                new Answer("double", true, true),
                 new Answer("double", true)
         });
 
@@ -64,7 +64,21 @@ public class InternalStandards extends SolutionSet {
     }
 
     public double getCompare(int count){
-        return standardMolarity;
+        if(count == 5)
+            return analyte.getCompare(count);
+        else if(count == 11)
+            return internalStandard.getCompare(count);
+        else if(count == 13)
+            return internalStandard.getCompare2();
+        else if(count == 14)
+            return standardMolarity;
+        else if(count == 17)
+            return analyte.getCompare2();
+        return analyteMolarity;
+    }
+
+    public double getCompare2() {
+        return standardVol;
     }
 
     public String getDialog() {
@@ -78,31 +92,28 @@ public class InternalStandards extends SolutionSet {
     public void setValues(Answer[] answers, int count) {
         analyte.setValues(answers, count);
         setAnsw(analyte.getAnsw());
-        if(count == 11) {
+        if(count <= 11) {
             internalStandard.setValues(answers, count);
             setAnsw(internalStandard.getAnsw());
         }
-        else if (count == 14) {
-            for(int i = 14; i < 17; i++) {
+        else {
+            for(int i = 12; i <= count; i++) {
                 switch(i) {
-                    case 14:
+                    case 12:
                         setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
-                    case 15:
+                    case 13:
                         setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        break;
-                    case 16:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
-                }
-            }
-        }
-        else if(count == 17) {
-            for (int i = 9; i < answers.length; i++) {
-                switch (i) {
+                    case 14:
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        break;
                     case 17:
                         setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                    case 10:
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        break;
+                    case 18:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                 }

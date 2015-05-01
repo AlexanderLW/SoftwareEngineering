@@ -5,11 +5,17 @@ package domain;
  */
 public class Answer {
     String TYPE, VALUE;
-    boolean CHECK;
+    boolean CHECK, TRANSFER = false;
 
     public Answer(String type, boolean check) {
         setTYPE(type);
         setCHECK(check);
+    }
+
+    public Answer(String type, boolean check, boolean transfer) {
+        setTYPE(type);
+        setCHECK(check);
+        setTRANSFER(transfer);
     }
 
     public Answer(String type, boolean check, String value) {
@@ -40,5 +46,13 @@ public class Answer {
 
     public void setCHECK(boolean CHECK) {
         this.CHECK = CHECK;
+    }
+
+    public boolean getTRANSFER() {
+        return TRANSFER;
+    }
+
+    public void setTRANSFER(boolean TRANSFER) {
+        this.TRANSFER = TRANSFER;
     }
 }

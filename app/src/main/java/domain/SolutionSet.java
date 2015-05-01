@@ -110,6 +110,8 @@ public abstract class SolutionSet {
 
     public abstract double getCompare(int count);
 
+    public abstract double getCompare2();
+
     public abstract String getDialog();
 
     public abstract int getRestart();
