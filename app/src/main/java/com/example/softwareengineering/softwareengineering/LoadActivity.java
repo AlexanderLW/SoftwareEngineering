@@ -12,13 +12,14 @@ import android.widget.TextView;
 public class LoadActivity extends Activity {
     int id;
     static Context appContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        appContext = getApplicationContext();
-
+        //appContext = getApplicationContext();
+        //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
@@ -27,14 +28,15 @@ public class LoadActivity extends Activity {
         TextView myNoButton = (TextView) findViewById(R.id.no);
         myNoButton.setTypeface(myTypeface);
 
+        //gets what was passed from previous screen, assigns it, and changes header according to id
         Bundle type = getIntent().getExtras();
-
         if(type != null) {
             this.id = type.getInt("id");
             changeHeader();
         }
     }
 
+    //closes activity under certain circumstances from next activities
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==2){
@@ -42,6 +44,7 @@ public class LoadActivity extends Activity {
         }
     }
 
+    //on yes button click passes info along to and loads next activity
     public void onYes(View view) {
         Intent nextScreen = new Intent(LoadActivity.this, SolutionsActivity.class);
         nextScreen.putExtra("id", id);
@@ -49,6 +52,7 @@ public class LoadActivity extends Activity {
         startActivityForResult(nextScreen, 1);
     }
 
+    //on no button click passes info along to and loads next activity
     public void onNo(View view) {
         Intent nextScreen = new Intent(LoadActivity.this, QuestionsActivity.class);
         nextScreen.putExtra("id", id);
@@ -57,6 +61,7 @@ public class LoadActivity extends Activity {
         finish();
     }
 
+    //method to change header
     public void changeHeader() {
         TextView head = (TextView) findViewById(R.id.text);
         switch (id) {

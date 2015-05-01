@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:onClick="onYes"
             android:id="@+id/yes"
+            android:textColor="@color/white"
             android:layout_marginRight="5dp" />
 
         <Button
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:onClick="onNo"
             android:id="@+id/no"
+            android:textColor="@color/white"
             android:layout_marginLeft="5dp" />
     </LinearLayout>
 </LinearLayout>

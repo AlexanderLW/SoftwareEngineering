@@ -23,6 +23,7 @@ public class SaveActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
 
+        //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.show);
         text.setTypeface(myTypeface);
@@ -36,19 +37,20 @@ public class SaveActivity extends Activity {
         TextView myfinishButton = (TextView) findViewById(R.id.finish);
         myfinishButton.setTypeface(myTypeface);
 
+        //gets what was passed from previous activity and assigns it
         Bundle type = getIntent().getExtras();
         if(type != null) {
             details = type.getStringArray("solutionDetails");
             data = type.getStringArray("solutionData");
 
+            //sets list with details of solution that could be saved
             ListAdapter soluAdapter = new TypeAdapter(this, details);
-
             ListView soluDetails = (ListView) findViewById(R.id.details);
-
             soluDetails.setAdapter(soluAdapter);
         }
     }
 
+    //checks to see if edit text is not empty or default and saves the solution and goes back to last screen
     public void onSave(View view) {
         EditText name = (EditText) findViewById(R.id.soluname);
         if(name.getText().toString().trim().equals("") || name.getText().toString().trim().equals("Enter Solution Name Here")) {
@@ -62,6 +64,7 @@ public class SaveActivity extends Activity {
         }
     }
 
+    //doesn't save solution and goes back to last screen
     public void onfinish(View view) {
         setResult(2);
         finish();

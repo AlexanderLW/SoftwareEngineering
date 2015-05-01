@@ -28,29 +28,32 @@ public class TypesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_types);
 
+        //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.text);
         text.setTypeface(myTypeface);
 
+        //adds action bar support
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //adapter for the list view
         ListAdapter soluAdapter = new TypeAdapter(this, SolutionSet.SOLUTIONTYPES);
-
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
-
         soluTypes.setAdapter(soluAdapter);
 
+        //adds onclics for the items in the list view
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                //if clicked goes to the questions if there is nothing saved in the database or solution was selected
                 if(mDbHelper.getCount() == 0 || position == 0) {
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                     nextScreen.putExtra("id", position);
                     nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
+                //if clicked goes to the load functionality
                 else {
                     Intent nextScreen = new Intent(TypesActivity.this, LoadActivity.class);
                     nextScreen.putExtra("id", position);
@@ -103,7 +106,7 @@ public class TypesActivity extends ActionBarActivity {
      * using onOptionItemSelected in menu
      */
     private void openSearch(){
-
+        //expandable functionality for search
     }
 
     private void openCardsList(){
@@ -112,8 +115,7 @@ public class TypesActivity extends ActionBarActivity {
     }
 
     private void setupSearchView(MenuItem searchItem){
-
-
+        //expandable functionality for search
     }
 }
 

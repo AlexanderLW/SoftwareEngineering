@@ -36,6 +36,7 @@ public class QuestionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
 
+        //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView head = (TextView) findViewById(R.id.header);
         head.setTypeface(myTypeface);
@@ -51,17 +52,22 @@ public class QuestionsActivity extends Activity {
         TextView mycontButton = (TextView) findViewById(R.id.cont);
         mycontButton.setTypeface(myTypeface);
 
+        //gets what was passed from previous activity and assigns it
         Bundle type = getIntent().getExtras();
         if(type != null) {
             this.id = type.getInt("id");
+            //sets the questions sequence to repeatable
             if(id > 1) repeat = true;
+            //if a solution was loaded it creates it for creation of the questions
             this.file = type.getBoolean("file");
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
                 count = 6;
             }
+            //creates the correct questions depending on the solution type clicked in types activity
             createSolutionType();
+            //sets all texts fields to the first values
             text.setText(soluType.getQuestion(count));
             setEdit(answer, "");
             changeHeader();
@@ -69,12 +75,12 @@ public class QuestionsActivity extends Activity {
         }
     }
 
-    //needs work 2
+    //listens for the save to close or pop up dialog box to ask if they wnat to repeat
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final TextView text = (TextView) findViewById(R.id.text);
         final EditText answer = (EditText) findViewById(R.id.answer);
-
+        //pops up dialog box if repeatable
         if(resultCode==2){
             if(repeat) {
                 builder = new AlertDialog.Builder(this);
@@ -101,12 +107,13 @@ public class QuestionsActivity extends Activity {
             }
             else finish();
         }
-        else if(resultCode == 3) finish();
     }
 
+    //on previous button click sets the correct data for questions and puts the answer they entered into the edit box so that they can change it
     public void onPrevious(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
+        //if it is the first question then it closes
         if(count == 0) {
             finish();
         }
@@ -120,7 +127,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
-    //needs work 2
+    //on continue it checks to see if input is correct and moves to next questions, if it is the last question then it goes to the save activity
     public void onContinue(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
@@ -151,6 +158,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
+    //method to set the edit text
     public void setEdit(EditText answer, String input) {
         answer.setText(input);
         answer.setSelection(answer.getText().length());
@@ -160,6 +168,7 @@ public class QuestionsActivity extends Activity {
             answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
     }
 
+    //method to check info/answers
     public void check() {
         soluType.setValues(soluType.getANSWERS(), count);
         if(soluType.getANSWERS()[count].getTRANSFER()) {
@@ -186,10 +195,12 @@ public class QuestionsActivity extends Activity {
         }
     }
 
+    //method to compute solutions data
     public void compute() {
         soluType.compute(count);
     }
 
+    //method to continue to save screen
     public void save() {
         compute();
         Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
@@ -198,6 +209,7 @@ public class QuestionsActivity extends Activity {
         startActivityForResult(nextScreen, 1);
     }
 
+    //method to create solution
     public void createSolutionType() {
         if (file) {
             switch (id) {
@@ -241,6 +253,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
+    //method to change header
     public void changeHeader() {
         TextView head = (TextView) findViewById(R.id.header);
         switch (id) {
@@ -265,6 +278,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
+    //method to change subheader
     public void changeSubHeader() {
         TextView head2 = (TextView) findViewById(R.id.subheader);
         head2.setText("Step " + (count + 1) + ":");

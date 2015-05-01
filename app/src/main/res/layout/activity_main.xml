@@ -21,5 +21,6 @@
         android:onClick="onBegin"
         android:layout_marginBottom="57dp"
         android:id="@+id/begin"
+        android:textColor="@color/white"
         android:textSize="15sp" style="@style/AppTheme" android:layout_gravity="center_horizontal" />
 </LinearLayout>

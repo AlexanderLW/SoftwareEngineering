@@ -55,14 +55,16 @@
             android:layout_height="wrap_content"
             android:onClick="onSave"
             android:id="@+id/save"
+            android:textColor="@color/white"
             android:layout_marginRight="5dp" />
 
         <Button
-            android:text="Finish"
+            android:text="Don't Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onfinish"
             android:id="@+id/finish"
+            android:textColor="@color/white"
             android:layout_marginLeft="5dp" />
         </LinearLayout>
 </LinearLayout>

@@ -19,8 +19,8 @@ public class DetailsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Bundle type = getIntent().getExtras();
 
+        //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
         TextView text = (TextView) findViewById(R.id.show);
         text.setTypeface(myTypeface);
@@ -29,12 +29,15 @@ public class DetailsActivity extends Activity {
         TextView myNoButton = (TextView) findViewById(R.id.no);
         myNoButton.setTypeface(myTypeface);
 
+        //gets what was passed from previous activity and assigns it
+        Bundle type = getIntent().getExtras();
         if(type != null) {
             this.id = type.getInt("id");
             this.file = type.getBoolean("file");
             this.data = type.getStringArray("data");
         }
 
+        //adapter for list view to list the details of the solution that was clicked
         String[] details = {
                 "The Volume of the solution is: " + Double.parseDouble(data[0])*1000 + "mL",
                 "The solvent in the solution is: " + data[1],
@@ -43,14 +46,12 @@ public class DetailsActivity extends Activity {
                 "The molarity of the solution is: " + data[4] + "M",
                 "The mass of " + data[2] + " in the solution is: " + data[6] +"g"
         };
-
         ListAdapter adapter = new TypeAdapter(this, details);
-
         ListView detailsview = (ListView) findViewById(R.id.details);
-
         detailsview.setAdapter(adapter);
     }
 
+    //on yes button click passes info along to and loads next activity it will send the response to the previous activities to close them
     public void onYes(View view) {
         Intent nextScreen = new Intent(DetailsActivity.this, QuestionsActivity.class);
         nextScreen.putExtra("id", id);
@@ -61,6 +62,7 @@ public class DetailsActivity extends Activity {
         finish();
     }
 
+    //on no click closes activity and goes back to the previous activity
     public void onNo(View view) {
         finish();
     }
