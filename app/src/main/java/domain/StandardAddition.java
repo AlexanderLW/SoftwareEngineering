@@ -23,9 +23,9 @@ public class StandardAddition extends SolutionSet implements Type {
         questions = super.concat(questions, new String[]{
                 "What is the volume of the new standard? (in mL)",
                 "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the internal standard in the new standard? (round to the 2nd Decimal)",
+                "What is the molarity of the internal standard in the new standard? (round to the 4th Decimal)",
                 "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the stock analyte in the new standard? (round to the 2nd Decimal)"
+                "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
         } );
 
         Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
@@ -43,14 +43,16 @@ public class StandardAddition extends SolutionSet implements Type {
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
-        analyte.setValues(answers, count);
-        setAnsw(analyte.getAnsw());
+        if(count <= 5) {
+            analyte.setValues(answers, count);
+            setAnsw(analyte.getAnsw());
+        }
         if(count <= 11) {
             internalStandard.setValues(answers, count);
             setAnsw(internalStandard.getAnsw());
         }
-        else if (count <= 14) {
-            for(int i = 14; i <= count; i++) {
+        else {
+            for(int i = 12; i <= count; i++) {
                 switch(i) {
                     case 12:
                         setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
@@ -101,13 +103,13 @@ public class StandardAddition extends SolutionSet implements Type {
     public double getCompare(int count){
         if(count == 5)
             return analyte.getCompare(count);
-        else if(count == 11)
-            return internalStandard.getCompare(count);
         else if(count == 13)
-            return internalStandard.getCompare2();
+            return internalStandard.getCompare(count);
         else if(count == 14)
+            return internalStandard.getCompare2();
+        else if(count == 15)
             return standardMolarity;
-        else if(count == 17)
+        else if(count == 16)
             return analyte.getCompare2();
         return analyteMolarity;
     }
@@ -137,6 +139,7 @@ public class StandardAddition extends SolutionSet implements Type {
         analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
+    //get and set
     public double getStandardVol() {
         return standardVol;
     }
