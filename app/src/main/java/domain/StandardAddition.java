@@ -62,17 +62,11 @@ public class StandardAddition extends SolutionSet implements Type {
                     case 14:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
-                }
-            }
-        }
-        else {
-            for (int i = 9; i <= count; i++) {
-                switch (i) {
-                    case 17:
+                    case 15:
                         setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
-                    case 18:
+                    case 16:
                         setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                 }
@@ -135,12 +129,12 @@ public class StandardAddition extends SolutionSet implements Type {
 
     //calculate standard molarity
     public void calcStandardMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = solutionMolarity * (volTran / vol);
+        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
     //calculate analyte molarity
     public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
-        analyteMolarity = solutionMolarity * (volTran/vol);
+        analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
     public double getStandardVol() {
