@@ -12,6 +12,7 @@ public class Solution extends SolutionSet {
     private double solMass = 0.0;
     private double solMol = 0.0;
 
+    //constructors
     public Solution(){
         super("Solution");
         String[] questions = {
@@ -110,45 +111,7 @@ public class Solution extends SolutionSet {
         setValues(getANSWERS(), 5);
     }
 
-    @Override
-    public void compute(int count) {
-        calcMol(solMolarity, volFlask);
-        calcMass(solMol, soluteMolWeight);
-
-        setDETAILS(new String[]{
-                (volFlask * 1000) + "ml",
-                solMolarity + " molar solution",
-                solvent + " as the solvent",
-                solMass + "g of " + solute + " as a solute"
-        });
-
-        setDATA(new String[]{
-                String.valueOf(volFlask),
-                solvent,
-                solute,
-                String.valueOf(soluteMolWeight),
-                String.valueOf(solMolarity),
-                String.valueOf(solMol),
-                String.valueOf(solMass)
-        });
-    }
-
-    public double getCompare(int count){
-        return solMass;
-    }
-
-    public double getCompare2() {
-        return volFlask;
-    }
-
-    public String getDialog() {
-        return "Would you like to add another solute?";
-    }
-
-    public int getRestart() {
-        return 2;
-    }
-
+    //set values of answers
     public void setValues(Answer[] answers, int count) {
         for(int i = 0; i <= count; i++) {
             switch(i) {
@@ -174,14 +137,60 @@ public class Solution extends SolutionSet {
         }
     }
 
+    //computes data
+    public void compute(int count) {
+        calcMol(solMolarity, volFlask);
+        calcMass(solMol, soluteMolWeight);
+
+        setDETAILS(new String[]{
+                (volFlask * 1000) + "ml",
+                solMolarity + " molar solution",
+                solvent + " as the solvent",
+                solMass + "g of " + solute + " as a solute"
+        });
+
+        setDATA(new String[]{
+                String.valueOf(volFlask),
+                solvent,
+                solute,
+                String.valueOf(soluteMolWeight),
+                String.valueOf(solMolarity),
+                String.valueOf(solMol),
+                String.valueOf(solMass)
+        });
+    }
+
+    //get compare for checks
+    public double getCompare(int count){
+        return solMass;
+    }
+
+    //get compare for volume
+    public double getCompare2() {
+        return volFlask;
+    }
+
+    //get dialog for alert
+    public String getDialog() {
+        return "Would you like to add another solute?";
+    }
+
+    //get restart value
+    public int getRestart() {
+        return 2;
+    }
+
+    //calculate moles
     public void calcMol(double molarity, double volume) {
         solMol = molarity*volume;
     }
 
+    //calculate molarity
     public void calcMass(double mols, double molecularW) {
         solMass = (double)Math.round((mols*molecularW) * 100) / 100;
     }
 
+    //get and set
     public double getVolFlask() {
         return volFlask;
     }

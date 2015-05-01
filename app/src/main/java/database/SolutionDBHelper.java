@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * Created by Alex on 4/16/2015.
  */
 public class SolutionDBHelper extends SQLiteOpenHelper{
+    //creates database
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "MySolutions.db";
-
 
     private static final String TEXT_TYPE = " TEXT ";
     private static final String COMMA = ", ";
@@ -52,12 +52,11 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-
+    //adds a solution to the database
     public void addSolution(String name, String [] data) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -75,7 +74,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-
+    //gets all the solution names from the database
     public String[] getSolutionNames() {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_NAME};
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,7 +96,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         return lNames;
     }
 
-
+    //gets data from a specific solution
     public String[] getSolutionData(int id) {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT, MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY, MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES, MyDBHandler.SolutionEntry.COLUMN_NAME_MASS};
         SQLiteDatabase db = this.getReadableDatabase();
@@ -119,6 +118,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         return listData;
     }
 
+    //remove a specific solution
     public void removeSolutionData(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(MyDBHandler.SolutionEntry.TABLE_NAME, MyDBHandler.SolutionEntry._ID + " = " + id,
@@ -126,6 +126,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.close();
     }
 
+    //gets the number of solutions
     public int getCount() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCount= db.rawQuery("select count(*) from " + MyDBHandler.SolutionEntry.TABLE_NAME, null);

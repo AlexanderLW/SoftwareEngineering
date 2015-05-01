@@ -7,6 +7,7 @@ public class Answer {
     String TYPE, VALUE;
     boolean CHECK, TRANSFER = false;
 
+    //answer constructors
     public Answer(String type, boolean check) {
         setTYPE(type);
         setCHECK(check);
@@ -24,6 +25,7 @@ public class Answer {
         setVALUE(value);
     }
 
+    //get and set
     public String getVALUE() {
         return VALUE;
     }

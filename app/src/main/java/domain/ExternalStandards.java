@@ -11,6 +11,7 @@ public class ExternalStandards extends SolutionSet {
     private double standardMolarity = 0.0;
     private boolean anotherStandard = false;
 
+    //constructor
     public ExternalStandards(Solution solution){
 
         super("External Standards");
@@ -33,47 +34,7 @@ public class ExternalStandards extends SolutionSet {
         super.setANSWERS(answers);
     }
 
-    @Override
-    public void compute(int count) {
-        if(count == 5) {
-            solution.setANSWERS(getANSWERS());
-            solution.compute(count);
-        }
-        else {
-            calcMolarity(solution.getSolMolarity(), stockVolT, standardVol);
-
-            Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
-            newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
-        }
-    }
-
-    public double getCompare(int count){
-        if(count == 5)
-            return solution.getCompare(count);
-        else if(count == 7)
-            return solution.getVolFlask();
-        return standardMolarity;
-    }
-
-    @Override
-    public double getCompare2() {
-        return standardVol;
-    }
-
-    public double getCompare2(int count) {
-        return standardVol;
-    }
-
-    public String getDialog() {
-        return "Would you like to create another external standard?";
-    }
-
-    public int getRestart() {
-        return 6;
-    }
-
+    //set values of answers
     public void setValues(Answer[] answers, int count) {
         if(count <= 5) {
             solution.setValues(answers, count);
@@ -97,10 +58,52 @@ public class ExternalStandards extends SolutionSet {
         }
     }
 
+    //computes data
+    public void compute(int count) {
+        if(count == 5) {
+            solution.setANSWERS(getANSWERS());
+            solution.compute(count);
+        }
+        else {
+            calcMolarity(solution.getSolMolarity(), stockVolT, standardVol);
+
+            Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
+            newSolution.compute(count);
+            setDETAILS(newSolution.getDETAILS());
+            setDATA(newSolution.getDATA());
+        }
+    }
+
+    //get compare for checks
+    public double getCompare(int count){
+        if(count == 5)
+            return solution.getCompare(count);
+        else if(count == 7)
+            return solution.getVolFlask();
+        return standardMolarity;
+    }
+
+    //get compare for volume
+    public double getCompare2() {
+        return standardVol;
+    }
+
+    //get dialog for alert
+    public String getDialog() {
+        return "Would you like to create another external standard?";
+    }
+
+    //get restart value
+    public int getRestart() {
+        return 6;
+    }
+
+    //calculate molarity
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
         standardMolarity = solutionMolarity * (volTran/vol);
     }
 
+    //get and set
     public Solution getSolution() {
         return solution;
     }

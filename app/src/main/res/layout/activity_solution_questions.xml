@@ -62,7 +62,8 @@
             android:onClick="onPrevious"
             android:id="@+id/prev"
             android:textColor="@color/white"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:background="#815f5f5f" />
 
         <Button
             android:text="Continue"
@@ -71,6 +72,7 @@
             android:onClick="onContinue"
             android:id="@+id/cont"
             android:textColor="@color/white"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:background="#815f5f5f" />
     </LinearLayout>
 </LinearLayout>

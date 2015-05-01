@@ -12,6 +12,7 @@ public class InternalStandards extends SolutionSet {
     private double analyteVolT = 0.0;
     private double analyteMolarity = 0.0;
 
+    //constructor
     public InternalStandards(Solution analyte, Solution internalStandard){
         super("Internal Standards");
 
@@ -40,55 +41,7 @@ public class InternalStandards extends SolutionSet {
         super.setANSWERS(answers);
     }
 
-    @Override
-    public void compute(int count) {
-        if(count == 5) {
-            analyte.setANSWERS(getANSWERS());
-            analyte.compute(count);
-        }
-        if(count == 11){
-            internalStandard.setANSWERS(getANSWERS());
-            internalStandard.compute(count);
-        }
-        if(count == 14) {
-            calcStandardMolarity(internalStandard.getSolMolarity(), standardVolT, standardVol);
-        }
-        else {
-            calcAnalyteMolarity(analyte.getSolMolarity(), analyteVolT, standardVol);
-
-            Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
-            newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
-        }
-    }
-
-    public double getCompare(int count){
-        if(count == 5)
-            return analyte.getCompare(count);
-        else if(count == 11)
-            return internalStandard.getCompare(count);
-        else if(count == 13)
-            return internalStandard.getCompare2();
-        else if(count == 14)
-            return standardMolarity;
-        else if(count == 17)
-            return analyte.getCompare2();
-        return analyteMolarity;
-    }
-
-    public double getCompare2() {
-        return standardVol;
-    }
-
-    public String getDialog() {
-        return "Would you like to create another standard?";
-    }
-
-    public int getRestart() {
-        return 18;
-    }
-
+    //set values of answers
     public void setValues(Answer[] answers, int count) {
         if(count <= 5) {
             analyte.setValues(answers, count);
@@ -123,13 +76,70 @@ public class InternalStandards extends SolutionSet {
         }
     }
 
+    //computes data
+    public void compute(int count) {
+        if(count == 5) {
+            analyte.setANSWERS(getANSWERS());
+            analyte.compute(count);
+        }
+        if(count == 11){
+            internalStandard.setANSWERS(getANSWERS());
+            internalStandard.compute(count);
+        }
+        if(count == 14) {
+            calcStandardMolarity(internalStandard.getSolMolarity(), standardVolT, standardVol);
+        }
+        else {
+            calcAnalyteMolarity(analyte.getSolMolarity(), analyteVolT, standardVol);
+
+            Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
+            newSolution.compute(count);
+            setDETAILS(newSolution.getDETAILS());
+            setDATA(newSolution.getDATA());
+        }
+    }
+
+    //get compare for checks
+    public double getCompare(int count){
+        if(count == 5)
+            return analyte.getCompare(count);
+        else if(count == 11)
+            return internalStandard.getCompare(count);
+        else if(count == 13)
+            return internalStandard.getCompare2();
+        else if(count == 14)
+            return standardMolarity;
+        else if(count == 17)
+            return analyte.getCompare2();
+        return analyteMolarity;
+    }
+
+    //get compare for volume
+    public double getCompare2() {
+        return standardVol;
+    }
+
+    //get dialog for alert
+    public String getDialog() {
+        return "Would you like to create another standard?";
+    }
+
+    //get restart value
+    public int getRestart() {
+        return 18;
+    }
+
+    //calculate standard molarity
     public void calcStandardMolarity(double solutionMolarity, double volTran, double vol) {
         standardMolarity = solutionMolarity * (volTran / vol);
     }
+
+    //calculate analyte molarity
     public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
         analyteMolarity = solutionMolarity * (volTran/vol);
     }
 
+    //get and set
     public double getStandardVol() {
         return standardVol;
     }

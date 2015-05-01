@@ -30,7 +30,8 @@
             android:id="@+id/yes"
             android:textColor="@color/white"
             android:onClick="onYes"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:background="#815f5f5f" />
 
         <Button
             android:text="New Solution"
@@ -39,6 +40,7 @@
             android:id="@+id/no"
             android:textColor="@color/white"
             android:onClick="onNo"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:background="#815f5f5f" />
         </LinearLayout>
 </LinearLayout>
