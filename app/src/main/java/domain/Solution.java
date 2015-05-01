@@ -3,7 +3,7 @@ package domain;
 /**
  * Created by User on 4/10/15.
  */
-public class Solution extends SolutionSet {
+public class Solution extends SolutionSet implements Type {
     private double volFlask = 0.0;
     private String solvent = "";
     private String solute = "";

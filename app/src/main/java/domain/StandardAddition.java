@@ -3,7 +3,7 @@ package domain;
 /**
  * Created by Alex on 4/25/2015.
  */
-public class StandardAddition extends SolutionSet {
+public class StandardAddition extends SolutionSet implements Type {
 
     Solution internalStandard, analyte;
     private double standardVol = 0.0;

@@ -13,12 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import domain.Dilution;
-import domain.ExternalStandards;
-import domain.InternalStandards;
 import domain.Solution;
 import domain.SolutionSet;
-import domain.StandardAddition;
+import domain.SolutionTypeFactory;
 
 public class QuestionsActivity extends Activity {
     int count = 0, trys = 0;
@@ -211,43 +208,44 @@ public class QuestionsActivity extends Activity {
 
     //method to create solution
     public void createSolutionType() {
+        SolutionTypeFactory sFactory = new SolutionTypeFactory();
         if (file) {
             switch (id) {
                 case 1:
-                    soluType = new Dilution(sol, false);
+                    soluType = sFactory.getSolutionSet("Dilution", sol);
                     break;
                 case 2:
-                    soluType = new Dilution(sol, true);
+                    soluType = sFactory.getSolutionSet("Serial Dilution", sol);
                     break;
                 case 3:
-                    soluType = new ExternalStandards(sol);
+                    soluType = sFactory.getSolutionSet("External Standards", sol);
                     break;
                 case 4:
-                    soluType = new InternalStandards(sol, new Solution("internal standard"));
+                    soluType = sFactory.getSolutionSet("Internal Standards", sol);
                     break;
                 case 5:
-                    soluType = new StandardAddition(sol, new Solution("internal standard"));
+                    soluType = sFactory.getSolutionSet("Standard Addition", sol);
                     break;
             }
         } else {
             switch (id) {
                 case 0:
-                    soluType = new Solution();
+                    soluType = sFactory.getSolutionSet("Solution", null);
                     break;
                 case 1:
-                    soluType = new Dilution(new Solution("stock solution"), false);
+                    soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"));
                     break;
                 case 2:
-                    soluType = new Dilution(new Solution("stock solution"), true);
+                    soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"));
                     break;
                 case 3:
-                    soluType = new ExternalStandards(new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("External Standard", new Solution("stock analyte solution"));
                     break;
                 case 4:
-                    soluType = new InternalStandards(new Solution("stock analyte solution"), new Solution("internal standard"));
+                    soluType = sFactory.getSolutionSet("Internal Standard", new Solution("stock analyte solution"));
                     break;
                 case 5:
-                    soluType = new StandardAddition(new Solution("stock analyte solution"), new Solution("internal standard"));
+                    soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"));
                     break;
             }
         }

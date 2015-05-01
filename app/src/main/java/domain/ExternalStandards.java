@@ -3,7 +3,7 @@ package domain;
 /**
  * Created by User on 4/11/15.
  */
-public class ExternalStandards extends SolutionSet {
+public class ExternalStandards extends SolutionSet implements Type {
 
     private Solution solution;
     private double standardVol = 0.0;

@@ -3,7 +3,7 @@ package domain;
 /**
  * Created by User on 4/11/15.
  */
-public class Dilution extends SolutionSet {
+public class Dilution extends SolutionSet implements Type{
     private Solution solution, newSolution;
     private double dilutionVol = 0.0;
     private double stockVolT = 0.0;
