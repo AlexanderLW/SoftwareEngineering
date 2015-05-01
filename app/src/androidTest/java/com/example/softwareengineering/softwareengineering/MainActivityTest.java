@@ -2,11 +2,8 @@ package com.example.softwareengineering.softwareengineering;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
-import com.example.softwareengineering.softwareengineering.MainActivity;
-import com.example.softwareengineering.softwareengineering.R;
 import junit.framework.Assert;
 
 /**
