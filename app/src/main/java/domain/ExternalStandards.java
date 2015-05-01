@@ -75,8 +75,10 @@ public class ExternalStandards extends SolutionSet {
     }
 
     public void setValues(Answer[] answers, int count) {
-        solution.setValues(answers, count);
-        setAnsw(solution.getAnsw());
+        if(count <= 5) {
+            solution.setValues(answers, count);
+            setAnsw(solution.getAnsw());
+        }
         if(count <= 8) {
             for (int i = 6; i <= count; i++) {
                 switch (i) {

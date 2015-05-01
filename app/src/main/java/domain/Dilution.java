@@ -4,8 +4,7 @@ package domain;
  * Created by User on 4/11/15.
  */
 public class Dilution extends SolutionSet {
-
-    private Solution solution;
+    private Solution solution, newSolution;
     private double dilutionVol = 0.0;
     private double stockVolT = 0.0;
     private double dilutionMolarity = 0.0;
@@ -36,62 +35,40 @@ public class Dilution extends SolutionSet {
         if(flag) super.setNAME("Serial Dilution");
     }
 
-    public void compute(int count) {
-        if(count == 5) {
-            solution.setANSWERS(getANSWERS());
-            solution.compute(count);
-        }
-        else {
-            calcMolarity(solution.getSolMolarity(), stockVolT, dilutionVol);
-
-            Solution newSolution = new Solution("Dilution", dilutionVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
-            newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
-
-            if(serial) {
-                solution = newSolution;
-                String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
-                        "What is the volume of the new dilution?",
-                        "What is the volume of the last dilution you are transferring?",
-                        "What is the molarity of the new dilution?"
-                });
-                super.setQUESTIONS(questions);
-                Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
-                        new Answer("double", false),
-                        new Answer("double", true, true),
-                        new Answer("double", true)
-                });
-                super.setANSWERS(answers);
-            }
-        }
-    }
-
-    public double getCompare(int count){
-        if(count == 5)
-            return solution.getCompare(count);
-        else if(count == 7)
-            return solution.getVolFlask();
-        return dilutionMolarity;
-    }
-
-    public double getCompare2() {
-        return dilutionVol;
-    }
-
-    public String getDialog() {
-        return "Would you like to create another dilution?";
-    }
-
     public int getRestart() {
-        if(serial)
-            return 7;
+        if(serial) {
+            String[] questions = super.concat(newSolution.getQUESTIONS(), new String[]{
+                    "What is the volume of the new dilution?",
+                    "What is the volume of the last dilution you are transferring?",
+                    "What is the molarity of the new dilution?"
+            });
+            setQUESTIONS(questions);
+            Answer[] answers = super.concat(newSolution.getANSWERS(), new Answer[]{
+                    new Answer("double", false),
+                    new Answer("double", true, true),
+                    new Answer("double", true)
+            });
+            setANSWERS(answers);
+
+            solution.setNAME(newSolution.getNAME());
+            solution.setVolFlask(newSolution.getVolFlask());
+            solution.setSolvent(newSolution.getSolvent());
+            solution.setSolute(newSolution.getSolute());
+            solution.setSoluteMolWeight(newSolution.getSoluteMolWeight());
+            solution.setSolMolarity(newSolution.getSolMolarity());
+            solution.setSolMol(newSolution.getSolMol());
+            solution.setSolMass(newSolution.getSolMass());
+            solution.setQUESTIONS(solution.getQUESTIONS());
+            solution.setANSWERS(solution.getANSWERS());
+        }
         return 6;
     }
 
     public void setValues(Answer[] answers, int count) {
-        solution.setValues(answers, count);
-        setAnsw(solution.getAnsw());
+        if(count <= 5) {
+            solution.setValues(answers, count);
+            setAnsw(solution.getAnsw());
+        }
         if(count <= 8) {
             for (int i = 6; i <= count; i++) {
                 switch (i) {
@@ -110,8 +87,39 @@ public class Dilution extends SolutionSet {
         }
     }
 
+    public void compute(int count) {
+        if(count == 5) {
+            solution.setANSWERS(getANSWERS());
+            solution.compute(count);
+        }
+        else {
+            calcMolarity(solution.getSolMolarity(), stockVolT, dilutionVol);
+
+            newSolution = new Solution("Dilution", dilutionVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
+            newSolution.compute(count);
+            setDETAILS(newSolution.getDETAILS());
+            setDATA(newSolution.getDATA());
+        }
+    }
+
+    public double getCompare(int count){
+        if(count == 5)
+            return solution.getCompare(count);
+        else if(count == 7)
+            return solution.getCompare2();
+        return dilutionMolarity;
+    }
+
+    public double getCompare2() {
+        return dilutionVol;
+    }
+
+    public String getDialog() {
+        return "Would you like to create another dilution?";
+    }
+
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        dilutionMolarity = solutionMolarity * (volTran/vol);
+        dilutionMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 100) / 100;
     }
 
     public Solution getSolution() {

@@ -90,8 +90,10 @@ public class InternalStandards extends SolutionSet {
     }
 
     public void setValues(Answer[] answers, int count) {
-        analyte.setValues(answers, count);
-        setAnsw(analyte.getAnsw());
+        if(count <= 5) {
+            analyte.setValues(answers, count);
+            setAnsw(analyte.getAnsw());
+        }
         if(count <= 11) {
             internalStandard.setValues(answers, count);
             setAnsw(internalStandard.getAnsw());

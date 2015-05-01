@@ -125,7 +125,9 @@ public class QuestionsActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
         soluType.setAnswerValue(count, answer.getText().toString());
-        if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals(".")||Double.parseDouble(answer.getText().toString().trim()) == 0)
+        if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals("."))
+            Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
+        else if(soluType.getANSWERS()[count].getTYPE().equals("double") && Double.parseDouble(answer.getText().toString().trim()) == 0)
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getANSWERS()[count].getCHECK()) {
             check();
@@ -162,7 +164,7 @@ public class QuestionsActivity extends Activity {
         soluType.setValues(soluType.getANSWERS(), count);
         if(soluType.getANSWERS()[count].getTRANSFER()) {
             if(soluType.getAnsw() > soluType.getCompare(count))
-                Toast.makeText(QuestionsActivity.this, "Cannot transfer more than you have", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsActivity.this, "Cannot transfer more than you have " + soluType.getAnsw() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
             else if(soluType.getAnsw() > soluType.getCompare2())
                 Toast.makeText(QuestionsActivity.this, "Need a bigger flask", Toast.LENGTH_SHORT).show();
             else
