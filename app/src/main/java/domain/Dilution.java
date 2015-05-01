@@ -20,9 +20,9 @@ public class Dilution extends SolutionSet implements Type{
         serial = flag;
 
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
-                "What is the volume of the new dilution?",
-                "What is the volume of the stock solution you are transferring?",
-                "What is the molarity of the new dilution?"
+                "What is the volume of the new dilution?(in mL)",
+                "What is the volume of the stock solution you are transferring?(in mL)",
+                "What is the molarity of the new dilution?(round to the 4th Decimal)"
         });
 
         Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
