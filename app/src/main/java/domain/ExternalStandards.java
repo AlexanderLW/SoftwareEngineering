@@ -57,6 +57,11 @@ public class ExternalStandards extends SolutionSet {
         return standardMolarity;
     }
 
+    @Override
+    public double getCompare2() {
+        return standardVol;
+    }
+
     public double getCompare2(int count) {
         return standardVol;
     }
