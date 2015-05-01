@@ -1,4 +1,4 @@
-package com.example.softwareengineering.softwareengineering;
+package com.example.softwareengineering.softwareengineering.tests;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
