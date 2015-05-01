@@ -127,7 +127,7 @@ public class Dilution extends SolutionSet implements Type{
 
     //calculate molarity
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        dilutionMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 100) / 100;
+        dilutionMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
     //get and set

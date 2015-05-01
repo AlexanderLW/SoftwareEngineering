@@ -100,7 +100,7 @@ public class ExternalStandards extends SolutionSet implements Type {
 
     //calculate molarity
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = solutionMolarity * (volTran/vol);
+        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
     //get and set
