@@ -82,10 +82,11 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         ArrayList<String> listNames = new ArrayList<>();
 
-        c.moveToFirst();
-        for (int i = 0; i < c.getCount(); i++) {
-            listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_NAME)));
-            c.moveToNext();
+        if(c.moveToNext()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_NAME)));
+                c.moveToNext();
+            }
         }
 
         db.close();
@@ -105,15 +106,18 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         Cursor c = db.query(MyDBHandler.SolutionEntry.TABLE_NAME, columns, MyDBHandler.SolutionEntry._ID + " = " + id,null,null,null,null);
 
-        c.moveToFirst();
-        listData[0] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME));
-        listData[1] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT));
-        listData[2] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE));
-        listData[3] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT));
-        listData[4] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY));
-        listData[5] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES));
-        listData[6] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MASS));
 
+        if(c.moveToNext()) {
+            listData[0] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME));
+            listData[1] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT));
+            listData[2] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE));
+            listData[3] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT));
+            listData[4] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY));
+            listData[5] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES));
+            listData[6] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MASS));
+        }else{
+            listData=null;
+        }
         db.close();
         return listData;
     }

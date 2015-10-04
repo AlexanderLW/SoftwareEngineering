@@ -239,10 +239,10 @@ public class QuestionsActivity extends Activity {
                     soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"));
                     break;
                 case 3:
-                    soluType = sFactory.getSolutionSet("External Standard", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"));
                     break;
                 case 4:
-                    soluType = sFactory.getSolutionSet("Internal Standard", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"));
                     break;
                 case 5:
                     soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"));
