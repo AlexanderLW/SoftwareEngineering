@@ -82,10 +82,11 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         ArrayList<String> listNames = new ArrayList<>();
 
-        c.moveToFirst();
-        for (int i = 0; i < c.getCount(); i++) {
-            listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_NAME)));
-            c.moveToNext();
+        if(c.moveToNext()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_NAME)));
+                c.moveToNext();
+            }
         }
 
         db.close();
@@ -103,34 +104,46 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
         String[] listData = new String[7];
 
-        Cursor c = db.query(MyDBHandler.SolutionEntry.TABLE_NAME, columns, MyDBHandler.SolutionEntry._ID + " = " + id,null,null,null,null);
+        Cursor c = db.query(MyDBHandler.SolutionEntry.TABLE_NAME, columns, null,null,null,null,null);
+        int index = 1;
+        while(index<id){
+            c.moveToNext();
+            index++;
+        }
 
-        c.moveToFirst();
-        listData[0] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME));
-        listData[1] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT));
-        listData[2] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE));
-        listData[3] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT));
-        listData[4] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY));
-        listData[5] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES));
-        listData[6] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MASS));
 
+        if(c.moveToNext()) {
+            listData[0] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_VOLUME));
+            listData[1] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLVENT));
+            listData[2] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_SOLUTE));
+            listData[3] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLECWEIGHT));
+            listData[4] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLARITY));
+            listData[5] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MOLES));
+            listData[6] = c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolutionEntry.COLUMN_NAME_MASS));
+        }else{
+            listData=null;
+        }
         db.close();
         return listData;
     }
 
+
+
     //remove a specific solution
     public void removeSolutionData(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(MyDBHandler.SolutionEntry.TABLE_NAME, MyDBHandler.SolutionEntry._ID + " = " + id,
+        db.delete(MyDBHandler.SolutionEntry.TABLE_NAME, "_id in (SELECT _id FROM Solutions LIMIT 1 OFFSET "+(id-1)+")",
                 null);
         db.close();
     }
+
+
 
     //gets the number of solutions
     public int getCount() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCount= db.rawQuery("select count(*) from " + MyDBHandler.SolutionEntry.TABLE_NAME, null);
-        mCount.moveToFirst();
+        mCount.moveToNext();
         int count= mCount.getInt(0);
         mCount.close();
         db.close();

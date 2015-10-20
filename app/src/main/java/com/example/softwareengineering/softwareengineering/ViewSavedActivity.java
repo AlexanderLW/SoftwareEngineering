@@ -143,6 +143,7 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // or return them to the component that opened the dialog
                         adapter.remove(adapter.getItem(pos));
                         mDbHelper.removeSolutionData(pos+1);
+                        recreate();
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
