@@ -47,6 +47,14 @@
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details" >
         </activity>
+        <activity
+            android:name=".GlossaryActivity"
+            android:label="@string/title_activity_glossary" >
+        </activity>
+        <activity
+            android:name=".DefinitionsActivity"
+            android:label="@string/title_activity_definitions" >
+    </activity>
     </application>
 
 </manifest>
