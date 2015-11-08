@@ -12,6 +12,8 @@ import android.widget.TextView;
  */
 public class DefinitionsActivity extends Activity{
 
+    //Testing override with pushing and pulling
+
     int id;
 
     @Override
