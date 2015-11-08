@@ -19,15 +19,21 @@ public class ExternalStandards extends SolutionSet implements Type {
         this.solution = solution;
 
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
-                "What is the volume of the new standard? (in mL)",
-                "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
-        });
+                "What is the molarity of the stock analyte? ",
+                "What volume of unknown solution will you transfer to a flask? (in mL)",
+                "What volume of stock analyte will you pour into the other flask (in mL)"
 
+        });
+/*
+External standards, Internal standards, and standard addition do not make sense in the current question format. Need to ask Kreller if he wants multiple choice style step through
+of process as an alternative.
+
+ */
         Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
                 new Answer("double", false),
-                new Answer("double", true, true),
-                new Answer("double", true)
+                new Answer("double", false),
+                new Answer("double", false)
+
         });
 
         super.setQUESTIONS(questions);

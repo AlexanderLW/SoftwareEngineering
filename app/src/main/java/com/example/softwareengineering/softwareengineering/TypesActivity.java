@@ -42,7 +42,7 @@ public class TypesActivity extends ActionBarActivity {
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
         soluTypes.setAdapter(soluAdapter);
 
-        //adds onclics for the items in the list view
+        //adds onclick for the items in the list view
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

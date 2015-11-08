@@ -72,7 +72,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
-    //listens for the save to close or pop up dialog box to ask if they wnat to repeat
+    //listens for the save to close or pop up dialog box to ask if they want to repeat
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final TextView text = (TextView) findViewById(R.id.text);

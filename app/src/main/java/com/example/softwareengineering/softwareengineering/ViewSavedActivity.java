@@ -161,8 +161,8 @@ public class ViewSavedActivity extends ActionBarActivity {
         print += "Using " + data[1] +  " as solvent\n";
         print += "Using " + data[2] + " as solute\n";
         print += data[3] + " g/mol of solute molecular weight\n";
-        print += data[4] + " g/mole of solution molarity\n";
-        print += data[5] + " g of solute mass";
+        print += data[4] + " mol/L of solution molarity\n";
+        print += data[6] + " g of solute mass";
         return print;
     }
 
