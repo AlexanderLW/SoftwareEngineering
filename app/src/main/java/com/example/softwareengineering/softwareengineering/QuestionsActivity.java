@@ -268,18 +268,24 @@ public class QuestionsActivity extends Activity {
                 head.setText("Creating Solution");
                 break;
             case 1:
-                head.setText("Creating Dilution");
+                head.setText("Creating Neat Solution");
                 break;
             case 2:
-                head.setText("Creating Serial Dilutions");
+                head.setText("Creating Concentrated Solution");
                 break;
             case 3:
-                head.setText("Creating External Standards");
+                head.setText("Creating Dilution");
                 break;
             case 4:
-                head.setText("Creating Internal Standards");
+                head.setText("Creating Serial Dilutions");
                 break;
             case 5:
+                head.setText("Creating External Standards");
+                break;
+            case 6:
+                head.setText("Creating Internal Standards");
+                break;
+            case 7:
                 head.setText("Creating Standard Using Standard Addition Method");
                 break;
         }
