@@ -53,8 +53,14 @@ public class TypesActivity extends ActionBarActivity {
                     nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
+                else if(id > 4 || position > 3) {
+                    Intent nextScreen = new Intent(TypesActivity.this, LoadSelectionActivity.class);
+                    nextScreen.putExtra("id", position);
+                    startActivity(nextScreen);
+
+                }
                 //if clicked goes to the load functionality
-                else {
+                else{
                     Intent nextScreen = new Intent(TypesActivity.this, LoadActivity.class);
                     nextScreen.putExtra("id", position);
                     startActivity(nextScreen);

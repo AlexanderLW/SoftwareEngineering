@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SoluSim</string>
+    <string name="app_name">Solu-Buddy</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_search">Searchable Solutions</string>
     <string name="action_cards">Saved Solutions</string>
@@ -17,6 +17,7 @@
     <string name="title_activity_view_solutions">ViewSolutionsActivity</string>
     <string name="title_activity_choose">ChooseActivity</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_load_selection">LoadSelectionActivity</string>
     <string name="confirm">I am sure</string>
     <string name="cancel">Cancel</string>
     <string name="remove_all_dialog_message">Are you sure you want to delete all saved solutions? (This will be permanent) </string>

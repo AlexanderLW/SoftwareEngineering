@@ -74,6 +74,7 @@ public class LoadActivity extends Activity {
             case 3:
                 head.setText("Creating a set of external standards requires an existing stock analyte solution, would you like to make a new one or load one that is saved?");
                 break;
+            //Both of these are being replaced by LoadSelectionActivity. Use this as a back up for testing if other is broken
             case 4:
                 head.setText("Creating a set of internal standards requires an existing stock analyte solution, would you like to make a new one or load one that is saved?");
                 break;

@@ -54,7 +54,11 @@
         <activity
             android:name=".DefinitionsActivity"
             android:label="@string/title_activity_definitions" >
-    </activity>
+        </activity>
+        <activity
+            android:name=".LoadSelectionActivity"
+            android:label="@string/title_activity_load_selection" >
+        </activity>
     </application>
 
 </manifest>
