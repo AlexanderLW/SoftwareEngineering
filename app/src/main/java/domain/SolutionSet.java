@@ -12,12 +12,12 @@ public abstract class SolutionSet {
     private String[] DATA = {};
 
     public static final String[] SOLUTIONTYPES = {
-      "Single Solution",
-      "Single Dilution",
-      "Serial Dilution",
-      "External Standards",
-      "Internal Standards",
-      "Standard Addition"
+            "Single Solution",
+            "Single Dilution",
+            "Serial Dilution",
+            "External Standards",
+            "Internal Standards",
+            "Standard Addition"
     };
 
     //constructors
