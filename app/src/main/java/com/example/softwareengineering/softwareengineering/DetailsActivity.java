@@ -39,12 +39,12 @@ public class DetailsActivity extends Activity {
 
         //adapter for list view to list the details of the solution that was clicked
         String[] details = {
-                "The Volume of the solution is: " + Double.parseDouble(data[0])*1000 + "mL",
+                "The Volume of the solution is: " + Double.parseDouble(data[0]) + "mL",
                 "The solvent in the solution is: " + data[1],
                 "The solute in the solution is:: " + data[2],
                 "The molecular weight of the " + data[2] + " is: " + data[3] + "g/mol",
                 "The molarity of the solution is: " + data[4] + "M",
-                "The mass of " + data[2] + " in the solution is: " + data[6] +"g"
+                "The mass of " + data[2] + " in the solution is: " + data[6] +"g"//fixed this value from[5] to [6]
         };
         ListAdapter adapter = new TypeAdapter(this, details);
         ListView detailsview = (ListView) findViewById(R.id.details);

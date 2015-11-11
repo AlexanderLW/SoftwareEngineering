@@ -72,7 +72,7 @@ public class Solution extends SolutionSet implements Type {
                         "Change the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
-                        new Answer("double", false, String.valueOf(volFlask)),
+                        new Answer("double", false, String.valueOf(volFlask*1000)), //fixed the value adjusting from L to mL
                         new Answer("String", false, solvent),
                         new Answer("String", false, solute),
                         new Answer("double", false, String.valueOf(soluteMolWeight)),
@@ -106,7 +106,7 @@ public class Solution extends SolutionSet implements Type {
                         new Answer("String", false, data[2]),
                         new Answer("double", false, data[3]),
                         new Answer("double", false, data[4]),
-                        new Answer("double", true, data[6])
+                        new Answer("double", true, data[5])//fixed this value  from 6 to 5 and the grams of solute now loads correctly
                 });
         setValues(getANSWERS(), 5);
     }
@@ -116,7 +116,7 @@ public class Solution extends SolutionSet implements Type {
         for(int i = 0; i <= count; i++) {
             switch(i) {
                 case 0:
-                    setVolFlask(Double.parseDouble(answers[i].getVALUE())/1000);
+                    setVolFlask(Double.parseDouble(answers[i].getVALUE()));
                     break;
                 case 1:
                     setSolvent(answers[i].getVALUE());
@@ -143,7 +143,7 @@ public class Solution extends SolutionSet implements Type {
         calcMass(solMol, soluteMolWeight);
 
         setDETAILS(new String[]{
-                (volFlask * 1000) + "ml",
+                (volFlask) + "ml",
                 solMolarity + " molar solution",
                 solvent + " as the solvent",
                 solMass + "g of " + solute + " as a solute"
@@ -182,12 +182,12 @@ public class Solution extends SolutionSet implements Type {
 
     //calculate moles
     public void calcMol(double molarity, double volume) {
-        solMol = molarity*volume;
+        solMol = molarity*(volume/1000);
     }
 
     //calculate molarity
     public void calcMass(double mols, double molecularW) {
-        solMass = (double)Math.round((mols*molecularW) * 100) / 100;
+        solMass = (double)Math.round((mols*molecularW));
     }
 
     //get and set

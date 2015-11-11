@@ -42,7 +42,7 @@ public class TypesActivity extends ActionBarActivity {
         ListView soluTypes = (ListView) findViewById(R.id.soluTypes);
         soluTypes.setAdapter(soluAdapter);
 
-        //adds onclics for the items in the list view
+        //adds onclicks for the items in the list view
         soluTypes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,8 +53,14 @@ public class TypesActivity extends ActionBarActivity {
                     nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
+                else if(id > 4 || position > 3) {
+                    Intent nextScreen = new Intent(TypesActivity.this, LoadSelectionActivity.class);
+                    nextScreen.putExtra("id", position);
+                    startActivity(nextScreen);
+
+                }
                 //if clicked goes to the load functionality
-                else {
+                else{
                     Intent nextScreen = new Intent(TypesActivity.this, LoadActivity.class);
                     nextScreen.putExtra("id", position);
                     startActivity(nextScreen);
@@ -71,9 +77,6 @@ public class TypesActivity extends ActionBarActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_solution_types, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        mSearchView = (SearchView) searchItem.getActionView();
-        setupSearchView(searchItem);
 
 
         return true;
@@ -88,13 +91,13 @@ public class TypesActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_search:
-                openSearch();
-                return true;
             case R.id.action_cards:
                 if(mDbHelper.getCount() != 0)
                     openCardsList();
                 else Toast.makeText(this, "You have no saved solutions", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_glossary:
+                openGlossary();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -105,17 +108,17 @@ public class TypesActivity extends ActionBarActivity {
      * The following methods redirect users to appropriate activities when
      * using onOptionItemSelected in menu
      */
-    private void openSearch(){
-        //expandable functionality for search
-    }
 
     private void openCardsList(){
         Intent i = new Intent(this, ViewSavedActivity.class);
         startActivity(i);
     }
 
-    private void setupSearchView(MenuItem searchItem){
-        //expandable functionality for search
+    //Method to start the Glossary Page Activity
+    private void openGlossary(){
+        Intent i = new Intent(this, GlossaryActivity.class);
+        startActivity(i);
     }
+
 }
 

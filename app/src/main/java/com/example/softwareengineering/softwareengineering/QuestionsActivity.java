@@ -128,6 +128,7 @@ public class QuestionsActivity extends Activity {
     public void onContinue(View view) {
         TextView text = (TextView) findViewById(R.id.text);
         EditText answer = (EditText) findViewById(R.id.answer);
+
         soluType.setAnswerValue(count, answer.getText().toString());
         if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals("."))
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
@@ -170,9 +171,11 @@ public class QuestionsActivity extends Activity {
         soluType.setValues(soluType.getANSWERS(), count);
         if(soluType.getANSWERS()[count].getTRANSFER()) {
             if(soluType.getAnsw() > soluType.getCompare(count))
-                Toast.makeText(QuestionsActivity.this, "Cannot transfer more than you have " + soluType.getAnsw() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsActivity.this, "Please enter a volume lower than the total volume " + soluType.getAnsw() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
             else if(soluType.getAnsw() > soluType.getCompare2())
                 Toast.makeText(QuestionsActivity.this, "Need a bigger flask", Toast.LENGTH_SHORT).show();
+            //else if(soluType.getAnsw() > Double.parseDouble(soluType.getDATA()[0]))
+              //  Toast.makeText(QuestionsActivity.this, "Please enter an amount less than the solution volume " + soluType.getAnsw() + " > " +  soluType.getDATA()[0], Toast.LENGTH_SHORT).show();
             else
                 correct = true;
         }

@@ -69,8 +69,9 @@ public class Dilution extends SolutionSet implements Type{
         else {
             calcMolarity(solution.getSolMolarity(), stockVolT, dilutionVol);
 
-            newSolution = new Solution("Dilution", dilutionVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
+            newSolution = new Solution("Dilution", dilutionVol*1000, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
             newSolution.compute(count);
+            newSolution.calcMass((dilutionVol*dilutionMolarity),solution.getSoluteMolWeight());//recalculate the mass of solute in the new solution
             setDETAILS(newSolution.getDETAILS());
             setDATA(newSolution.getDATA());
         }
@@ -127,7 +128,7 @@ public class Dilution extends SolutionSet implements Type{
 
     //calculate molarity
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        dilutionMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
+        dilutionMolarity = (solutionMolarity *volTran)/(vol);
     }
 
     //get and set
