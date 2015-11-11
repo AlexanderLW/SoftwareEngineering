@@ -21,7 +21,9 @@ public class InternalStandards extends SolutionSet implements Type {
 
         String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
         questions = super.concat(questions, new String[]{
-                "What is the volume of the new standard? (in mL)",
+                "How many standards are you making?",
+                "What is the initial volume of the stock analyte solution you are moving to the first standard? (in mL)",
+                "What is the increase in volume between each standard? (in mL and must be a constant)",
                 "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
                 "What is the molarity of the internal standard in the new standard? (round to the 4th Decimal)",
                 "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
