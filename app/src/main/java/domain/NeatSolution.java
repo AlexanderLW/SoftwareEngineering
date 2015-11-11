@@ -1,6 +1,7 @@
 package domain;
 
 /**
+<<<<<<< HEAD
  * Created by Samuel on 11/2/2015.
  */
 public class NeatSolution extends Solution implements Type {
@@ -226,3 +227,9 @@ public class NeatSolution extends Solution implements Type {
     }
 }
 
+=======
+ * Created by Alexander on 11/11/2015.
+ */
+public class NeatSolution {
+}
+>>>>>>> origin/master
