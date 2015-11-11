@@ -72,7 +72,7 @@ public class QuestionsActivity extends Activity {
         }
     }
 
-    //listens for the save to close or pop up dialog box to ask if they wnat to repeat
+    //listens for the save to close or pop up dialog box to ask if they want to repeat
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final TextView text = (TextView) findViewById(R.id.text);
@@ -211,19 +211,19 @@ public class QuestionsActivity extends Activity {
         SolutionTypeFactory sFactory = new SolutionTypeFactory();
         if (file) {
             switch (id) {
-                case 1:
+                case 3:
                     soluType = sFactory.getSolutionSet("Dilution", sol);
                     break;
-                case 2:
+                case 4:
                     soluType = sFactory.getSolutionSet("Serial Dilution", sol);
                     break;
-                case 3:
+                case 5:
                     soluType = sFactory.getSolutionSet("External Standards", sol);
                     break;
-                case 4:
+                case 6:
                     soluType = sFactory.getSolutionSet("Internal Standards", sol);
                     break;
-                case 5:
+                case 7:
                     soluType = sFactory.getSolutionSet("Standard Addition", sol);
                     break;
             }
@@ -233,18 +233,24 @@ public class QuestionsActivity extends Activity {
                     soluType = sFactory.getSolutionSet("Solution", null);
                     break;
                 case 1:
-                    soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"));
+                    soluType = sFactory.getSolutionSet("Neat", null);
                     break;
                 case 2:
-                    soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"));
+                    soluType = sFactory.getSolutionSet("Concentrated", null);
                     break;
                 case 3:
-                    soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"));
                     break;
                 case 4:
-                    soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"));
                     break;
                 case 5:
+                    soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"));
+                    break;
+                case 6:
+                    soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"));
+                    break;
+                case 7:
                     soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"));
                     break;
             }

@@ -19,6 +19,10 @@ public class SolutionTypeFactory {
             return new InternalStandards(sol, new Solution("internal standard"));
         else if(solutionType.equalsIgnoreCase("Standard Addition"))
             return new StandardAddition(sol, new Solution("internal standard"));
+        else if(solutionType.equalsIgnoreCase("Neat"))
+            return new NeatSolution();
+        else if(solutionType.equalsIgnoreCase("Concentrated"))
+            return new ConcentratedSolution();
         return null;
     }
 }

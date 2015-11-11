@@ -13,6 +13,8 @@ public abstract class SolutionSet {
 
     public static final String[] SOLUTIONTYPES = {
       "Single Solution",
+        "Neat Solution",
+    "Concentrated Solution",
       "Single Dilution",
       "Serial Dilution",
       "External Standards",
