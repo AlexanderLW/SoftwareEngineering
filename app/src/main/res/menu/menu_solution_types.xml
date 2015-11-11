@@ -6,7 +6,7 @@
     <!-- Glossary, should appear as action button -->
     <item
         android:id="@+id/action_glossary"
-        android:icon="@drawable/ic_list_white_24dp"
+        android:icon="@drawable/ic_action_view_as_list"
         android:title="@string/action_glossary"
         app:showAsAction="ifRoom" />
 
