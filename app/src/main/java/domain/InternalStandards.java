@@ -6,11 +6,26 @@ package domain;
 public class InternalStandards extends SolutionSet implements Type {
 
     Solution internalStandard, analyte;
+
+    //Old variables
     private double standardVol = 0.0;
     private double standardVolT = 0.0;
     private double standardMolarity = 0.0;
     private double analyteVolT = 0.0;
     private double analyteMolarity = 0.0;
+
+    //New variables
+    private String unknownSolutionName = "";
+    private double flaskVolume = 0.0;
+    private int numberOfStandards = 0;
+    private double volumeUnknownTransferred = 0.0;
+    private String volumeAnalyteTransferred = "";
+    private double volumeInternalTransferred = 0.0;
+
+    //This is the array that will be made from the volumeAnalyteTransferred.
+    //volumeAnalyteTransferred will be read in and separated by comma and space delimited.
+    private double[] volumeAnalyteTransferredArray = {};
+
 
     //constructor
     public InternalStandards(Solution analyte, Solution internalStandard){
@@ -21,22 +36,27 @@ public class InternalStandards extends SolutionSet implements Type {
 
         String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
         questions = super.concat(questions, new String[]{
-                "How many standards are you making?",
-                "What is the initial volume of the stock analyte solution you are moving to the first standard? (in mL)",
-                "What is the increase in volume between each standard? (in mL and must be a constant)",
-                "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the internal standard in the new standard? (round to the 4th Decimal)",
-                "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
+                "What is the name of the unknown?",
+                "What is the volume of the volumetric flasks within which you will prepare the unknown solution that is analyzed and the standards(V_tot in mL)?",
+                "How many internal standards are you going to prepare?",
+                "What volume of the Unknown solution will be added to the unknown solution that is analyzed (in mL)?",
+
+                //Try to make a loop that runs through the value of the internal standards.
+                //Break out of the questions value change to initialize a variable that is equal to the number of internal standards
+                //Then use concatenation to get back into the questions value.
+                "What are the volumes of the stock analyte solution added to each of the standards (V_a1, V_a2, ect. in mL)?",
+
+                "What are the volume of the Internal Standard solution added to each of the standards (in mL)?",
         } );
 
         Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
         answers = super.concat(answers, new Answer[]{
+                new Answer("String", false),
                 new Answer("double", false),
-                new Answer("double", true, true),
-                new Answer("double", true),
-                new Answer("double", true, true),
-                new Answer("double", true)
+                new Answer("int", true),
+                new Answer("double", false),
+                new Answer("String", true),
+                new Answer("double", false)
         });
 
         super.setQUESTIONS(questions);
@@ -45,18 +65,25 @@ public class InternalStandards extends SolutionSet implements Type {
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
+
+        //Set the values from the loading (or creating) of an analyte.
         if(count <= 5) {
             analyte.setValues(answers, count);
             setAnsw(analyte.getAnsw());
         }
+
+        //Set the values from the loading (or creating) of an internal standard.
         if(count <= 11) {
             internalStandard.setValues(answers, count);
             setAnsw(internalStandard.getAnsw());
         }
+
+        //Set the values for the questions in this class
         else {
             for(int i = 12; i <= count; i++) {
                 switch(i) {
                     case 12:
+                        //The parse double is setting the variable to being a double
                         setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 13:
@@ -78,7 +105,7 @@ public class InternalStandards extends SolutionSet implements Type {
         }
     }
 
-    //computes data
+    //computes data from the questions asked. Same method name as compute from the solution class.
     public void compute(int count) {
         if(count == 5) {
             analyte.setANSWERS(getANSWERS());
@@ -141,14 +168,47 @@ public class InternalStandards extends SolutionSet implements Type {
         analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
     }
 
+
+
+    //Setters and getters for the new variables
+    public String getUnknownSolutionName() {return unknownSolutionName;}
+
+    public void setUnknownSolutionName(String unknownSolutionName) {this.unknownSolutionName = unknownSolutionName;}
+
+    public double getFlaskVolume() {return flaskVolume;}
+
+    public void setFlaskVolume(double flaskVolume) {this.flaskVolume = flaskVolume;}
+
+    public int getNumberOfStandards() {return numberOfStandards;}
+
+    public void setNumberOfStandards(int numberOfStandards) {this.numberOfStandards = numberOfStandards;}
+
+    public double getVolumeUnknownTransferred() {return volumeUnknownTransferred;}
+
+    public void setVolumeUnknownTransferred(double volumeUnknownTransferred) {this.volumeUnknownTransferred = volumeUnknownTransferred;}
+
+    public String getVolumeAnalyteTransferred() {return volumeAnalyteTransferred;}
+
+    public void setVolumeAnalyteTransferred(String volumeAnalyteTransferred) {this.volumeAnalyteTransferred = volumeAnalyteTransferred;}
+
+    public double getVolumeInternalTransferred() {return volumeInternalTransferred;}
+
+    public void setVolumeInternalTransferred(double volumeInternalTransferred) {this.volumeInternalTransferred = volumeInternalTransferred;}
+
+    public double[] getVolumeAnalyteTransferredArray() {return volumeAnalyteTransferredArray;}
+
+    public void setVolumeAnalyteTransferredArray(double[] volumeAnalyteTransferredArray) {this.volumeAnalyteTransferredArray = volumeAnalyteTransferredArray;}
+
+
+
+
+    //Old Setters and Getters
     //get and set
     public double getStandardVol() {
         return standardVol;
     }
 
-    public void setStandardVol(double standardVol) {
-        this.standardVol = standardVol;
-    }
+    public void setStandardVol(double standardVol) {this.standardVol = standardVol;}
 
     public double getStandardVolT() {
         return standardVolT;
@@ -162,9 +222,7 @@ public class InternalStandards extends SolutionSet implements Type {
         return standardMolarity;
     }
 
-    public void setStandardMolarity(double standardMolarity) {
-        this.standardMolarity = standardMolarity;
-    }
+    public void setStandardMolarity(double standardMolarity) {this.standardMolarity = standardMolarity;}
 
     public double getAnalyteVolT() {
         return analyteVolT;
@@ -178,7 +236,6 @@ public class InternalStandards extends SolutionSet implements Type {
         return analyteMolarity;
     }
 
-    public void setAnalyteMolarity(double analyteMolarity) {
-        this.analyteMolarity = analyteMolarity;
-    }
+    public void setAnalyteMolarity(double analyteMolarity) {this.analyteMolarity = analyteMolarity;}
+
 }

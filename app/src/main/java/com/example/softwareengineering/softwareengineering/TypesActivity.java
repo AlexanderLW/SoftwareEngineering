@@ -21,7 +21,6 @@ import domain.SolutionSet;
 
 public class TypesActivity extends ActionBarActivity {
     SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
-    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class TypesActivity extends ActionBarActivity {
             @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //if clicked goes to the questions if there is nothing saved in the database or solution was selected
-                if(mDbHelper.getCount() == 0 || position <3) {
+                if(mDbHelper.getCount() == 0 || position < 3) {
                     Intent nextScreen = new Intent(TypesActivity.this, QuestionsActivity.class);
                     nextScreen.putExtra("id", position);
                     nextScreen.putExtra("file", false);

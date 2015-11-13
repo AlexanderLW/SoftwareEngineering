@@ -1,3 +1,4 @@
+
 package domain;
 
 /**
@@ -11,7 +12,7 @@ public class ExternalStandards extends SolutionSet implements Type {
     private double standardMolarity = 0.0;
     private boolean anotherStandard = false;
 
-    //constructor
+    //External Standards constructor. This is set to give you the questions and answer related to external standards on the app
     public ExternalStandards(Solution solution){
 
         super("External Standards");
@@ -19,9 +20,11 @@ public class ExternalStandards extends SolutionSet implements Type {
         this.solution = solution;
 
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
-                "What is the molarity of the stock analyte? ",
-                "What volume of unknown solution will you transfer to a flask? (in mL)",
-                "What volume of stock analyte will you pour into the other flask (in mL)"
+                "What is the name of the unknown solution?",
+                "Stock solution of the analyte - create new or use saved?",
+                "How many standards are you going to prepare?",
+                "What is the volume of the volumetric flask within which you will prepare the unknown that is analyzed and the standards?",
+                "What are the volumes of the stock analyte solution added to each one of the standards?"
 
         });
 /*
@@ -32,8 +35,9 @@ of process as an alternative.
         Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
                 new Answer("double", false),
                 new Answer("double", false),
+                new Answer("double", false),
+                new Answer("double", false),
                 new Answer("double", false)
-
         });
 
         super.setQUESTIONS(questions);
