@@ -54,7 +54,7 @@ public class QuestionsActivity extends Activity {
         if(type != null) {
             this.id = type.getInt("id");
             //sets the questions sequence to repeatable
-            if(id > 1) repeat = true;
+            if(id > 3) repeat = true;
             //if a solution was loaded it creates it for creation of the questions
             this.file = type.getBoolean("file");
             if(this.file) {
@@ -182,7 +182,7 @@ public class QuestionsActivity extends Activity {
         else {
             compute();
             if (trys < 3 && soluType.getCompare(count) != soluType.getAnsw()) {
-                Toast.makeText(QuestionsActivity.this, "Incorect please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsActivity.this, "Incorrect please try again", Toast.LENGTH_SHORT).show();
                 trys++;
             } else if (soluType.getCompare(count) == soluType.getAnsw()) {
                 Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();

@@ -33,8 +33,14 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
                     ")";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME + ";";
 
+
+    public void removeAllSolutions(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
+    }
 
     public SolutionDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -110,9 +110,7 @@ public class ViewSavedActivity extends ActionBarActivity {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         adapter.removeAll();
-                        for (int i = 0; i < adapter.getCount(); i++) {
-                            mDbHelper.removeSolutionData(i + 1);
-                        }
+                        mDbHelper.removeAllSolutions();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -157,7 +155,7 @@ public class ViewSavedActivity extends ActionBarActivity {
 
     private String printSolution(String[] data){
         String print = "";
-        print += data[0] + " mL of solution volume\n";
+        print += data[0] + " L of solution volume\n";
         print += "Using " + data[1] +  " as solvent\n";
         print += "Using " + data[2] + " as solute\n";
         print += data[3] + " g/mol of solute molecular weight\n";
