@@ -4,14 +4,13 @@ package domain;
  * Created by Samuel on 11/3/2015.
  */
 
-public class ConcentratedSolution extends Solution implements Type {
+public class ConcentratedSolution extends SolutionSet implements Type {
 
     private double volFlask = 0.0;
     private String solvent = "";
     private String solute = "";
     private double solVol = 0.0;
     private double solMolarity = 0.0;
-    private double solDensity = 0.0;
     private double solMol = 0.0;
     private double molWeight = 0.0;
     private double solMass = 0.0;
@@ -21,7 +20,6 @@ public class ConcentratedSolution extends Solution implements Type {
 
     private double massPercent = 0.0;
 
-
     //constructors
     public ConcentratedSolution(){
         super("NeatSolution");
@@ -30,35 +28,9 @@ public class ConcentratedSolution extends Solution implements Type {
                 "What is the solvent you are using?",
                 "What is the solute?",
                 "What is the molecular weight(g/mol) of your solute?",
-                "What is the molarity of the solution?",
+                "What is the molarity (mol/L) of the solution you want to make?",
                 "What is the mass % of the solute that you are adding? (in mL)",
-                "What is the mass of the solute needed?"
-        };
-
-        Answer[] answers = {
-                new Answer("double", false),
-                new Answer("String", false),
-                new Answer("String", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", true)
-        };
-
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
-    }
-
-    public ConcentratedSolution(String type){
-        super("NeatSolution");
-        String[] questions = {
-                "What is the volume of the" + type + "you are preparing? (in mL)",
-                "What is the solvent you are using?",
-                "What is the solute?",
-                "What is the molecular weight(g/mol) of your solute?",
-                "What is the molarity of the"+ type +"?",
-                "What is the mass % of the solute that you are adding? (in mL)",
-                "What is the mass of the solute needed?"
+                "What mass (in g) of the concentrated solution should be added (Round to two decimal places)?"
         };
 
         Answer[] answers = {
@@ -106,16 +78,16 @@ public class ConcentratedSolution extends Solution implements Type {
 
     //computes data
     public void compute(int count) {
+        calcMassMix();
         calcMol();
         calcSolMass();
-        calcMassMix();
 
 
         setDETAILS(new String[]{
                 (volFlask * 1000) + "ml",
                 solMolarity + " molar solution",
                 solvent + " as the solvent",
-                solMass + "g of " + solute + " as a solute"
+                massMix + "g of "+massPercent+"% " + solute + " as a solute"
         });
 
         setDATA(new String[]{
@@ -135,16 +107,16 @@ public class ConcentratedSolution extends Solution implements Type {
     }
 
     public void calcSolMass(){
-        solMass = solMolarity/molWeight;
+        solMass = solMol*molWeight;
     }
 
     public void calcMassMix(){
-        setMassMix(solMass/massPercent);
+        massMix = Math.round(100*solMolarity*volFlask*molWeight/(massPercent));
     }
 
     //get compare for checks
     public double getCompare(int count){
-        return solVol;
+        return massMix;
     }
 
     //get compare for volume

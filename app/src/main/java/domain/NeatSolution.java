@@ -4,7 +4,7 @@ package domain;
 <<<<<<< HEAD
  * Created by Samuel on 11/2/2015.
  */
-public class NeatSolution extends Solution implements Type {
+public class NeatSolution extends SolutionSet implements Type {
 
     private double volFlask = 0.0;
     private String solvent = "";
@@ -25,9 +25,9 @@ public class NeatSolution extends Solution implements Type {
                 "What is the solvent you are using?",
                 "What is the solute?",
                 "What is the molecular weight(g/mol) of your solute?",
-                "What is the molarity of the solution?",
-                "What is the density of the solute",
-                "What is the volume of the solute that you are adding? (in mL)",
+                "What is the molarity of the solution you would like to make?",
+                "What is the density(g/mL) of the solute",
+                "What is the volume (in mL) of the solute that you should add? (Round to two decimal places.)",
 
         };
 
@@ -45,32 +45,7 @@ public class NeatSolution extends Solution implements Type {
         super.setANSWERS(answers);
     }
 
-    public NeatSolution(String type){
-        super("NeatSolution");
-        String[] questions = {
-                "What is the volume of the" + type + "you are preparing? (in mL)",
-                "What is the solvent you are using?",
-                "What is the solute?",
-                "What is the molecular weight(g/mol) of your solute?",
-                "What is the molarity of the"+ type +"?",
-                "What is the density of the solute",
-                "What is the volume of the solute that you are adding? (in mL)"
 
-        };
-
-        Answer[] answers = {
-                new Answer("double", false),
-                new Answer("String", false),
-                new Answer("String", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", true)
-        };
-
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
-    }
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
@@ -95,8 +70,7 @@ public class NeatSolution extends Solution implements Type {
                     setSolDensity(Double.parseDouble(answers[i].getVALUE()));
                     break;
                 case 6:
-                    compute(0);
-                    setAnswerValue(6, String.valueOf(solMass));
+                    //setAnswerValue(6, String.valueOf(solVol));
                     super.setAnsw(Double.parseDouble(answers[i].getVALUE()));
                     break;
             }
@@ -107,12 +81,14 @@ public class NeatSolution extends Solution implements Type {
     public void compute(int count) {
         calcMol();
         calcVol();
+        calcMass();
 
 
         setDETAILS(new String[]{
                 (volFlask * 1000) + "ml",
                 solMolarity + " molar solution",
                 solvent + " as the solvent",
+                solDensity + " g/mL density",
                 solVol + "mL of " + solute + " as a solute"
         });
 
@@ -123,7 +99,7 @@ public class NeatSolution extends Solution implements Type {
                 String.valueOf(molWeight),
                 String.valueOf(solMolarity),
                 String.valueOf(solMol),
-                String.valueOf(solVol)
+                String.valueOf(solMass)
         });
     }
 
