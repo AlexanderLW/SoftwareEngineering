@@ -155,11 +155,11 @@ public class ViewSavedActivity extends ActionBarActivity {
 
     private String printSolution(String[] data){
         String print = "";
-        print += data[0] + " L of solution volume\n";
+        print += data[0] + " mL of solution volume\n";
         print += "Using " + data[1] +  " as solvent\n";
         print += "Using " + data[2] + " as solute\n";
-        print += data[3] + " g/mol of solute molecular weight\n";
-        print += data[4] + " mol/L of solution molarity\n";
+        print += data[3] + " g/mol solute molecular weight\n";
+        print += data[4] + " mol/L solution molarity\n";
         print += data[6] + " g of solute mass";
         return print;
     }
