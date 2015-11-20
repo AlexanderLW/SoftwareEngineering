@@ -5,21 +5,35 @@ package domain;
  */
 public class StandardAddition extends SolutionSet implements Type {
 
-    Solution internalStandard, analyte;
+    Solution standardAddition, analyte;
     private double standardVol = 0.0;
     private double standardVolT = 0.0;
     private double standardMolarity = 0.0;
     private double analyteVolT = 0.0;
     private double analyteMolarity = 0.0;
 
+    //New variables
+    private String unknownSolutionName = "";
+    private double flaskVolume = 0.0;
+    private int numberOfStandards = 0;
+    private double volumeUnknownTransferred = 0.0;
+    private String volumeAnalyteTransferred = "";
+    private double volumeInternalTransferred = 0.0;
+
+    //This is the array that will be made from the volumeAnalyteTransferred.
+    //volumeAnalyteTransferred will be read in and separated by comma and space delimited.
+    private String[] AnalyteTransferredString = new String[10];
+    private double[] AnalyteTransferredDouble = new double[AnalyteTransferredString.length];
+
+
     //constructor
-    public StandardAddition(Solution analyte, Solution internalStandard){
-        super("Internal Standards");
+    public StandardAddition(Solution analyte, Solution StandardAddition){
+        super("Standard Addition");
 
         this.analyte = analyte;
-        this.internalStandard = internalStandard;
+        this.standardAddition = standardAddition;
 
-        String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQUESTIONS(), standardAddition.getQUESTIONS());
         questions = super.concat(questions, new String[]{
                 "What is the volume of the new standard? (in mL)",
                 "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
@@ -28,7 +42,7 @@ public class StandardAddition extends SolutionSet implements Type {
                 "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
         } );
 
-        Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
+        Answer[] answers = super.concat(analyte.getANSWERS(), standardAddition.getANSWERS());
         answers = super.concat(answers, new Answer[]{
                 new Answer("double", false),
                 new Answer("double", true, true),
@@ -43,76 +57,97 @@ public class StandardAddition extends SolutionSet implements Type {
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
+
+        //Set the values from the loading (or creating) of an analyte.
         if(count <= 5) {
             analyte.setValues(answers, count);
             setAnsw(analyte.getAnsw());
         }
+
+        //Set the values from the loading (or creating) of an internal standard.
         if(count <= 11) {
-            internalStandard.setValues(answers, count);
-            setAnsw(internalStandard.getAnsw());
+            standardAddition.setValues(answers, count);
+            setAnsw(standardAddition.getAnsw());
         }
+
+        //Set the values for the questions in this class
         else {
             for(int i = 12; i <= count; i++) {
                 switch(i) {
                     case 12:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        //The parse double is setting the variable to being a double
+                        setUnknownSolutionName(answers[i].getVALUE());
                         break;
                     case 13:
-                        setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setFlaskVolume(Double.parseDouble(answers[i].getVALUE()));
                         break;
                     case 14:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setNumberOfStandards(Integer.parseInt(answers[i].getVALUE()));
                         break;
                     case 15:
-                        setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        //Might need to be divided by 1000 ??? Don't know the purpose of that yet
                         break;
                     case 16:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setVolumeAnalyteTransferred(answers[i].getVALUE());
+
+                        //This is where the string to array transference will occur
+                        AnalyteTransferredString = getVolumeAnalyteTransferred().split(",");
+
+                        //Loop that sets all the values of from the user input to the new variable with doubles
+                        for(int j = 0; j < AnalyteTransferredString.length; j++) {
+                            AnalyteTransferredDouble[i] = Double.parseDouble(AnalyteTransferredString[i]);
+                        }
+
+                        break;
+                    case 17:
+                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getVALUE()));
                         break;
                 }
             }
         }
     }
 
-    //computes data
+    //Probably not needed since there are no computations
+    //computes data from the questions asked. Same method name as compute from the solution class.
     public void compute(int count) {
         if(count == 5) {
             analyte.setANSWERS(getANSWERS());
             analyte.compute(count);
         }
         if(count == 11){
-            internalStandard.setANSWERS(getANSWERS());
-            internalStandard.compute(count);
+            standardAddition.setANSWERS(getANSWERS());
+            standardAddition.compute(count);
         }
         if(count == 14) {
-            calcStandardMolarity(internalStandard.getSolMolarity(), standardVolT, standardVol);
+            calcStandardMolarity(standardAddition.getSolMolarity(), standardVolT, standardVol);
         }
         else {
             calcAnalyteMolarity(analyte.getSolMolarity(), analyteVolT, standardVol);
 
-            Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
+            Solution newSolution = new Solution("Standard Addition", standardVolT, standardAddition.getSolvent(), standardAddition.getSolute(), standardAddition.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
             setDETAILS(newSolution.getDETAILS());
             setDATA(newSolution.getDATA());
         }
     }
 
+    //Probably not needed since there are no checks
     //get compare for checks
     public double getCompare(int count){
         if(count == 5)
             return analyte.getCompare(count);
         else if(count == 13)
-            return internalStandard.getCompare(count);
+            return standardAddition.getCompare(count);
         else if(count == 14)
-            return internalStandard.getCompare2();
+            return standardAddition.getCompare2();
         else if(count == 15)
             return standardMolarity;
         else if(count == 16)
             return analyte.getCompare2();
         return analyteMolarity;
     }
+
 
     //get compare for volume
     public double getCompare2() {
@@ -137,7 +172,47 @@ public class StandardAddition extends SolutionSet implements Type {
     //calculate analyte molarity
     public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
         analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
+
+
     }
+
+
+    //Setters and getters for the new variables
+    public String getUnknownSolutionName() {return unknownSolutionName;}
+
+    public void setUnknownSolutionName(String unknownSolutionName) {this.unknownSolutionName = unknownSolutionName;}
+
+    public double getFlaskVolume() {return flaskVolume;}
+
+    public void setFlaskVolume(double flaskVolume) {this.flaskVolume = flaskVolume;}
+
+    public int getNumberOfStandards() {return numberOfStandards;}
+
+    public void setNumberOfStandards(int numberOfStandards) {this.numberOfStandards = numberOfStandards;}
+
+    public double getVolumeUnknownTransferred() {return volumeUnknownTransferred;}
+
+    public void setVolumeUnknownTransferred(double volumeUnknownTransferred) {this.volumeUnknownTransferred = volumeUnknownTransferred;}
+
+    public String getVolumeAnalyteTransferred() {return volumeAnalyteTransferred;}
+
+    public void setVolumeAnalyteTransferred(String volumeAnalyteTransferred) {this.volumeAnalyteTransferred = volumeAnalyteTransferred;}
+
+    public double getVolumeInternalTransferred() {return volumeInternalTransferred;}
+
+    public void setVolumeInternalTransferred(double volumeInternalTransferred) {this.volumeInternalTransferred = volumeInternalTransferred;}
+
+    public String[] getAnalyteTransferredString() {return AnalyteTransferredString;}
+
+    public void setAnalyteTransferredString(String[] analyteTransferredString) {AnalyteTransferredString = analyteTransferredString;}
+
+    public double[] getAnalyteTransferredDouble() {return AnalyteTransferredDouble;}
+
+    public void setAnalyteTransferredDouble(double[] analyteTransferredDouble) {AnalyteTransferredDouble = analyteTransferredDouble;}
+
+
+
+
 
     //get and set
     public double getStandardVol() {

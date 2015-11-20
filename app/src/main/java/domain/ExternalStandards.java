@@ -18,6 +18,7 @@ public class ExternalStandards extends SolutionSet implements Type {
 
         this.solution = solution;
 
+
         String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
                 "What is the name of the unknown solution?",
                 "How many standards are you going to prepare?",
