@@ -24,7 +24,8 @@ public class InternalStandards extends SolutionSet implements Type {
 
     //This is the array that will be made from the volumeAnalyteTransferred.
     //volumeAnalyteTransferred will be read in and separated by comma and space delimited.
-    private double[] volumeAnalyteTransferredArray = {};
+    private String[] AnalyteTransferredString = new String[10];
+    private double[] AnalyteTransferredDouble = new double[AnalyteTransferredString.length];
 
 
     //constructor
@@ -35,27 +36,35 @@ public class InternalStandards extends SolutionSet implements Type {
         this.internalStandard = internalStandard;
 
         String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
+
+        //This is how to get the proper amount of standards to show up on the results screen that needs to be made.
+        for(int i = 0; i < 5; i++) {
+            //questions = super.concat(questions, new String[] {"What if i try this."});
+        }
+
         questions = super.concat(questions, new String[]{
                 "What is the name of the unknown?",
                 "What is the volume of the volumetric flasks within which you will prepare the unknown solution that is analyzed and the standards(V_tot in mL)?",
                 "How many internal standards are you going to prepare?",
                 "What volume of the Unknown solution will be added to the unknown solution that is analyzed (in mL)?",
 
-                //Try to make a loop that runs through the value of the internal standards.
-                //Break out of the questions value change to initialize a variable that is equal to the number of internal standards
-                //Then use concatenation to get back into the questions value.
-                "What are the volumes of the stock analyte solution added to each of the standards (V_a1, V_a2, ect. in mL)?",
+                //Read the String variable volumeAnalyteTransferred in and convert it to the double array volumeAnalyteTransferredArray
+                //Loop through and look at each character and once you reach a space, you end that index of the array.
+                //For example "Hello" would become [H][E][L][L][O] in the array
+                "What are the volumes of the stock analyte solution added to each of the standards (V_a1, V_a2, ect. in mL. Please separate with a single comma)?",
 
-                "What are the volume of the Internal Standard solution added to each of the standards (in mL)?",
+                "What is the volume of the Internal Standard solution added to each of the standards (in mL)?",
+
         } );
 
+        //NOTHING will have a value of true until I add in the proper check methods
         Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
         answers = super.concat(answers, new Answer[]{
                 new Answer("String", false),
                 new Answer("double", false),
-                new Answer("int", true),
+                new Answer("int", false),
                 new Answer("double", false),
-                new Answer("String", true),
+                new Answer("String", false),
                 new Answer("double", false)
         });
 
@@ -84,27 +93,39 @@ public class InternalStandards extends SolutionSet implements Type {
                 switch(i) {
                     case 12:
                         //The parse double is setting the variable to being a double
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setUnknownSolutionName(answers[i].getVALUE());
                         break;
                     case 13:
-                        setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setFlaskVolume(Double.parseDouble(answers[i].getVALUE()));
                         break;
                     case 14:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setNumberOfStandards(Integer.parseInt(answers[i].getVALUE()));
                         break;
                     case 15:
-                        setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        //Might need to be divided by 1000 ??? Don't know the purpose of that yet
                         break;
                     case 16:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setVolumeAnalyteTransferred(answers[i].getVALUE());
+
+                        //This is where the string to array transference will occur
+                        AnalyteTransferredString = getVolumeAnalyteTransferred().split(",");
+
+                        //Loop that sets all the values of from the user input to the new variable with doubles
+                        for(int j = 0; j < AnalyteTransferredString.length; j++) {
+                            AnalyteTransferredDouble[i] = Double.parseDouble(AnalyteTransferredString[i]);
+                        }
+
+                        break;
+                    case 17:
+                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getVALUE()));
                         break;
                 }
             }
         }
     }
 
+    //Probably not needed since there are no computations
     //computes data from the questions asked. Same method name as compute from the solution class.
     public void compute(int count) {
         if(count == 5) {
@@ -128,6 +149,7 @@ public class InternalStandards extends SolutionSet implements Type {
         }
     }
 
+    //Probably not needed since there are no checks
     //get compare for checks
     public double getCompare(int count){
         if(count == 5)
@@ -195,9 +217,14 @@ public class InternalStandards extends SolutionSet implements Type {
 
     public void setVolumeInternalTransferred(double volumeInternalTransferred) {this.volumeInternalTransferred = volumeInternalTransferred;}
 
-    public double[] getVolumeAnalyteTransferredArray() {return volumeAnalyteTransferredArray;}
+    public String[] getAnalyteTransferredString() {return AnalyteTransferredString;}
 
-    public void setVolumeAnalyteTransferredArray(double[] volumeAnalyteTransferredArray) {this.volumeAnalyteTransferredArray = volumeAnalyteTransferredArray;}
+    public void setAnalyteTransferredString(String[] analyteTransferredString) {AnalyteTransferredString = analyteTransferredString;}
+
+    public double[] getAnalyteTransferredDouble() {return AnalyteTransferredDouble;}
+
+    public void setAnalyteTransferredDouble(double[] analyteTransferredDouble) {AnalyteTransferredDouble = analyteTransferredDouble;}
+
 
 
 
