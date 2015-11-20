@@ -1,0 +1,121 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.example.softwareengineering.softwareengineering.QuestionsActivity"
+    android:background="@drawable/chalkboard" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="201dp">
+
+        <TextView
+            android:text="Creating A New Solution"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/header"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="27dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="What form is the solute?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignRight="@+id/header"
+        android:layout_alignEnd="@+id/header"
+        android:layout_margin="20dp">
+
+        <TableLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false">
+
+                <Button
+                    android:text="Neat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onNeat"
+                    android:id="@+id/neat"
+                    android:textColor="@color/white"
+                    android:background="#815f5f5f"
+                    android:layout_gravity="fill_horizontal|center_horizontal"
+                    android:layout_column="0"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textSize="11dp" />
+
+                <Button
+                    android:text="Solid"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSolid"
+                    android:id="@+id/solid"
+                    android:textColor="@color/white"
+                    android:background="#815f5f5f"
+                    android:layout_column="1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="11dp" />
+
+                <Button
+                    android:text="Concentrated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onConcentrated"
+                    android:id="@+id/concentrated"
+                    android:textColor="@color/white"
+                    android:background="#815f5f5f"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textSize="11dp" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
