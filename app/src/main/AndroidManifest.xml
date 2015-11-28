@@ -27,6 +27,11 @@
             android:theme="@style/AppTheme" >
         </activity>
         <activity
+            android:name=".BranchActivity"
+            android:label="@string/title_activity_solution_questions"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
             android:name=".SaveActivity"
             android:label="@string/title_activity_save" >
         </activity>

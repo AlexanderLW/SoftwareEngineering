@@ -7,8 +7,8 @@ package domain;
 public class ExternalStandards extends SolutionSet implements Type {
 
     private Solution solution;
-    private double standardVol = 0.0;
-    private double stockVolT = 0.0;
+    private double unknownVol = 0.0; //changed from standardVolume to unknownVolume
+    private double analyteVol = 0.0; // changed from stockVolT to analyteVolume
     private double standardMolarity = 0.0;
     private boolean anotherStandard = false;
 
@@ -32,7 +32,9 @@ External standards, Internal standards, and standard addition do not make sense 
 of process as an alternative.
 
  */
-        Answer[] answers = super.concat(solution.getAnswers(), new Answer[]{
+        Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
+                new Answer("String", false),
+                new Answer("int", false),
                 new Answer("double", false),
                 new Answer("double", false),
                 new Answer("double", false),
@@ -51,18 +53,14 @@ of process as an alternative.
             setAnswer(solution.getAnswer());
         }
         if(count <= 8) {
-            for (int i = 6; i <= count; i++) {
+            for (int i = 7; i <= count; i++) {
                 switch (i) {
-                    case 6:
-                        setStandardVol(Double.parseDouble(answers[i].getValue()) / 1000);
-                        break;
                     case 7:
-                        setStockVolT(Double.parseDouble(answers[i].getValue()) / 1000);
-                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setUnknownVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
                         break;
                     case 8:
-                        setAnswer(Double.parseDouble(answers[i].getValue()));
-                        break;
+                        setAnalyteVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
                 }
             }
         }
@@ -75,9 +73,9 @@ of process as an alternative.
             solution.compute(count);
         }
         else {
-            calcMolarity(solution.getSolMolarity(), stockVolT, standardVol);
+            calcMolarity(solution.getSolMolarity(), analyteVol, unknownVol);
 
-            Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
+            Solution newSolution = new Solution("External Standard", unknownVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
             setDetails(newSolution.getDetails());
             setData(newSolution.getData());
@@ -90,12 +88,12 @@ of process as an alternative.
             return solution.getCompare(count);
         else if(count == 7)
             return solution.getVolFlask();
-        return standardMolarity;
+        return unknownVol;
     }
 
     //get compare for volume
     public double getCompare2() {
-        return standardVol;
+        return unknownVol;
     }
 
     //get dialog for alert
@@ -110,7 +108,7 @@ of process as an alternative.
 
     //calculate molarity
     public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
+        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 1000) / 1000;
     }
 
     //get and set
@@ -122,20 +120,20 @@ of process as an alternative.
         this.solution = solution;
     }
 
-    public double getStandardVol() {
-        return standardVol;
+    public double getUnknownVol() {
+        return unknownVol;
     }
 
-    public void setStandardVol(double standardVol) {
-        this.standardVol = standardVol;
+    public void setUnknownVol(double unknownVol) {
+        this.unknownVol = unknownVol;
     }
 
-    public double getStockVolT() {
-        return stockVolT;
+    public double getAnalyteVol() {
+        return analyteVol;
     }
 
-    public void setStockVolT(double stockVolT) {
-        this.stockVolT = stockVolT;
+    public void setAnalyteVol(double analyteVol) {
+        this.analyteVol = analyteVol;
     }
 
     public double getStandardMolarity() {

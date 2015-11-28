@@ -276,13 +276,13 @@ public class QuestionsActivity extends Activity {
         TextView head = (TextView) findViewById(R.id.header);
         switch (id) {
             case 0:
-                head.setText("Creating Solution");
+                head.setText("Creating Solution: Solid Solvent");
                 break;
             case 1:
-                head.setText("Creating Neat Solution");
+                head.setText("Creating Solution: Neat Solvent");
                 break;
             case 2:
-                head.setText("Creating Concentrated Solution");
+                head.setText("Creating Solution: Concentrated Solvent");
                 break;
             case 3:
                 head.setText("Creating Dilution");
