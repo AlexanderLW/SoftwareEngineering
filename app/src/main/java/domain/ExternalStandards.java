@@ -19,7 +19,7 @@ public class ExternalStandards extends SolutionSet implements Type {
 
         this.solution = solution;
 
-        String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
+        String[] questions = super.concat(solution.getQuestions(), new String[]{
                 "What is the name of the unknown solution?",
                 "Stock solution of the analyte - create new or use saved?",
                 "How many standards are you going to prepare?",
@@ -32,7 +32,7 @@ External standards, Internal standards, and standard addition do not make sense 
 of process as an alternative.
 
  */
-        Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
+        Answer[] answers = super.concat(solution.getAnswers(), new Answer[]{
                 new Answer("double", false),
                 new Answer("double", false),
                 new Answer("double", false),
@@ -40,28 +40,28 @@ of process as an alternative.
                 new Answer("double", false)
         });
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
         if(count <= 5) {
             solution.setValues(answers, count);
-            setAnsw(solution.getAnsw());
+            setAnswer(solution.getAnswer());
         }
         if(count <= 8) {
             for (int i = 6; i <= count; i++) {
                 switch (i) {
                     case 6:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStandardVol(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 7:
-                        setStockVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStockVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 8:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()));
+                        setAnswer(Double.parseDouble(answers[i].getValue()));
                         break;
                 }
             }
@@ -71,7 +71,7 @@ of process as an alternative.
     //computes data
     public void compute(int count) {
         if(count == 5) {
-            solution.setANSWERS(getANSWERS());
+            solution.setAnswers(getAnswers());
             solution.compute(count);
         }
         else {
@@ -79,8 +79,8 @@ of process as an alternative.
 
             Solution newSolution = new Solution("External Standard", standardVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
+            setDetails(newSolution.getDetails());
+            setData(newSolution.getData());
         }
     }
 

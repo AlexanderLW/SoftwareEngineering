@@ -22,6 +22,13 @@ import domain.SolutionSet;
 
 public class GlossaryActivity extends Activity {
 
+
+    /*
+    This class displays a list of terms  the user can learn more about by clicking on them. when i term is clicked its id is sent to the DefinitionsActivity class and its definition is displayed.
+     */
+
+
+
     //String array that stores all of the glossary terms. You can add
     //more terms and they should go right into the listview
     public static final String[] glossary = {

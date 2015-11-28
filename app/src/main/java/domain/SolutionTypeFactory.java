@@ -4,7 +4,7 @@ package domain;
  * Created by Alex on 5/1/2015.
  */
 public class SolutionTypeFactory {
-    public SolutionSet getSolutionSet(String solutionType, Solution sol) {
+    public SolutionSet getSolutionSet(String solutionType, Solution sol, Solution sol2) {
         if(solutionType == null)
             return null;
         else if(solutionType.equalsIgnoreCase("Solution"))
@@ -20,9 +20,9 @@ public class SolutionTypeFactory {
         else if(solutionType.equalsIgnoreCase("External Standards"))
             return new ExternalStandards(sol);
         else if(solutionType.equalsIgnoreCase("Internal Standards"))
-            return new InternalStandards(sol, new Solution("internal standard"));
+            return new InternalStandards(sol, sol2);
         else if(solutionType.equalsIgnoreCase("Standard Addition"))
-            return new StandardAddition(sol, new Solution("internal standard"));
+            return new StandardAddition(sol, sol2);
         return null;
     }
 }

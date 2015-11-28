@@ -15,6 +15,9 @@ import android.widget.TextView;
  */
 public class LoadSelectionActivity extends Activity {
 
+    /*
+    Paired with LoadActivity, this allows selection of saved solutions to load for use.
+     */
     int id;
     static Context appContext;
 
@@ -69,7 +72,7 @@ public class LoadSelectionActivity extends Activity {
 
     //on yes button click passes info along to and loads next activity
     public void onLoadBothClick(View view) {
-        Intent nextScreen = new Intent(LoadSelectionActivity.this, SolutionsActivity.class);
+        Intent nextScreen = new Intent(LoadSelectionActivity.this, SolutionsActivity2.class);
         nextScreen.putExtra("id", id);
         nextScreen.putExtra("file", true);
         startActivityForResult(nextScreen, 1);

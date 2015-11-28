@@ -34,7 +34,7 @@ public class InternalStandards extends SolutionSet implements Type {
         this.analyte = analyte;
         this.internalStandard = internalStandard;
 
-        String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQuestions(), internalStandard.getQuestions());
         questions = super.concat(questions, new String[]{
                 "What is the name of the unknown?",
                 "What is the volume of the volumetric flasks within which you will prepare the unknown solution that is analyzed and the standards(V_tot in mL)?",
@@ -49,7 +49,7 @@ public class InternalStandards extends SolutionSet implements Type {
                 "What are the volume of the Internal Standard solution added to each of the standards (in mL)?",
         } );
 
-        Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
+        Answer[] answers = super.concat(analyte.getAnswers(), internalStandard.getAnswers());
         answers = super.concat(answers, new Answer[]{
                 new Answer("String", false),
                 new Answer("double", false),
@@ -59,8 +59,8 @@ public class InternalStandards extends SolutionSet implements Type {
                 new Answer("double", false)
         });
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
     //set values of answers
@@ -69,13 +69,13 @@ public class InternalStandards extends SolutionSet implements Type {
         //Set the values from the loading (or creating) of an analyte.
         if(count <= 5) {
             analyte.setValues(answers, count);
-            setAnsw(analyte.getAnsw());
+            setAnswer(analyte.getAnswer());
         }
 
         //Set the values from the loading (or creating) of an internal standard.
         if(count <= 11) {
             internalStandard.setValues(answers, count);
-            setAnsw(internalStandard.getAnsw());
+            setAnswer(internalStandard.getAnswer());
         }
 
         //Set the values for the questions in this class
@@ -84,21 +84,21 @@ public class InternalStandards extends SolutionSet implements Type {
                 switch(i) {
                     case 12:
                         //The parse double is setting the variable to being a double
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStandardVol(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 13:
-                        setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStandardVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 14:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 15:
-                        setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnalyteVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 16:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                 }
             }
@@ -108,11 +108,11 @@ public class InternalStandards extends SolutionSet implements Type {
     //computes data from the questions asked. Same method name as compute from the solution class.
     public void compute(int count) {
         if(count == 5) {
-            analyte.setANSWERS(getANSWERS());
+            analyte.setAnswers(getAnswers());
             analyte.compute(count);
         }
         if(count == 11){
-            internalStandard.setANSWERS(getANSWERS());
+            internalStandard.setAnswers(getAnswers());
             internalStandard.compute(count);
         }
         if(count == 14) {
@@ -123,8 +123,8 @@ public class InternalStandards extends SolutionSet implements Type {
 
             Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
+            setDetails(newSolution.getDetails());
+            setData(newSolution.getData());
         }
     }
 
@@ -160,12 +160,12 @@ public class InternalStandards extends SolutionSet implements Type {
 
     //calculate standard molarity
     public void calcStandardMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
+
     }
 
     //calculate analyte molarity
     public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
-        analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
+
     }
 
 

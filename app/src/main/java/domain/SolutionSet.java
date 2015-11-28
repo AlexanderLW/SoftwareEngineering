@@ -4,12 +4,16 @@ package domain;
  * Created by User on 4/10/15.
  */
 public abstract class SolutionSet {
-    private String NAME = "";
-    private String[] QUESTIONS = {};
-    private Answer[] ANSWERS;
-    double answ;
-    private String[] DETAILS = {};
-    private String[] DATA = {};
+
+    /*
+    Parent class for all solution types.
+     */
+    private String name = "";
+    private String[] questions = {};
+    private Answer[] answers;
+    double answer;
+    private String[] details = {};
+    private String[] data = {};
 
     public static final String[] SOLUTIONTYPES = {
       "Single Solution",
@@ -24,13 +28,13 @@ public abstract class SolutionSet {
 
     //constructors
     public SolutionSet(String name){
-        setNAME(name);
+        setName(name);
     }
 
     public SolutionSet(String name, String[] questions, Answer[] answers){
-        setNAME(name);
-        setQUESTIONS(questions);
-        setANSWERS(answers);
+        setName(name);
+        setQuestions(questions);
+        setAnswers(answers);
     }
 
     //concatenate arrays
@@ -54,33 +58,33 @@ public abstract class SolutionSet {
 
     //get specific question
     public String getQuestion(int id) {
-        return QUESTIONS[id];
+        return questions[id];
     }
 
     //set answer
     public void setAnswerValue(int id, String value) {
-        ANSWERS[id].setVALUE(value);
+        answers[id].setValue(value);
     }
 
     //get answer
     public String getAnswerValue(int id) {
-        return ANSWERS[id].getVALUE();
+        return answers[id].getValue();
     }
 
     //get the user answer
-    public double getAnsw() {
-        return answ;
+    public double getAnswer() {
+        return answer;
     }
 
     //set the user answer
-    public void setAnsw(double answ) {
-        this.answ = answ;
+    public void setAnswer(double answer) {
+        this.answer = answer;
     }
 
     //erase answers from array
     public void eraseAnswers(int j) {
-        for(int i = j; i < ANSWERS.length; i++) {
-            ANSWERS[i].setVALUE(null);
+        for(int i = j; i < answers.length; i++) {
+            answers[i].setValue(null);
         }
     }
 
@@ -98,43 +102,43 @@ public abstract class SolutionSet {
     public abstract int getRestart();
 
     //get and set
-    public void setNAME(String name){
-        NAME = name;
+    public void setName(String name){
+        this.name = name;
     }
 
-    public String getNAME(){
-        return NAME;
+    public String getName(){
+        return name;
     }
 
-    public void setQUESTIONS(String[] questions){
-        QUESTIONS = questions;
+    public void setQuestions(String[] questions){
+        this.questions = questions;
     }
 
-    public String[] getQUESTIONS() {
-        return QUESTIONS;
+    public String[] getQuestions() {
+        return questions;
     }
 
-    public void setANSWERS(Answer[] ANSWERS) {
-        this.ANSWERS = ANSWERS;
+    public void setAnswers(Answer[] answers) {
+        this.answers = answers;
     }
 
-    public Answer[] getANSWERS() {
-        return ANSWERS;
+    public Answer[] getAnswers() {
+        return answers;
     }
 
-    public String[] getDETAILS() {
-        return DETAILS;
+    public String[] getDetails() {
+        return details;
     }
 
-    public void setDETAILS(String[] DETAILS) {
-        this.DETAILS = DETAILS;
+    public void setDetails(String[] details) {
+        this.details = details;
     }
 
-    public String[] getDATA() {
-        return DATA;
+    public String[] getData() {
+        return data;
     }
 
-    public void setDATA(String[] DATA) {
-        this.DATA = DATA;
+    public void setData(String[] data) {
+        this.data = data;
     }
 }

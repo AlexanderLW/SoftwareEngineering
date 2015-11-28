@@ -16,6 +16,10 @@ import domain.Card;
 
 
 public class ViewSavedActivity extends ActionBarActivity {
+
+    /*
+    Uses CardArrayAdapter to display all saved solutions
+     */
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     private CardArrayAdapter adapter;
 

@@ -10,7 +10,9 @@ import android.widget.Button;
 
 
 public class MainActivity extends Activity {
-
+/*
+Title screen
+ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,8 +20,8 @@ public class MainActivity extends Activity {
 
         //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
-        Button mybutton = (Button)findViewById(R.id.begin);
-        mybutton.setTypeface(myTypeface);
+        Button myButton = (Button)findViewById(R.id.begin);
+        myButton.setTypeface(myTypeface);
     }
 
     //button click to start

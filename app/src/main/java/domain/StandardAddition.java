@@ -19,7 +19,7 @@ public class StandardAddition extends SolutionSet implements Type {
         this.analyte = analyte;
         this.internalStandard = internalStandard;
 
-        String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQuestions(), internalStandard.getQuestions());
         questions = super.concat(questions, new String[]{
                 "What is the volume of the new standard? (in mL)",
                 "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
@@ -28,7 +28,7 @@ public class StandardAddition extends SolutionSet implements Type {
                 "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
         } );
 
-        Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
+        Answer[] answers = super.concat(analyte.getAnswers(), internalStandard.getAnswers());
         answers = super.concat(answers, new Answer[]{
                 new Answer("double", false),
                 new Answer("double", true, true),
@@ -37,39 +37,39 @@ public class StandardAddition extends SolutionSet implements Type {
                 new Answer("double", true)
         });
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
         if(count <= 5) {
             analyte.setValues(answers, count);
-            setAnsw(analyte.getAnsw());
+            setAnswer(analyte.getAnswer());
         }
         if(count <= 11) {
             internalStandard.setValues(answers, count);
-            setAnsw(internalStandard.getAnsw());
+            setAnswer(internalStandard.getAnswer());
         }
         else {
             for(int i = 12; i <= count; i++) {
                 switch(i) {
                     case 12:
-                        setStandardVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStandardVol(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 13:
-                        setStandardVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStandardVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 14:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 15:
-                        setAnalyteVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnalyteVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 16:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                 }
             }
@@ -79,11 +79,11 @@ public class StandardAddition extends SolutionSet implements Type {
     //computes data
     public void compute(int count) {
         if(count == 5) {
-            analyte.setANSWERS(getANSWERS());
+            analyte.setAnswers(getAnswers());
             analyte.compute(count);
         }
         if(count == 11){
-            internalStandard.setANSWERS(getANSWERS());
+            internalStandard.setAnswers(getAnswers());
             internalStandard.compute(count);
         }
         if(count == 14) {
@@ -94,8 +94,8 @@ public class StandardAddition extends SolutionSet implements Type {
 
             Solution newSolution = new Solution("Internal Standard", standardVolT, internalStandard.getSolvent(), internalStandard.getSolute(), internalStandard.getSoluteMolWeight(), standardMolarity);
             newSolution.compute(count);
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
+            setDetails(newSolution.getDetails());
+            setData(newSolution.getData());
         }
     }
 

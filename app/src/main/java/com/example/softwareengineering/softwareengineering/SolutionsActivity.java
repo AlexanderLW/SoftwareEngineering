@@ -18,6 +18,7 @@ public class SolutionsActivity extends Activity {
     boolean file;
     int ids;
     String[] data;
+    String[] data2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class SolutionsActivity extends Activity {
         if(type != null) {
             this.ids = type.getInt("id");
             this.file = type.getBoolean("file");
+            this.data2 = type.getStringArray("data2");
         }
 
         //adapter for list view to list solutions that are saved in the database
@@ -51,6 +53,7 @@ public class SolutionsActivity extends Activity {
                 nextScreen.putExtra("id", ids);
                 nextScreen.putExtra("file", true);
                 nextScreen.putExtra("data", data);
+                nextScreen.putExtra("data2", data2);
                 startActivityForResult(nextScreen, 0);
             }
         });

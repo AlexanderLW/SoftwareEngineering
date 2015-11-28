@@ -41,8 +41,8 @@ public class NeatSolution extends SolutionSet implements Type {
                 new Answer("double", true)
         };
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
 
@@ -52,26 +52,26 @@ public class NeatSolution extends SolutionSet implements Type {
         for(int i = 0; i <= count; i++) {
             switch(i) {
                 case 0:
-                    setVolFlask(Double.parseDouble(answers[i].getVALUE())/1000);
+                    setVolFlask(Double.parseDouble(answers[i].getValue())/1000);
                     break;
                 case 1:
-                    setSolvent(answers[i].getVALUE());
+                    setSolvent(answers[i].getValue());
                     break;
                 case 2:
-                    setSolute(answers[i].getVALUE());
+                    setSolute(answers[i].getValue());
                     break;
                 case 3:
-                    setMolWeight(Double.parseDouble(answers[i].getVALUE()));
+                    setMolWeight(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 4:
-                    setSolMolarity(Double.parseDouble(answers[i].getVALUE()));
+                    setSolMolarity(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 5:
-                    setSolDensity(Double.parseDouble(answers[i].getVALUE()));
+                    setSolDensity(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 6:
                     //setAnswerValue(6, String.valueOf(solVol));
-                    super.setAnsw(Double.parseDouble(answers[i].getVALUE()));
+                    super.setAnswer(Double.parseDouble(answers[i].getValue()));
                     break;
             }
         }
@@ -84,7 +84,7 @@ public class NeatSolution extends SolutionSet implements Type {
         calcMass();
 
 
-        setDETAILS(new String[]{
+        setDetails(new String[]{
                 (volFlask * 1000) + "ml",
                 solMolarity + " molar solution",
                 solvent + " as the solvent",
@@ -92,7 +92,7 @@ public class NeatSolution extends SolutionSet implements Type {
                 solVol + "mL of " + solute + " as a solute"
         });
 
-        setDATA(new String[]{
+        setData(new String[]{
                 String.valueOf(volFlask),
                 solvent,
                 solute,

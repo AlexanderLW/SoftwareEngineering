@@ -15,6 +15,9 @@ import database.SolutionDBHelper;
 
 
 public class SaveActivity extends Activity {
+    /*
+    This screen allows the naming of a solution to be saved for later use.
+     */
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     String[] details, data;
 

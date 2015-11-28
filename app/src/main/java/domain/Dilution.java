@@ -19,41 +19,41 @@ public class Dilution extends SolutionSet implements Type{
 
         serial = flag;
 
-        String[] questions = super.concat(solution.getQUESTIONS(), new String[]{
+        String[] questions = super.concat(solution.getQuestions(), new String[]{
                 "What is the volume of the new dilution?(in mL)",
                 "What is the volume of the stock solution you are transferring?(in mL)",
                 "What is the molarity of the new dilution?(round to the 4th Decimal)"
         });
 
-        Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
+        Answer[] answers = super.concat(solution.getAnswers(), new Answer[]{
                 new Answer("double", false),
                 new Answer("double", true, true),
                 new Answer("double", true)
         });
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
-        if(flag) super.setNAME("Serial Dilution");
+        super.setQuestions(questions);
+        super.setAnswers(answers);
+        if(flag) super.setName("Serial Dilution");
     }
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
         if(count <= 5) {
             solution.setValues(answers, count);
-            setAnsw(solution.getAnsw());
+            setAnswer(solution.getAnswer());
         }
         if(count <= 8) {
             for (int i = 6; i <= count; i++) {
                 switch (i) {
                     case 6:
-                        setDilutionVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setDilutionVol(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 7:
-                        setStockVolT(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setStockVolT(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 8:
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()));
+                        setAnswer(Double.parseDouble(answers[i].getValue()));
                         break;
                 }
             }
@@ -63,7 +63,7 @@ public class Dilution extends SolutionSet implements Type{
     //computes data
     public void compute(int count) {
         if(count == 5) {
-            solution.setANSWERS(getANSWERS());
+            solution.setAnswers(getAnswers());
             solution.compute(count);
         }
         else {
@@ -72,8 +72,8 @@ public class Dilution extends SolutionSet implements Type{
             newSolution = new Solution("Dilution", dilutionVol*1000, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), dilutionMolarity);
             newSolution.compute(count);
             newSolution.calcMass((dilutionVol*dilutionMolarity),solution.getSoluteMolWeight());//recalculate the mass of solute in the new solution
-            setDETAILS(newSolution.getDETAILS());
-            setDATA(newSolution.getDATA());
+            setDetails(newSolution.getDetails());
+            setData(newSolution.getData());
         }
     }
 
@@ -83,6 +83,8 @@ public class Dilution extends SolutionSet implements Type{
             return solution.getCompare(count);
         else if(count == 7)
             return solution.getCompare2();
+        //else if(count == 8)
+           // return solution.getVolFlask();
         return dilutionMolarity;
     }
 
@@ -99,20 +101,20 @@ public class Dilution extends SolutionSet implements Type{
     //get restart value and set the answers for the new dilution
     public int getRestart() {
         if(serial) {
-            String[] questions = super.concat(newSolution.getQUESTIONS(), new String[]{
+            String[] questions = super.concat(newSolution.getQuestions(), new String[]{
                     "What is the volume of the new dilution?",
                     "What is the volume of the last dilution you are transferring?",
                     "What is the molarity of the new dilution?"
             });
-            setQUESTIONS(questions);
-            Answer[] answers = super.concat(newSolution.getANSWERS(), new Answer[]{
+            setQuestions(questions);
+            Answer[] answers = super.concat(newSolution.getAnswers(), new Answer[]{
                     new Answer("double", false),
                     new Answer("double", true, true),
                     new Answer("double", true)
             });
-            setANSWERS(answers);
+            setAnswers(answers);
 
-            solution.setNAME(newSolution.getNAME());
+            solution.setName(newSolution.getName());
             solution.setVolFlask(newSolution.getVolFlask());
             solution.setSolvent(newSolution.getSolvent());
             solution.setSolute(newSolution.getSolute());
@@ -120,8 +122,8 @@ public class Dilution extends SolutionSet implements Type{
             solution.setSolMolarity(newSolution.getSolMolarity());
             solution.setSolMol(newSolution.getSolMol());
             solution.setSolMass(newSolution.getSolMass());
-            solution.setQUESTIONS(solution.getQUESTIONS());
-            solution.setANSWERS(solution.getANSWERS());
+            solution.setQuestions(solution.getQuestions());
+            solution.setAnswers(solution.getAnswers());
         }
         return 6;
     }

@@ -4,7 +4,9 @@ package domain;
  * Created by User on 4/24/15.
  */
 public class Card {
-
+/*
+used to display saved solutions.
+ */
     private String data;
 
     public Card(String data){

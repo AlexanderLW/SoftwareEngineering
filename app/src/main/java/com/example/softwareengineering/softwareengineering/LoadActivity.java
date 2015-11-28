@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 
 public class LoadActivity extends Activity {
+
+    /*
+    This screen is displayed after selecting a solution type and handles setting up for creating that solution type.
+     */
+
     int id;
     static Context appContext;
 

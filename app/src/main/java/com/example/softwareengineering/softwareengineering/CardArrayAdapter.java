@@ -19,6 +19,11 @@ import domain.Card;
  * Created by User on 4/24/15.
  */
 public class CardArrayAdapter extends ArrayAdapter<Card> {
+
+    /*
+    This class prepares and displays saved solutions in a format similar to index cards in a scrollable list.
+     */
+
     Typeface myTypeface;
     private ArrayList<Card> cardList = new ArrayList();
 

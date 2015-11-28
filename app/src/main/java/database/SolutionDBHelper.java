@@ -12,6 +12,11 @@ import java.util.ArrayList;
  * Created by Alex on 4/16/2015.
  */
 public class SolutionDBHelper extends SQLiteOpenHelper{
+
+    /*
+    This class is used to access the database for both loading and saving.
+     */
+
     //creates database
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "MySolutions.db";

@@ -18,12 +18,18 @@ import domain.SolutionSet;
 import domain.SolutionTypeFactory;
 
 public class QuestionsActivity extends Activity {
+    /*
+    This activity displays all questions and input fields for all solution types. It receives data selected from the solutions and details activity classes to load saved solutions for use.
+     */
+
     int count = 0, trys = 0;
     boolean file = false, repeat = false, correct = false;
     int id;
     SolutionSet soluType;
     String[] data;
+    String[] data2;
     Solution sol;
+    Solution sol2;
 
     private AlertDialog.Builder builder;
     private AlertDialog repeatDialog;
@@ -60,6 +66,10 @@ public class QuestionsActivity extends Activity {
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
+                if(id > 3) {
+                    this.data2 = type.getStringArray("data2");
+                    this.sol2 = new Solution(data2);
+                }
                 count = 6;
             }
             //creates the correct questions depending on the solution type clicked in types activity
@@ -132,9 +142,9 @@ public class QuestionsActivity extends Activity {
         soluType.setAnswerValue(count, answer.getText().toString());
         if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals("."))
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
-        else if(soluType.getANSWERS()[count].getTYPE().equals("double") && Double.parseDouble(answer.getText().toString().trim()) == 0)
+        else if(soluType.getAnswers()[count].getType().equals("double") && Double.parseDouble(answer.getText().toString().trim()) == 0)
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
-        else if(soluType.getANSWERS()[count].getCHECK()) {
+        else if(soluType.getAnswers()[count].getCheck()) {
             check();
         }
         else {
@@ -142,7 +152,7 @@ public class QuestionsActivity extends Activity {
         }
 
         if(correct) {
-            if(count == (soluType.getQUESTIONS().length - 1))
+            if(count == (soluType.getQuestions().length - 1))
                 save();
             else {
                 count++;
@@ -160,7 +170,7 @@ public class QuestionsActivity extends Activity {
     public void setEdit(EditText answer, String input) {
         answer.setText(input);
         answer.setSelection(answer.getText().length());
-        if(soluType.getANSWERS()[count].getTYPE().equals("String"))
+        if(soluType.getAnswers()[count].getType().equals("String"))
             answer.setInputType(InputType.TYPE_CLASS_TEXT);
         else
             answer.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -168,23 +178,24 @@ public class QuestionsActivity extends Activity {
 
     //method to check info/answers
     public void check() {
-        soluType.setValues(soluType.getANSWERS(), count);
-        if(soluType.getANSWERS()[count].getTRANSFER()) {
-            if(soluType.getAnsw() > soluType.getCompare(count))
-                Toast.makeText(QuestionsActivity.this, "Please enter a volume lower than the total volume " + soluType.getAnsw() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
-            else if(soluType.getAnsw() > soluType.getCompare2())
+        soluType.setValues(soluType.getAnswers(), count);
+        if(soluType.getAnswers()[count].getTransfer()) {
+            if(soluType.getAnswer() > soluType.getCompare(count))
+                Toast.makeText(QuestionsActivity.this, "Please enter a volume lower than the total volume " + soluType.getAnswer() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
+            else if(soluType.getAnswer() > soluType.getCompare2())
                 Toast.makeText(QuestionsActivity.this, "Need a bigger flask", Toast.LENGTH_SHORT).show();
-            //else if(soluType.getAnsw() > Double.parseDouble(soluType.getDATA()[0]))
-              //  Toast.makeText(QuestionsActivity.this, "Please enter an amount less than the solution volume " + soluType.getAnsw() + " > " +  soluType.getDATA()[0], Toast.LENGTH_SHORT).show();
+           // else if(soluType.getAnswer() > Double.parseDouble(soluType.getAnswers()[0].getValue()))
+              //  Toast.makeText(QuestionsActivity.this, "Not enough solution", Toast.LENGTH_SHORT).show();
             else
+
                 correct = true;
         }
         else {
             compute();
-            if (trys < 3 && soluType.getCompare(count) != soluType.getAnsw()) {
+            if (trys < 3 && soluType.getCompare(count) != soluType.getAnswer()) {
                 Toast.makeText(QuestionsActivity.this, "Incorrect please try again", Toast.LENGTH_SHORT).show();
                 trys++;
-            } else if (soluType.getCompare(count) == soluType.getAnsw()) {
+            } else if (soluType.getCompare(count) == soluType.getAnswer()) {
                 Toast.makeText(QuestionsActivity.this, "Correct", Toast.LENGTH_SHORT).show();
                 correct = true;
             } else {
@@ -204,8 +215,8 @@ public class QuestionsActivity extends Activity {
     public void save() {
         compute();
         Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-        nextScreen.putExtra("solutionDetails", soluType.getDETAILS());
-        nextScreen.putExtra("solutionData", soluType.getDATA());
+        nextScreen.putExtra("solutionDetails", soluType.getDetails());
+        nextScreen.putExtra("solutionData", soluType.getData());
         startActivityForResult(nextScreen, 1);
     }
 
@@ -215,46 +226,46 @@ public class QuestionsActivity extends Activity {
         if (file) {
             switch (id) {
                 case 3:
-                    soluType = sFactory.getSolutionSet("Dilution", sol);
+                    soluType = sFactory.getSolutionSet("Dilution", sol, null);
                     break;
                 case 4:
-                    soluType = sFactory.getSolutionSet("Serial Dilution", sol);
+                    soluType = sFactory.getSolutionSet("Serial Dilution", sol, null);
                     break;
                 case 5:
-                    soluType = sFactory.getSolutionSet("External Standards", sol);
+                    soluType = sFactory.getSolutionSet("External Standards", sol, null);
                     break;
                 case 6:
-                    soluType = sFactory.getSolutionSet("Internal Standards", sol);
+                    soluType = sFactory.getSolutionSet("Internal Standards", sol, sol2);
                     break;
                 case 7:
-                    soluType = sFactory.getSolutionSet("Standard Addition", sol);
+                    soluType = sFactory.getSolutionSet("Standard Addition", sol, sol2);
                     break;
             }
         } else {
             switch (id) {
                 case 0:
-                    soluType = sFactory.getSolutionSet("Solution", null);
+                    soluType = sFactory.getSolutionSet("Solution", null, null);
                     break;
                 case 1:
-                    soluType = sFactory.getSolutionSet("Neat", null);
+                    soluType = sFactory.getSolutionSet("Neat", null, null);
                     break;
                 case 2:
-                    soluType = sFactory.getSolutionSet("Concentrated", null);
+                    soluType = sFactory.getSolutionSet("Concentrated", null, null);
                     break;
                 case 3:
-                    soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"));
+                    soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"), null);
                     break;
                 case 4:
-                    soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"));
+                    soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"), null);
                     break;
                 case 5:
-                    soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"), null);
                     break;
                 case 6:
-                    soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"),new Solution("standard solution") );
                     break;
                 case 7:
-                    soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"));
+                    soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"), new Solution("standard solution"));
                     break;
             }
         }

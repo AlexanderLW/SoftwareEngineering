@@ -11,9 +11,16 @@ import android.widget.TextView;
 
 
 public class DetailsActivity extends Activity {
+
+    /*
+    This class displays information about a saved solution before it is selected to be used in the creation of another solution type.
+     */
+
+
     boolean file;
     int id;
     String[] data;
+    String[] data2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,7 @@ public class DetailsActivity extends Activity {
             this.id = type.getInt("id");
             this.file = type.getBoolean("file");
             this.data = type.getStringArray("data");
+            this.data2 = type.getStringArray("data2");
         }
 
         //adapter for list view to list the details of the solution that was clicked
@@ -42,13 +50,13 @@ public class DetailsActivity extends Activity {
                 "The Volume of the solution is: " + Double.parseDouble(data[0]) + "mL",
                 "The solvent in the solution is: " + data[1],
                 "The solute in the solution is:: " + data[2],
-                "The molecular weight of the " + data[2] + " is: " + data[3] + "g/mol",
+                "The molecular weight of " + data[2] + " is: " + data[3] + "g/mol",
                 "The molarity of the solution is: " + data[4] + "M",
                 "The mass of " + data[2] + " in the solution is: " + data[6] +"g"//fixed this value from[5] to [6]
         };
         ListAdapter adapter = new TypeAdapter(this, details);
-        ListView detailsview = (ListView) findViewById(R.id.details);
-        detailsview.setAdapter(adapter);
+        ListView detailsView = (ListView) findViewById(R.id.details);
+        detailsView.setAdapter(adapter);
     }
 
     //on yes button click passes info along to and loads next activity it will send the response to the previous activities to close them
@@ -57,6 +65,7 @@ public class DetailsActivity extends Activity {
         nextScreen.putExtra("id", id);
         nextScreen.putExtra("file", true);
         nextScreen.putExtra("data", data);
+        nextScreen.putExtra("data2", data2);
         startActivity(nextScreen);
         setResult(2);
         finish();

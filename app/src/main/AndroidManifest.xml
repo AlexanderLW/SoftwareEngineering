@@ -39,6 +39,10 @@
             android:label="@string/title_activity_solutions" >
         </activity>
         <activity
+            android:name=".SolutionsActivity2"
+            android:label="@string/title_activity_solutions2" >
+        </activity>
+        <activity
             android:name=".ViewSavedActivity"
             android:label="@string/title_activity_view_solutions"
             android:parentActivityName=".TypesActivity" >
@@ -46,6 +50,10 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details" >
+        </activity>
+        <activity
+            android:name=".DetailsActivity2"
+            android:label="@string/title_activity_details2" >
         </activity>
         <activity
             android:name=".GlossaryActivity"

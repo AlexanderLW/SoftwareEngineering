@@ -20,6 +20,9 @@ import domain.SolutionSet;
 
 
 public class TypesActivity extends ActionBarActivity {
+    /*
+    Displays solution types and launches load activity when one is selected.
+     */
     SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
 
     @Override
@@ -52,12 +55,12 @@ public class TypesActivity extends ActionBarActivity {
                     nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
-               /* else if(id > 4 || position > 3) {
+                else if(id > 4 || position > 3) {
                     Intent nextScreen = new Intent(TypesActivity.this, LoadSelectionActivity.class);
                     nextScreen.putExtra("id", position);
                     startActivity(nextScreen);
 
-                }*/
+                }
                 //if clicked goes to the load functionality
                 else{
                     Intent nextScreen = new Intent(TypesActivity.this, LoadActivity.class);

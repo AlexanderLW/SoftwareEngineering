@@ -11,10 +11,11 @@ import android.widget.TextView;
  * Created by Alexander on 10/20/2015.
  */
 public class DefinitionsActivity extends Activity{
+    /*
+    This page displays definitions of terms selected from the GlossaryActivity page.
+     */
 
-    //Testing override with pushing and pulling
-
-    int id;
+    int id;//identifies what term was selected
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

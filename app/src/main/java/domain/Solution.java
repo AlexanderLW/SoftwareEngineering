@@ -33,8 +33,8 @@ public class Solution extends SolutionSet implements Type {
             new Answer("double", true)
         };
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
     public Solution(String type) {
@@ -57,8 +57,8 @@ public class Solution extends SolutionSet implements Type {
                 new Answer("double", true)
         };
 
-        super.setQUESTIONS(questions);
-        super.setANSWERS(answers);
+        super.setQuestions(questions);
+        super.setAnswers(answers);
     }
 
     public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
@@ -101,14 +101,14 @@ public class Solution extends SolutionSet implements Type {
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
                 new Answer[] {
-                        new Answer("double", false, String.valueOf(Double.valueOf(data[0])*1000)),
+                        new Answer("double", false, String.valueOf(Double.valueOf(data[0]))),
                         new Answer("String", false, data[1]),
                         new Answer("String", false, data[2]),
                         new Answer("double", false, data[3]),
                         new Answer("double", false, data[4]),
                         new Answer("double", true, data[5])//fixed this value  from 6 to 5 and the grams of solute now loads correctly
                 });
-        setValues(getANSWERS(), 5);
+        setValues(getAnswers(), 5);
     }
 
     //set values of answers
@@ -116,22 +116,22 @@ public class Solution extends SolutionSet implements Type {
         for(int i = 0; i <= count; i++) {
             switch(i) {
                 case 0:
-                    setVolFlask(Double.parseDouble(answers[i].getVALUE()));
+                    setVolFlask(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 1:
-                    setSolvent(answers[i].getVALUE());
+                    setSolvent(answers[i].getValue());
                     break;
                 case 2:
-                    setSolute(answers[i].getVALUE());
+                    setSolute(answers[i].getValue());
                     break;
                 case 3:
-                    setSoluteMolWeight(Double.parseDouble(answers[i].getVALUE()));
+                    setSoluteMolWeight(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 4:
-                    setSolMolarity(Double.parseDouble(answers[i].getVALUE()));
+                    setSolMolarity(Double.parseDouble(answers[i].getValue()));
                     break;
                 case 5:
-                    super.setAnsw(Double.parseDouble(answers[i].getVALUE()));
+                    super.setAnswer(Double.parseDouble(answers[i].getValue()));
                     break;
             }
         }
@@ -142,14 +142,14 @@ public class Solution extends SolutionSet implements Type {
         calcMol(solMolarity, volFlask);
         calcMass(solMol, soluteMolWeight);
 
-        setDETAILS(new String[]{
+        setDetails(new String[]{
                 (volFlask) + "ml",
                 solMolarity + " molar solution",
                 solvent + " as the solvent",
                 solMass + "g of " + solute + " as a solute"
         });
 
-        setDATA(new String[]{
+        setData(new String[]{
                 String.valueOf(volFlask),
                 solvent,
                 solute,
