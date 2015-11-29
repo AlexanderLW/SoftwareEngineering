@@ -33,7 +33,7 @@ public class StandardAddition extends SolutionSet implements Type {
         this.analyte = analyte;
         this.standardAddition = standardAddition;
 
-        String[] questions = super.concat(analyte.getQUESTIONS(), standardAddition.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQuestions(), standardAddition.getQuestions());
         questions = super.concat(questions, new String[]{
                 "What is the volume of the new standard? (in mL)",
                 "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
@@ -42,7 +42,7 @@ public class StandardAddition extends SolutionSet implements Type {
                 "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
         } );
 
-        Answer[] answers = super.concat(analyte.getANSWERS(), standardAddition.getANSWERS());
+        Answer[] answers = super.concat(analyte.getAnswers(), standardAddition.getAnswers());
         answers = super.concat(answers, new Answer[]{
                 new Answer("double", false),
                 new Answer("double", true, true),
@@ -67,7 +67,7 @@ public class StandardAddition extends SolutionSet implements Type {
         //Set the values from the loading (or creating) of an internal standard.
         if(count <= 11) {
             standardAddition.setValues(answers, count);
-            setAnsw(standardAddition.getAnsw());
+            setAnswer(standardAddition.getAnswer());
         }
 
         //Set the values for the questions in this class
@@ -76,20 +76,20 @@ public class StandardAddition extends SolutionSet implements Type {
                 switch(i) {
                     case 12:
                         //The parse double is setting the variable to being a double
-                        setUnknownSolutionName(answers[i].getVALUE());
+                        setUnknownSolutionName(answers[i].getValue());
                         break;
                     case 13:
-                        setFlaskVolume(Double.parseDouble(answers[i].getVALUE()));
+                        setFlaskVolume(Double.parseDouble(answers[i].getValue()));
                         break;
                     case 14:
-                        setNumberOfStandards(Integer.parseInt(answers[i].getVALUE()));
+                        setNumberOfStandards(Integer.parseInt(answers[i].getValue()));
                         break;
                     case 15:
-                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getValue()));
                         //Might need to be divided by 1000 ??? Don't know the purpose of that yet
                         break;
                     case 16:
-                        setVolumeAnalyteTransferred(answers[i].getVALUE());
+                        setVolumeAnalyteTransferred(answers[i].getValue());
 
                         //This is where the string to array transference will occur
                         AnalyteTransferredString = getVolumeAnalyteTransferred().split(",");
@@ -101,7 +101,7 @@ public class StandardAddition extends SolutionSet implements Type {
 
                         break;
                     case 17:
-                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getValue()));
                         break;
                 }
             }
@@ -116,7 +116,7 @@ public class StandardAddition extends SolutionSet implements Type {
             analyte.compute(count);
         }
         if(count == 11){
-            standardAddition.setANSWERS(getANSWERS());
+            standardAddition.setAnswers(getAnswers());
             standardAddition.compute(count);
         }
         if(count == 14) {

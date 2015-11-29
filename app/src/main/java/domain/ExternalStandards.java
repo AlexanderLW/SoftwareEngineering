@@ -32,7 +32,7 @@ External standards, Internal standards, and standard addition do not make sense 
 of process as an alternative.
 
  */
-        Answer[] answers = super.concat(solution.getANSWERS(), new Answer[]{
+        Answer[] answers = super.concat(solution.getAnswers(), new Answer[]{
                 new Answer("String", false),
                 new Answer("int", false),
                 new Answer("double", false),
@@ -56,11 +56,11 @@ of process as an alternative.
             for (int i = 7; i <= count; i++) {
                 switch (i) {
                     case 7:
-                        setUnknownVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setUnknownVol(Double.parseDouble(answers[i].getValue()) / 1000);
                         break;
                     case 8:
-                        setAnalyteVol(Double.parseDouble(answers[i].getVALUE()) / 1000);
-                        setAnsw(Double.parseDouble(answers[i].getVALUE()) / 1000);
+                        setAnalyteVol(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
                 }
             }
         }

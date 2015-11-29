@@ -71,6 +71,7 @@ public class QuestionsActivity extends Activity {
                     this.sol2 = new Solution(data2);
                 }
                 count = 6;
+                if(id > 3) count = 12;
             }
             //creates the correct questions depending on the solution type clicked in types activity
             createSolutionType();

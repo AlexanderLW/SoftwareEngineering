@@ -35,7 +35,7 @@ public class InternalStandards extends SolutionSet implements Type {
         this.analyte = analyte;
         this.internalStandard = internalStandard;
 
-        String[] questions = super.concat(analyte.getQUESTIONS(), internalStandard.getQUESTIONS());
+        String[] questions = super.concat(analyte.getQuestions(), internalStandard.getQuestions());
 
         //This is how to get the proper amount of standards to show up on the results screen that needs to be made.
         for(int i = 0; i < 5; i++) {
@@ -58,7 +58,7 @@ public class InternalStandards extends SolutionSet implements Type {
         } );
 
         //NOTHING will have a value of true until I add in the proper check methods
-        Answer[] answers = super.concat(analyte.getANSWERS(), internalStandard.getANSWERS());
+
         Answer[] answers = super.concat(analyte.getAnswers(), internalStandard.getAnswers());
         answers = super.concat(answers, new Answer[]{
                 new Answer("String", false),
@@ -94,20 +94,20 @@ public class InternalStandards extends SolutionSet implements Type {
                 switch(i) {
                     case 12:
                         //The parse double is setting the variable to being a double
-                        setUnknownSolutionName(answers[i].getVALUE());
+                        setUnknownSolutionName(answers[i].getValue());
                         break;
                     case 13:
-                        setFlaskVolume(Double.parseDouble(answers[i].getVALUE()));
+                        setFlaskVolume(Double.parseDouble(answers[i].getValue()));
                         break;
                     case 14:
-                        setNumberOfStandards(Integer.parseInt(answers[i].getVALUE()));
+                        setNumberOfStandards(Integer.parseInt(answers[i].getValue()));
                         break;
                     case 15:
-                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        setVolumeUnknownTransferred(Double.parseDouble(answers[i].getValue()));
                         //Might need to be divided by 1000 ??? Don't know the purpose of that yet
                         break;
                     case 16:
-                        setVolumeAnalyteTransferred(answers[i].getVALUE());
+                        setVolumeAnalyteTransferred(answers[i].getValue());
 
                         //This is where the string to array transference will occur
                         AnalyteTransferredString = getVolumeAnalyteTransferred().split(",");
@@ -119,7 +119,7 @@ public class InternalStandards extends SolutionSet implements Type {
 
                         break;
                     case 17:
-                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getVALUE()));
+                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getValue()));
                         break;
                 }
             }
