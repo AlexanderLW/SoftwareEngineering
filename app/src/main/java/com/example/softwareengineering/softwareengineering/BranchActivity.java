@@ -46,7 +46,7 @@ public class BranchActivity extends Activity{
         //on Neat button click, create new questionsActivity; pass 1 as id
         public void onNeat(View view) {
             Intent nextScreen = new Intent(BranchActivity.this, QuestionsActivity.class);
-            nextScreen.putExtra("id", 1);
+            nextScreen.putExtra("id", -1);
             nextScreen.putExtra("file", false);
             startActivity(nextScreen);
         }
@@ -61,7 +61,7 @@ public class BranchActivity extends Activity{
 
         public void onConcentrated(View view) {
             Intent nextScreen = new Intent(BranchActivity.this, QuestionsActivity.class);
-            nextScreen.putExtra("id", 2);
+            nextScreen.putExtra("id", -2);
             nextScreen.putExtra("file", false);
             startActivity(nextScreen);
         }

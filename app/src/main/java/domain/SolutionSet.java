@@ -14,11 +14,16 @@ public abstract class SolutionSet {
     double answer;
     private String[] details = {};
     private String[] data = {};
+    private String NAME = "";
+    private String[] QUESTIONS = {};
+    private Answer[] ANSWERS;
+    double answ;
+    private String[] DETAILS = {};
+    private String[] DATA = {};
+    private String[] DATA2 = {};
 
     public static final String[] SOLUTIONTYPES = {
       "Single Solution",
-      "Neat Solution",
-      "Concentrated Solution",
       "Single Dilution",
       "Serial Dilution",
       "External Standards",
@@ -141,4 +146,15 @@ public abstract class SolutionSet {
     public void setData(String[] data) {
         this.data = data;
     }
+
+    public String[] getDATA2() {
+        return DATA2;
+    }
+
+    public void setDATA2(String[] DATA2) {
+        this.DATA2 = DATA2;
+    }
+
+
+
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,7 +60,7 @@ public class TypesActivity extends ActionBarActivity {
                     nextScreen.putExtra("file", false);
                     startActivity(nextScreen);
                 }
-                else if(id > 4 || position > 3) {
+                else if(id > 3 || position > 3) {
                     Intent nextScreen = new Intent(TypesActivity.this, LoadSelectionActivity.class);
                     nextScreen.putExtra("id", position);
                     startActivity(nextScreen);

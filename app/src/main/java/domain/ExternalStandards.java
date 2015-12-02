@@ -1,4 +1,3 @@
-
 package domain;
 
 /**
@@ -7,10 +6,18 @@ package domain;
 public class ExternalStandards extends SolutionSet implements Type {
 
     private Solution solution;
-    private double unknownVol = 0.0; //changed from standardVolume to unknownVolume
-    private double analyteVol = 0.0; // changed from stockVolT to analyteVolume
-    private double standardMolarity = 0.0;
-    private boolean anotherStandard = false;
+
+    //New variables
+    private String unknownName = "";
+    private int numberOfStandards = 0;
+    private double flaskVolume = 0.0;
+    private String volumeAnalyteTransferred = "";
+
+    //This is the string that is used for the listview when you click internal standards
+    public static final String[] values = {
+            "Unknown Standard",
+            "Standard"
+    };
 
     //External Standards constructor. This is set to give you the questions and answer related to external standards on the app
     public ExternalStandards(Solution solution){
@@ -19,27 +26,25 @@ public class ExternalStandards extends SolutionSet implements Type {
 
         this.solution = solution;
 
-        String[] questions = super.concat(solution.getQuestions(), new String[]{
-                "What is the name of the unknown solution?",
-                "Stock solution of the analyte - create new or use saved?",
-                "How many standards are you going to prepare?",
-                "What is the volume of the volumetric flask within which you will prepare the unknown that is analyzed and the standards?",
-                "What are the volumes of the stock analyte solution added to each one of the standards?"
+        String[] questions = solution.getQuestions();
 
+        questions = super.concat(questions, new String[]{
+                "What is the name of the unknown solution?",
+                "What is the volume of the volumetric flask within which you will prepare the unknown that is analyzed and the standards (V_tot in mL)?",
+                "How many standards, including the unknown, are you going to prepare(no more than 10)?",
+                "What are the volumes of the stock analyte solution added to each one of the standards(V_a1, ect. in mL)?"
         });
 /*
 External standards, Internal standards, and standard addition do not make sense in the current question format. Need to ask Kreller if he wants multiple choice style step through
 of process as an alternative.
 
  */
-        Answer[] answers = super.concat(solution.getAnswers(), new Answer[]{
+        Answer[] answers = solution.getAnswers();
+        answers = super.concat(answers, new Answer[]{
                 new Answer("String", false),
+                new Answer("double", false),
                 new Answer("int", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", false),
-                new Answer("double", false)
+                new Answer("String", false)
         });
 
         super.setQuestions(questions);
@@ -52,15 +57,21 @@ of process as an alternative.
             solution.setValues(answers, count);
             setAnswer(solution.getAnswer());
         }
-        if(count <= 8) {
-            for (int i = 7; i <= count; i++) {
+        else {
+            for (int i = 6; i <= count; i++) {
                 switch (i) {
+                    case 6:
+                        setUnknownName(answers[i].getValue());
+                        break;
                     case 7:
-                        setUnknownVol(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setFlaskVolume(Double.parseDouble(answers[i].getValue()));
                         break;
                     case 8:
-                        setAnalyteVol(Double.parseDouble(answers[i].getValue()) / 1000);
-                        setAnswer(Double.parseDouble(answers[i].getValue()) / 1000);
+                        setNumberOfStandards(Integer.parseInt(answers[i].getValue()));
+                        break;
+                    case 9:
+                        setVolumeAnalyteTransferred(answers[i].getValue());
+                        break;
                 }
             }
         }
@@ -73,82 +84,47 @@ of process as an alternative.
             solution.compute(count);
         }
         else {
-            calcMolarity(solution.getSolMolarity(), analyteVol, unknownVol);
 
-            Solution newSolution = new Solution("External Standard", unknownVol, solution.getSolvent(), solution.getSolute(), solution.getSoluteMolWeight(), standardMolarity);
-            newSolution.compute(count);
-            setDetails(newSolution.getDetails());
-            setData(newSolution.getData());
+            setData(new String[] {
+                    String.valueOf(this.getUnknownName()),
+                    String.valueOf(this.getFlaskVolume()),
+                    String.valueOf(this.getNumberOfStandards()),
+                    String.valueOf(this.getVolumeAnalyteTransferred())
+            });
+            setDetails(new String[] {
+                    "1"
+            });
         }
     }
 
-    //get compare for checks
-    public double getCompare(int count){
-        if(count == 5)
-            return solution.getCompare(count);
-        else if(count == 7)
-            return solution.getVolFlask();
-        return unknownVol;
-    }
+    @Override
+    public double getCompare(int count) {return 0;}
 
-    //get compare for volume
-    public double getCompare2() {
-        return unknownVol;
-    }
+    @Override
+    public double getCompare2() {return 0;}
 
-    //get dialog for alert
-    public String getDialog() {
-        return "Would you like to create another external standard?";
-    }
+    @Override
+    public String getDialog() {return null;}
 
-    //get restart value
-    public int getRestart() {
-        return 6;
-    }
+    @Override
+    public int getRestart() {return 0;}
 
-    //calculate molarity
-    public void calcMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 1000) / 1000;
-    }
 
-    //get and set
-    public Solution getSolution() {
-        return solution;
-    }
+    //Set and get for new variables
+    public String getUnknownName() {return unknownName;}
 
-    public void setSolution(Solution solution) {
-        this.solution = solution;
-    }
+    public void setUnknownName(String unknownName) {this.unknownName = unknownName;}
 
-    public double getUnknownVol() {
-        return unknownVol;
-    }
+    public int getNumberOfStandards() {return numberOfStandards;}
 
-    public void setUnknownVol(double unknownVol) {
-        this.unknownVol = unknownVol;
-    }
+    public void setNumberOfStandards(int numberOfStandards) {this.numberOfStandards = numberOfStandards;}
 
-    public double getAnalyteVol() {
-        return analyteVol;
-    }
+    public double getFlaskVolume() {return flaskVolume;}
 
-    public void setAnalyteVol(double analyteVol) {
-        this.analyteVol = analyteVol;
-    }
+    public void setFlaskVolume(double flaskVolume) {this.flaskVolume = flaskVolume;}
 
-    public double getStandardMolarity() {
-        return standardMolarity;
-    }
+    public String getVolumeAnalyteTransferred() {return volumeAnalyteTransferred;}
 
-    public void setStandardMolarity(double standardMolarity) {
-        this.standardMolarity = standardMolarity;
-    }
+    public void setVolumeAnalyteTransferred(String volumeAnalyteTransferred) {this.volumeAnalyteTransferred = volumeAnalyteTransferred;}
 
-    public boolean isAnotherStandard() {
-        return anotherStandard;
-    }
-
-    public void setAnotherStandard(boolean anotherStandard) {
-        this.anotherStandard = anotherStandard;
-    }
 }

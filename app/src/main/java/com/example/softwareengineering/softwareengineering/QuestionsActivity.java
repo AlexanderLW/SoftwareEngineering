@@ -57,12 +57,14 @@ public class QuestionsActivity extends Activity {
 
         //gets what was passed from previous activity and assigns it
         Bundle type = getIntent().getExtras();
+
         if(type != null) {
             this.id = type.getInt("id");
             //sets the questions sequence to repeatable
-            if(id > 3) repeat = true;
+            if(id > 1) repeat = true;
             //if a solution was loaded it creates it for creation of the questions
             this.file = type.getBoolean("file");
+
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
@@ -141,6 +143,8 @@ public class QuestionsActivity extends Activity {
         EditText answer = (EditText) findViewById(R.id.answer);
 
         soluType.setAnswerValue(count, answer.getText().toString());
+        //Used to test and make sure all values are going through the questions correctly
+            //Toast.makeText(QuestionsActivity.this, soluType.getAnswerValue(count), Toast.LENGTH_SHORT).show();
         if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals("."))
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getAnswers()[count].getType().equals("double") && Double.parseDouble(answer.getText().toString().trim()) == 0)
@@ -152,9 +156,16 @@ public class QuestionsActivity extends Activity {
             correct = true;
         }
 
+        /*
+         *setValues method was put here in after it was put into the check method. Without setValues here
+         *your last value the answers string from the different solutions had to be true on the second parameter
+         *or the method never ran and you never stored values
+         */
         if(correct) {
-            if(count == (soluType.getQuestions().length - 1))
+            if(count == (soluType.getQuestions().length - 1)) {
+                soluType.setValues(soluType.getAnswers(), count);
                 save();
+            }
             else {
                 count++;
                 setEdit(answer, soluType.getAnswerValue(count));
@@ -214,31 +225,42 @@ public class QuestionsActivity extends Activity {
 
     //method to continue to save screen
     public void save() {
-        compute();
-        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-        nextScreen.putExtra("solutionDetails", soluType.getDetails());
-        nextScreen.putExtra("solutionData", soluType.getData());
-        startActivityForResult(nextScreen, 1);
-    }
 
+        //This carries the data from External, Internal and Standard Addition to the StandardDetailActivity
+        if (id >= 3) {
+            compute();
+            Intent nextScreen = new Intent(QuestionsActivity.this, StandardsDetailActivity.class);
+            nextScreen.putExtra("solutionDetails", soluType.getDetails());
+            nextScreen.putExtra("solutionData", soluType.getData());
+            startActivityForResult(nextScreen, 1);
+        }
+        //This carries the data from Solution, Dilution and Serial Dilution to the DetailsActivity
+        else {
+            compute();
+            Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+            nextScreen.putExtra("solutionDetails", soluType.getDetails());
+            nextScreen.putExtra("solutionData", soluType.getData());
+            startActivityForResult(nextScreen, 1);
+        }
+    }
     //method to create solution
     public void createSolutionType() {
         SolutionTypeFactory sFactory = new SolutionTypeFactory();
         if (file) {
             switch (id) {
-                case 3:
+                case 1:
                     soluType = sFactory.getSolutionSet("Dilution", sol, null);
                     break;
-                case 4:
+                case 2:
                     soluType = sFactory.getSolutionSet("Serial Dilution", sol, null);
                     break;
-                case 5:
+                case 3:
                     soluType = sFactory.getSolutionSet("External Standards", sol, null);
                     break;
-                case 6:
+                case 4:
                     soluType = sFactory.getSolutionSet("Internal Standards", sol, sol2);
                     break;
-                case 7:
+                case 5:
                     soluType = sFactory.getSolutionSet("Standard Addition", sol, sol2);
                     break;
             }
@@ -247,25 +269,25 @@ public class QuestionsActivity extends Activity {
                 case 0:
                     soluType = sFactory.getSolutionSet("Solution", null, null);
                     break;
-                case 1:
+                case -1:
                     soluType = sFactory.getSolutionSet("Neat", null, null);
                     break;
-                case 2:
+                case -2:
                     soluType = sFactory.getSolutionSet("Concentrated", null, null);
                     break;
-                case 3:
+                case 1:
                     soluType = sFactory.getSolutionSet("Dilution", new Solution("stock solution"), null);
                     break;
-                case 4:
+                case 2:
                     soluType = sFactory.getSolutionSet("Serial Dilution", new Solution("stock solution"), null);
                     break;
-                case 5:
+                case 3:
                     soluType = sFactory.getSolutionSet("External Standards", new Solution("stock analyte solution"), null);
                     break;
-                case 6:
+                case 4:
                     soluType = sFactory.getSolutionSet("Internal Standards", new Solution("stock analyte solution"),new Solution("standard solution") );
                     break;
-                case 7:
+                case 5:
                     soluType = sFactory.getSolutionSet("Standard Addition", new Solution("stock analyte solution"), new Solution("standard solution"));
                     break;
             }
@@ -277,27 +299,27 @@ public class QuestionsActivity extends Activity {
         TextView head = (TextView) findViewById(R.id.header);
         switch (id) {
             case 0:
-                head.setText("Creating Solution: Solid Solvent");
+                head.setText("Creating Solution: Solid Solute");
+                break;
+            case -1:
+                head.setText("Creating Solution: Neat Solute");
+                break;
+            case -2:
+                head.setText("Creating Solution: Concentrated Solute");
                 break;
             case 1:
-                head.setText("Creating Solution: Neat Solvent");
-                break;
-            case 2:
-                head.setText("Creating Solution: Concentrated Solvent");
-                break;
-            case 3:
                 head.setText("Creating Dilution");
                 break;
-            case 4:
+            case 2:
                 head.setText("Creating Serial Dilutions");
                 break;
-            case 5:
+            case 3:
                 head.setText("Creating External Standards");
                 break;
-            case 6:
+            case 4:
                 head.setText("Creating Internal Standards");
                 break;
-            case 7:
+            case 5:
                 head.setText("Creating Standard Using Standard Addition Method");
                 break;
         }

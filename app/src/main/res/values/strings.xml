@@ -20,6 +20,8 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_details2">DetailsActivity2</string>
     <string name="title_activity_load_selection">LoadSelectionActivity</string>
+    <string name="title_activity_standards_detail">StandardsDetailActivity</string>
+    <string name="title_activity_standards_info">StandardsInfoActivity</string>
     <string name="confirm">I am sure</string>
     <string name="cancel">Cancel</string>
     <string name="remove_all_dialog_message">Are you sure you want to delete all saved solutions? (This will be permanent) </string>

@@ -92,7 +92,7 @@ public class Solution extends SolutionSet implements Type {
 
     public Solution(String[] data) {
         super("Solution",
-                new String[] {
+                new String[]{
                         "What is the volume of the stock solution you are preparing? (in mL)",
                         "What is the solvent you are using?",
                         "What is the solute?",
@@ -100,7 +100,7 @@ public class Solution extends SolutionSet implements Type {
                         "What is the molarity of the solution?",
                         "What is the mass of the solute that you are adding? (round to the 2nd Decimal)"
                 },
-                new Answer[] {
+                new Answer[]{
                         new Answer("double", false, String.valueOf(Double.valueOf(data[0]))),
                         new Answer("String", false, data[1]),
                         new Answer("String", false, data[2]),
@@ -110,6 +110,7 @@ public class Solution extends SolutionSet implements Type {
                 });
         setValues(getAnswers(), 5);
     }
+
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
@@ -158,6 +159,7 @@ public class Solution extends SolutionSet implements Type {
                 String.valueOf(solMol),
                 String.valueOf(solMass)
         });
+
     }
 
     //get compare for checks

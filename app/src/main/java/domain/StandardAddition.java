@@ -5,50 +5,45 @@ package domain;
  */
 public class StandardAddition extends SolutionSet implements Type {
 
-    Solution standardAddition, analyte;
-    private double standardVol = 0.0;
-    private double standardVolT = 0.0;
-    private double standardMolarity = 0.0;
-    private double analyteVolT = 0.0;
-    private double analyteMolarity = 0.0;
+
+    Solution unknownAnalyte, analyte;
 
     //New variables
-    private String unknownSolutionName = "";
+    private String unknownName = "";
     private double flaskVolume = 0.0;
-    private int numberOfStandards = 0;
+    private int numberOfVolumes = 0;
     private double volumeUnknownTransferred = 0.0;
     private String volumeAnalyteTransferred = "";
-    private double volumeInternalTransferred = 0.0;
 
-    //This is the array that will be made from the volumeAnalyteTransferred.
-    //volumeAnalyteTransferred will be read in and separated by comma and space delimited.
-    private String[] AnalyteTransferredString = new String[10];
-    private double[] AnalyteTransferredDouble = new double[AnalyteTransferredString.length];
-
+    //This is the string that is used for the listview when you click internal standards
+    public static final String[] values = {
+            "Unknown Standard",
+            "Standard"
+    };
 
     //constructor
-    public StandardAddition(Solution analyte, Solution StandardAddition){
+    public StandardAddition(Solution analyte, Solution unknownAnalyte){
         super("Standard Addition");
 
         this.analyte = analyte;
-        this.standardAddition = standardAddition;
+        this.unknownAnalyte = unknownAnalyte;
 
-        String[] questions = super.concat(analyte.getQuestions(), standardAddition.getQuestions());
+        String[] questions = super.concat(analyte.getQuestions(), unknownAnalyte.getQuestions());
         questions = super.concat(questions, new String[]{
-                "What is the volume of the new standard? (in mL)",
-                "What is the volume of the internal standard that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the internal standard in the new standard? (round to the 4th Decimal)",
-                "What is the volume of the stock analyte that you are transferring into the new standard? (in mL)",
-                "What is the molarity of the stock analyte in the new standard? (round to the 4th Decimal)"
+                "What is the name of the unknown?",
+                "What is the volume of the volumetric flasks within which you will prepare the standard (V_tot)?",
+                "How many standard solutions are you going to prepare (this includes the standard that only has unknown added to it)?",
+                "What volume of the Unknown solution will be added to each of the standards?",
+                "What are the volumes of the stock Analyte solution that are added to the standards (V_a1, V_a2, etc.)?"
         } );
 
-        Answer[] answers = super.concat(analyte.getAnswers(), standardAddition.getAnswers());
+        Answer[] answers = super.concat(analyte.getAnswers(), unknownAnalyte.getAnswers());
         answers = super.concat(answers, new Answer[]{
+                new Answer("String", false),
                 new Answer("double", false),
-                new Answer("double", true, true),
-                new Answer("double", true),
-                new Answer("double", true, true),
-                new Answer("double", true)
+                new Answer("int", false),
+                new Answer("double", false),
+                new Answer("String", false)
         });
 
         super.setQuestions(questions);
@@ -57,138 +52,90 @@ public class StandardAddition extends SolutionSet implements Type {
 
     //set values of answers
     public void setValues(Answer[] answers, int count) {
-
-        //Set the values from the loading (or creating) of an analyte.
         if(count <= 5) {
             analyte.setValues(answers, count);
-            setAnswer(analyte.getAnswer());
+            setAnswers(analyte.getAnswers());
         }
-
-        //Set the values from the loading (or creating) of an internal standard.
         if(count <= 11) {
-            standardAddition.setValues(answers, count);
-            setAnswer(standardAddition.getAnswer());
+            unknownAnalyte.setValues(answers, count);
+            setAnswers(unknownAnalyte.getAnswers());
         }
-
-        //Set the values for the questions in this class
         else {
             for(int i = 12; i <= count; i++) {
                 switch(i) {
                     case 12:
-                        //The parse double is setting the variable to being a double
-                        setUnknownSolutionName(answers[i].getValue());
+                        setUnknownName(answers[i].getValue());
                         break;
                     case 13:
                         setFlaskVolume(Double.parseDouble(answers[i].getValue()));
                         break;
                     case 14:
-                        setNumberOfStandards(Integer.parseInt(answers[i].getValue()));
+                        setNumberOfVolumes(Integer.parseInt(answers[i].getValue()));
                         break;
                     case 15:
                         setVolumeUnknownTransferred(Double.parseDouble(answers[i].getValue()));
-                        //Might need to be divided by 1000 ??? Don't know the purpose of that yet
                         break;
                     case 16:
                         setVolumeAnalyteTransferred(answers[i].getValue());
-
-                        //This is where the string to array transference will occur
-                        AnalyteTransferredString = getVolumeAnalyteTransferred().split(",");
-
-                        //Loop that sets all the values of from the user input to the new variable with doubles
-                        for(int j = 0; j < AnalyteTransferredString.length; j++) {
-                            AnalyteTransferredDouble[i] = Double.parseDouble(AnalyteTransferredString[i]);
-                        }
-
-                        break;
-                    case 17:
-                        setVolumeInternalTransferred(Double.parseDouble(answers[i].getValue()));
                         break;
                 }
             }
         }
     }
 
-    //Probably not needed since there are no computations
-    //computes data from the questions asked. Same method name as compute from the solution class.
+    //computes data
     public void compute(int count) {
         if(count == 5) {
             analyte.setAnswers(getAnswers());
             analyte.compute(count);
         }
         if(count == 11){
-            standardAddition.setAnswers(getAnswers());
-            standardAddition.compute(count);
-        }
-        if(count == 14) {
-            calcStandardMolarity(standardAddition.getSolMolarity(), standardVolT, standardVol);
+            unknownAnalyte.setAnswers(getAnswers());
+            unknownAnalyte.compute(count);
         }
         else {
-            calcAnalyteMolarity(analyte.getSolMolarity(), analyteVolT, standardVol);
 
-            Solution newSolution = new Solution("Standard Addition", standardVolT, standardAddition.getSolvent(), standardAddition.getSolute(), standardAddition.getSoluteMolWeight(), standardMolarity);
-            newSolution.compute(count);
-            setDetails(newSolution.getDetails());
-            setData(newSolution.getData());
+            setData(new String[]{
+                    String.valueOf(this.getUnknownName()),
+                    String.valueOf(this.getFlaskVolume()),
+                    String.valueOf(this.getNumberOfVolumes()),
+                    String.valueOf(this.getVolumeUnknownTransferred()),
+                    String.valueOf(this.getVolumeAnalyteTransferred())
+
+            });
+            //Set to in integer to distinguish between the 3 types of standard calibrations
+            setDetails(new String[] {
+                    "3"
+            });
+
         }
     }
 
-    //Probably not needed since there are no checks
-    //get compare for checks
-    public double getCompare(int count){
-        if(count == 5)
-            return analyte.getCompare(count);
-        else if(count == 13)
-            return standardAddition.getCompare(count);
-        else if(count == 14)
-            return standardAddition.getCompare2();
-        else if(count == 15)
-            return standardMolarity;
-        else if(count == 16)
-            return analyte.getCompare2();
-        return analyteMolarity;
-    }
+    @Override
+    public double getCompare(int count) {return 0;}
+
+    @Override
+    public double getCompare2() {return 0;}
+
+    @Override
+    public String getDialog() {return null;}
+
+    @Override
+    public int getRestart() {return 0;}
 
 
-    //get compare for volume
-    public double getCompare2() {
-        return standardVol;
-    }
+    //New getters and setters
+    public String getUnknownName() {return unknownName;}
 
-    //get dialog for alert
-    public String getDialog() {
-        return "Would you like to create another standard?";
-    }
-
-    //get restart value
-    public int getRestart() {
-        return 18;
-    }
-
-    //calculate standard molarity
-    public void calcStandardMolarity(double solutionMolarity, double volTran, double vol) {
-        standardMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
-    }
-
-    //calculate analyte molarity
-    public void calcAnalyteMolarity(double solutionMolarity, double volTran, double vol) {
-        analyteMolarity = (double)Math.round((solutionMolarity * (volTran/vol)) * 10000) / 10000;
-
-
-    }
-
-
-    //Setters and getters for the new variables
-    public String getUnknownSolutionName() {return unknownSolutionName;}
-
-    public void setUnknownSolutionName(String unknownSolutionName) {this.unknownSolutionName = unknownSolutionName;}
+    public void setUnknownName(String unknownName) {this.unknownName = unknownName;}
 
     public double getFlaskVolume() {return flaskVolume;}
 
     public void setFlaskVolume(double flaskVolume) {this.flaskVolume = flaskVolume;}
 
-    public int getNumberOfStandards() {return numberOfStandards;}
+    public int getNumberOfVolumes() {return numberOfVolumes;}
 
-    public void setNumberOfStandards(int numberOfStandards) {this.numberOfStandards = numberOfStandards;}
+    public void setNumberOfVolumes(int numberOfVolumes) {this.numberOfVolumes = numberOfVolumes;}
 
     public double getVolumeUnknownTransferred() {return volumeUnknownTransferred;}
 
@@ -198,60 +145,4 @@ public class StandardAddition extends SolutionSet implements Type {
 
     public void setVolumeAnalyteTransferred(String volumeAnalyteTransferred) {this.volumeAnalyteTransferred = volumeAnalyteTransferred;}
 
-    public double getVolumeInternalTransferred() {return volumeInternalTransferred;}
-
-    public void setVolumeInternalTransferred(double volumeInternalTransferred) {this.volumeInternalTransferred = volumeInternalTransferred;}
-
-    public String[] getAnalyteTransferredString() {return AnalyteTransferredString;}
-
-    public void setAnalyteTransferredString(String[] analyteTransferredString) {AnalyteTransferredString = analyteTransferredString;}
-
-    public double[] getAnalyteTransferredDouble() {return AnalyteTransferredDouble;}
-
-    public void setAnalyteTransferredDouble(double[] analyteTransferredDouble) {AnalyteTransferredDouble = analyteTransferredDouble;}
-
-
-
-
-
-    //get and set
-    public double getStandardVol() {
-        return standardVol;
-    }
-
-    public void setStandardVol(double standardVol) {
-        this.standardVol = standardVol;
-    }
-
-    public double getStandardVolT() {
-        return standardVolT;
-    }
-
-    public void setStandardVolT(double standardVolT) {
-        this.standardVolT = standardVolT;
-    }
-
-    public double getStandardMolarity() {
-        return standardMolarity;
-    }
-
-    public void setStandardMolarity(double standardMolarity) {
-        this.standardMolarity = standardMolarity;
-    }
-
-    public double getAnalyteVolT() {
-        return analyteVolT;
-    }
-
-    public void setAnalyteVolT(double analyteVolT) {
-        this.analyteVolT = analyteVolT;
-    }
-
-    public double getAnalyteMolarity() {
-        return analyteMolarity;
-    }
-
-    public void setAnalyteMolarity(double analyteMolarity) {
-        this.analyteMolarity = analyteMolarity;
-    }
 }
