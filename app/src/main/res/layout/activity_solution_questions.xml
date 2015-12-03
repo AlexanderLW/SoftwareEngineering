@@ -40,14 +40,19 @@
         android:textSize="15sp"
         android:textColor="@color/white" />
 
-    <EditText
+    <AutoCompleteTextView
+
         android:inputType="text"
         android:layout_width="186dp"
         android:layout_height="wrap_content"
+        android:completionThreshold="1"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/answer"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:autoText="true"/>
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"

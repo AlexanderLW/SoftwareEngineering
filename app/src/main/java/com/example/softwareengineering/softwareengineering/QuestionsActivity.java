@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import domain.Solution;
 import domain.SolutionSet;
@@ -21,7 +25,7 @@ public class QuestionsActivity extends Activity {
     /*
     This activity displays all questions and input fields for all solution types. It receives data selected from the solutions and details activity classes to load saved solutions for use.
      */
-
+    private AutoCompleteTextView actv;
     int count = 0, trys = 0;
     boolean file = false, repeat = false, correct = false;
     int id;
@@ -30,6 +34,7 @@ public class QuestionsActivity extends Activity {
     String[] data2;
     Solution sol;
     Solution sol2;
+    String[] autoComplete;
 
     private AlertDialog.Builder builder;
     private AlertDialog repeatDialog;
@@ -38,6 +43,16 @@ public class QuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_questions);
+        actv = (AutoCompleteTextView) findViewById(R.id.answer);
+
+
+
+        String autoComplete[] = {};
+        //for questions asking for solute, set up autocomplete
+
+
+
+
 
         //set font
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/KGTenThousandReasons.ttf");
@@ -55,16 +70,15 @@ public class QuestionsActivity extends Activity {
         TextView mycontButton = (TextView) findViewById(R.id.cont);
         mycontButton.setTypeface(myTypeface);
 
+
         //gets what was passed from previous activity and assigns it
         Bundle type = getIntent().getExtras();
-
         if(type != null) {
             this.id = type.getInt("id");
             //sets the questions sequence to repeatable
             if(id > 1) repeat = true;
             //if a solution was loaded it creates it for creation of the questions
             this.file = type.getBoolean("file");
-
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
@@ -73,15 +87,37 @@ public class QuestionsActivity extends Activity {
                     this.sol2 = new Solution(data2);
                 }
                 count = 6;
-                if(id > 3) count = 12;
             }
             //creates the correct questions depending on the solution type clicked in types activity
             createSolutionType();
             //sets all texts fields to the first values
             text.setText(soluType.getQuestion(count));
+            System.out.println(soluType.getQuestion(count));
             setEdit(answer, "");
             changeHeader();
             changeSubHeader();
+
+        }
+        System.out.println(soluType.getQuestion(count));
+        if(soluType.getQuestion(count).toString().contains("solvent")) {
+
+            /* unicode subscripts:
+               u2081 = 1
+               u2082 = 2
+               u2083 = 3
+               etc...
+             */
+            autoComplete = new String[]{
+                    "water (H\u2082O)",
+                    "methanol (CH\u2083OH)",
+                    "ethanol (CH\u2083CH\u2082OH)",
+                    "propanol (CH\u2083CH\u2082CH\u2082OH)",
+                    "n-hexane (C\u2086H\u2081\u2084)",
+                    "cyclohexane (C\u2086H\u2081\u2082)",
+                    "chloromethane (CH\u2083C\u2081)"
+            };
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autoComplete);
+            actv.setAdapter(adapter);
         }
     }
 
@@ -143,8 +179,6 @@ public class QuestionsActivity extends Activity {
         EditText answer = (EditText) findViewById(R.id.answer);
 
         soluType.setAnswerValue(count, answer.getText().toString());
-        //Used to test and make sure all values are going through the questions correctly
-            //Toast.makeText(QuestionsActivity.this, soluType.getAnswerValue(count), Toast.LENGTH_SHORT).show();
         if(answer.getText().toString().trim().equals("")||answer.getText().toString().trim().equals("."))
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getAnswers()[count].getType().equals("double") && Double.parseDouble(answer.getText().toString().trim()) == 0)
@@ -156,22 +190,38 @@ public class QuestionsActivity extends Activity {
             correct = true;
         }
 
-        /*
-         *setValues method was put here in after it was put into the check method. Without setValues here
-         *your last value the answers string from the different solutions had to be true on the second parameter
-         *or the method never ran and you never stored values
-         */
         if(correct) {
-            if(count == (soluType.getQuestions().length - 1)) {
-                soluType.setValues(soluType.getAnswers(), count);
+            if(count == (soluType.getQuestions().length - 1))
                 save();
-            }
             else {
                 count++;
                 setEdit(answer, soluType.getAnswerValue(count));
                 text.setText(soluType.getQuestion(count));
                 changeHeader();
                 changeSubHeader();
+                if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
+
+            /* unicode subscripts:
+               u2081 = 1
+               u2082 = 2
+               u2083 = 3
+               etc...
+             */
+                    autoComplete = new String[]{
+                            "water (H\u2082O)",
+                            "methanol (CH\u2083OH)",
+                            "ethanol (CH\u2083CH\u2082OH)",
+                            "propanol (CH\u2083CH\u2082CH\u2082OH)",
+                            "n-hexane (C\u2086H\u2081\u2084)",
+                            "cyclohexane (C\u2086H\u2081\u2082)",
+                            "chloromethane (CH\u2083C\u2081)"
+                    };
+
+                }else{
+                    autoComplete = new String[]{};
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autoComplete);
+                actv.setAdapter(adapter);
             }
             trys = 0;
             correct = false;
@@ -196,8 +246,8 @@ public class QuestionsActivity extends Activity {
                 Toast.makeText(QuestionsActivity.this, "Please enter a volume lower than the total volume " + soluType.getAnswer() + " > " +  soluType.getCompare(count), Toast.LENGTH_SHORT).show();
             else if(soluType.getAnswer() > soluType.getCompare2())
                 Toast.makeText(QuestionsActivity.this, "Need a bigger flask", Toast.LENGTH_SHORT).show();
-           // else if(soluType.getAnswer() > Double.parseDouble(soluType.getAnswers()[0].getValue()))
-              //  Toast.makeText(QuestionsActivity.this, "Not enough solution", Toast.LENGTH_SHORT).show();
+                // else if(soluType.getAnswer() > Double.parseDouble(soluType.getAnswers()[0].getValue()))
+                //  Toast.makeText(QuestionsActivity.this, "Not enough solution", Toast.LENGTH_SHORT).show();
             else
 
                 correct = true;
@@ -225,24 +275,13 @@ public class QuestionsActivity extends Activity {
 
     //method to continue to save screen
     public void save() {
-
-        //This carries the data from External, Internal and Standard Addition to the StandardDetailActivity
-        if (id >= 3) {
-            compute();
-            Intent nextScreen = new Intent(QuestionsActivity.this, StandardsDetailActivity.class);
-            nextScreen.putExtra("solutionDetails", soluType.getDetails());
-            nextScreen.putExtra("solutionData", soluType.getData());
-            startActivityForResult(nextScreen, 1);
-        }
-        //This carries the data from Solution, Dilution and Serial Dilution to the DetailsActivity
-        else {
-            compute();
-            Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-            nextScreen.putExtra("solutionDetails", soluType.getDetails());
-            nextScreen.putExtra("solutionData", soluType.getData());
-            startActivityForResult(nextScreen, 1);
-        }
+        compute();
+        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+        nextScreen.putExtra("solutionDetails", soluType.getDetails());
+        nextScreen.putExtra("solutionData", soluType.getData());
+        startActivityForResult(nextScreen, 1);
     }
+
     //method to create solution
     public void createSolutionType() {
         SolutionTypeFactory sFactory = new SolutionTypeFactory();
