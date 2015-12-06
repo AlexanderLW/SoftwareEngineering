@@ -111,7 +111,7 @@ public class ConcentratedSolution extends SolutionSet implements Type {
     }
 
     public void calcMassMix(){
-        massMix = Math.round(100*solMolarity*volFlask*molWeight/(massPercent));
+        massMix = Math.round(100*solMolarity*volFlask*molWeight*100/(massPercent))/100;
     }
 
     //get compare for checks

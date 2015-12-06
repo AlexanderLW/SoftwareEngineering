@@ -110,7 +110,7 @@ public class NeatSolution extends SolutionSet implements Type {
 
     //calculate volume needed
     public void calcVol() {
-        solVol = (double) Math.round(volFlask*solMolarity*molWeight/solDensity);
+        solVol = (double) Math.round(volFlask*solMolarity*molWeight*100/solDensity)/100;
     }
 
     //get compare for checks

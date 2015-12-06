@@ -189,7 +189,7 @@ public class Solution extends SolutionSet implements Type {
 
     //calculate molarity
     public void calcMass(double mols, double molecularW) {
-        solMass = (double)Math.round((mols*molecularW));
+        solMass = (double)Math.round(mols*molecularW*100)/100;
     }
 
     //get and set

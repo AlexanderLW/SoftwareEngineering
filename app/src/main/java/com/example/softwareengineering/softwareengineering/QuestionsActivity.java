@@ -190,22 +190,6 @@ public class QuestionsActivity extends Activity {
          *or the method never ran and you never stored values
          */
         if(correct) {
-            if(count == (soluType.getQuestions().length - 1)) {
-                soluType.setValues(soluType.getAnswers(), count);
-                save();
-            }
-            else {
-                count++;
-                setEdit(answer, soluType.getAnswerValue(count));
-                text.setText(soluType.getQuestion(count));
-                changeHeader();
-                changeSubHeader();
-            }
-            trys = 0;
-            correct = false;
-        }
-
-        if(correct) {
             //for solvent and solute entries, add the data to the database for future autocompletes
             if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
                 try {
@@ -220,6 +204,7 @@ public class QuestionsActivity extends Activity {
             }
 
             if(count == (soluType.getQuestions().length - 1)) {
+                soluType.setValues(soluType.getAnswers(), count);
                 save();
             }
             else {
