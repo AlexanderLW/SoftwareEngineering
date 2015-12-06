@@ -54,7 +54,7 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
     public void removeAllSolutions(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     public SolutionDBHelper(Context context) {

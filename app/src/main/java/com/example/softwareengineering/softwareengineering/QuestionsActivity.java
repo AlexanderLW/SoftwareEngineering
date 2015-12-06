@@ -184,6 +184,27 @@ public class QuestionsActivity extends Activity {
             correct = true;
         }
 
+        /*
+         *setValues method was put here in after it was put into the check method. Without setValues here
+         *your last value the answers string from the different solutions had to be true on the second parameter
+         *or the method never ran and you never stored values
+         */
+        if(correct) {
+            if(count == (soluType.getQuestions().length - 1)) {
+                soluType.setValues(soluType.getAnswers(), count);
+                save();
+            }
+            else {
+                count++;
+                setEdit(answer, soluType.getAnswerValue(count));
+                text.setText(soluType.getQuestion(count));
+                changeHeader();
+                changeSubHeader();
+            }
+            trys = 0;
+            correct = false;
+        }
+
         if(correct) {
             //for solvent and solute entries, add the data to the database for future autocompletes
             if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
@@ -273,11 +294,21 @@ public class QuestionsActivity extends Activity {
 
     //method to continue to save screen
     public void save() {
-        compute();
-        Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
-        nextScreen.putExtra("solutionDetails", soluType.getDetails());
-        nextScreen.putExtra("solutionData", soluType.getData());
-        startActivityForResult(nextScreen, 1);
+        if (id >= 3) {
+            compute();
+            Intent nextScreen = new Intent(QuestionsActivity.this, StandardsDetailActivity.class);
+            nextScreen.putExtra("solutionDetails", soluType.getDetails());
+            nextScreen.putExtra("solutionData", soluType.getData());
+            startActivityForResult(nextScreen, 1);
+        }
+        //This carries the data from Solution, Dilution and Serial Dilution to the DetailsActivity
+        else {
+            compute();
+            Intent nextScreen = new Intent(QuestionsActivity.this, SaveActivity.class);
+            nextScreen.putExtra("solutionDetails", soluType.getDetails());
+            nextScreen.putExtra("solutionData", soluType.getData());
+            startActivityForResult(nextScreen, 1);
+        }
     }
 
     //method to create solution

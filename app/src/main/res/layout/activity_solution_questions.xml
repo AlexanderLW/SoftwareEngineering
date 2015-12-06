@@ -43,6 +43,7 @@
     <AutoCompleteTextView
 
         android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="186dp"
         android:layout_height="wrap_content"
         android:completionThreshold="1"
