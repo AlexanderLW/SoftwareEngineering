@@ -23,4 +23,14 @@ public final class MyDBHandler{
         public static final String COLUMN_NAME_MASS = "Mass";
 
     }
+
+    public static abstract class SoluteEntry implements BaseColumns{
+        public static final String TABLE_NAME = "Solutes";
+        public static final String COLUMN_NAME_NAME = "Name";
+    }
+
+    public static abstract class SolventEntry implements BaseColumns{
+        public static final String TABLE_NAME = "Solvents";
+        public static final String COLUMN_NAME_NAME = "Name";
+    }
 }

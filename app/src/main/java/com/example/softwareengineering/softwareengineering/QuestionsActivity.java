@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import database.SolutionDBHelper;
 import domain.Solution;
 import domain.SolutionSet;
 import domain.SolutionTypeFactory;
@@ -35,6 +37,7 @@ public class QuestionsActivity extends Activity {
     Solution sol;
     Solution sol2;
     String[] autoComplete;
+    private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
 
     private AlertDialog.Builder builder;
     private AlertDialog repeatDialog;
@@ -99,26 +102,7 @@ public class QuestionsActivity extends Activity {
 
         }
         System.out.println(soluType.getQuestion(count));
-        if(soluType.getQuestion(count).toString().contains("solvent")) {
 
-            /* unicode subscripts:
-               u2081 = 1
-               u2082 = 2
-               u2083 = 3
-               etc...
-             */
-            autoComplete = new String[]{
-                    "water (H\u2082O)",
-                    "methanol (CH\u2083OH)",
-                    "ethanol (CH\u2083CH\u2082OH)",
-                    "propanol (CH\u2083CH\u2082CH\u2082OH)",
-                    "n-hexane (C\u2086H\u2081\u2084)",
-                    "cyclohexane (C\u2086H\u2081\u2082)",
-                    "chloromethane (CH\u2083C\u2081)"
-            };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autoComplete);
-            actv.setAdapter(adapter);
-        }
     }
 
     //listens for the save to close or pop up dialog box to ask if they want to repeat
@@ -171,6 +155,17 @@ public class QuestionsActivity extends Activity {
             changeHeader();
             changeSubHeader();
         }
+        if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
+            mDbHelper = new SolutionDBHelper(this);
+            autoComplete = mDbHelper.getSolventNames();
+        }else if(soluType.getQuestion(count).toString().equals("What is the solute?")||soluType.getQuestion(count).toString().equals("What is the solute you are using?")) {
+            mDbHelper = new SolutionDBHelper(this);
+            autoComplete = mDbHelper.getSoluteNames();
+        }else{
+            autoComplete = new String[]{};
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autoComplete);
+        actv.setAdapter(adapter);
     }
 
     //on continue it checks to see if input is correct and moves to next questions, if it is the last question then it goes to the save activity
@@ -185,14 +180,27 @@ public class QuestionsActivity extends Activity {
             Toast.makeText(QuestionsActivity.this, "Please enter something in before continuing", Toast.LENGTH_SHORT).show();
         else if(soluType.getAnswers()[count].getCheck()) {
             check();
-        }
-        else {
+        }else {
             correct = true;
         }
 
         if(correct) {
-            if(count == (soluType.getQuestions().length - 1))
+            //for solvent and solute entries, add the data to the database for future autocompletes
+            if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
+                try {
+                    mDbHelper.addSolvent(answer.getText().toString());
+                }catch(Exception e){//don't reinsert data into the database that already exists//
+                }
+            }else if(soluType.getQuestion(count).toString().equals("What is the solute?")||soluType.getQuestion(count).toString().equals("What is the solute you are using?")) {
+                try {
+                    mDbHelper.addSolute(answer.getText().toString());
+                }catch(Exception e){//don't reinsert data into the database that already exists//
+                }
+            }
+
+            if(count == (soluType.getQuestions().length - 1)) {
                 save();
+            }
             else {
                 count++;
                 setEdit(answer, soluType.getAnswerValue(count));
@@ -200,24 +208,13 @@ public class QuestionsActivity extends Activity {
                 changeHeader();
                 changeSubHeader();
                 if(soluType.getQuestion(count).toString().equals("What is the solvent?")||soluType.getQuestion(count).toString().equals("What is the solvent you are using?")) {
-
-            /* unicode subscripts:
-               u2081 = 1
-               u2082 = 2
-               u2083 = 3
-               etc...
-             */
-                    autoComplete = new String[]{
-                            "water (H\u2082O)",
-                            "methanol (CH\u2083OH)",
-                            "ethanol (CH\u2083CH\u2082OH)",
-                            "propanol (CH\u2083CH\u2082CH\u2082OH)",
-                            "n-hexane (C\u2086H\u2081\u2084)",
-                            "cyclohexane (C\u2086H\u2081\u2082)",
-                            "chloromethane (CH\u2083C\u2081)"
-                    };
-
-                }else{
+                    mDbHelper = new SolutionDBHelper(this);
+                    autoComplete = mDbHelper.getSolventNames();
+                }else if(soluType.getQuestion(count).toString().equals("What is the solute?")||soluType.getQuestion(count).toString().equals("What is the solute you are using?")) {
+                    mDbHelper = new SolutionDBHelper(this);
+                    autoComplete = mDbHelper.getSoluteNames();
+                }
+                else{
                     autoComplete = new String[]{};
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autoComplete);
@@ -227,6 +224,7 @@ public class QuestionsActivity extends Activity {
             correct = false;
         }
     }
+
 
     //method to set the edit text
     public void setEdit(EditText answer, String input) {

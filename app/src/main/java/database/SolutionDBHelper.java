@@ -37,6 +37,16 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
                     MyDBHandler.SolutionEntry.COLUMN_NAME_MASS + TEXT_TYPE +
                     ")";
 
+    private static final String SQL_CREATE_SOLVENT_ENTRIES =
+            "CREATE TABLE " + MyDBHandler.SolventEntry.TABLE_NAME + "(" +
+                    MyDBHandler.SolventEntry.COLUMN_NAME_NAME + TEXT_TYPE + "UNIQUE" +
+                    ")";
+
+    private static final String SQL_CREATE_SOLUTE_ENTRIES =
+            "CREATE TABLE " + MyDBHandler.SoluteEntry.TABLE_NAME + "(" +
+                    MyDBHandler.SoluteEntry.COLUMN_NAME_NAME + TEXT_TYPE + "UNIQUE" +
+                    ")";
+
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MyDBHandler.SolutionEntry.TABLE_NAME + ";";
 
@@ -54,6 +64,33 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_SOLUTE_ENTRIES);
+        db.execSQL(SQL_CREATE_SOLVENT_ENTRIES);
+        ContentValues values= new ContentValues();
+
+
+        /*insert initial autocomplete solvent values into the database
+        Unicode Subscripts:
+        u2081 = 1
+        u2082 = 2
+        u2083 = 3
+        etc...
+         */
+
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME,"water (H\u2082O)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "methanol (CH\u2083OH)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "ethanol (CH\u2083CH\u2082OH)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "propanol (CH\u2083CH\u2082CH\u2082OH)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "n-hexane (C\u2086H\u2081\u2084)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "cyclohexane (C\u2086H\u2081\u2082)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, "chloromethane (CH\u2083Cl)");
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -85,6 +122,23 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         db.close();
     }
 
+    public void addSolute(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values  = new ContentValues();
+        values.put(MyDBHandler.SoluteEntry.COLUMN_NAME_NAME, name);
+        db.insert(MyDBHandler.SoluteEntry.TABLE_NAME, null, values);
+    }
+
+
+    public void addSolvent(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values  = new ContentValues();
+        values.put(MyDBHandler.SolventEntry.COLUMN_NAME_NAME, name);
+        db.insert(MyDBHandler.SolventEntry.TABLE_NAME, null, values);
+    }
+
     //gets all the solution names from the database
     public String[] getSolutionNames() {
         String[] columns = {MyDBHandler.SolutionEntry.COLUMN_NAME_NAME};
@@ -105,6 +159,40 @@ public class SolutionDBHelper extends SQLiteOpenHelper{
         String[] lNames = new String[listNames.size()];
         lNames = listNames.toArray(lNames);
 
+        return lNames;
+    }
+
+    public String[] getSolventNames(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(MyDBHandler.SolventEntry.TABLE_NAME, new String[]{MyDBHandler.SolventEntry.COLUMN_NAME_NAME}, null, null, null, null, null);
+
+        ArrayList<String> listNames = new ArrayList<>();
+        if(c.moveToNext()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SolventEntry.COLUMN_NAME_NAME)));
+                c.moveToNext();
+            }
+        }
+        db.close();
+        String[] lNames = new String[listNames.size()];
+        lNames = listNames.toArray(lNames);
+        return lNames;
+    }
+
+    public String[] getSoluteNames(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(MyDBHandler.SoluteEntry.TABLE_NAME, new String[]{MyDBHandler.SoluteEntry.COLUMN_NAME_NAME}, null, null, null, null, null);
+
+        ArrayList<String> listNames = new ArrayList<>();
+        if(c.moveToNext()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                listNames.add(c.getString(c.getColumnIndexOrThrow(MyDBHandler.SoluteEntry.COLUMN_NAME_NAME)));
+                c.moveToNext();
+            }
+        }
+        db.close();
+        String[] lNames = new String[listNames.size()];
+        lNames = listNames.toArray(lNames);
         return lNames;
     }
 
