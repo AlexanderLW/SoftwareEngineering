@@ -14,6 +14,10 @@ import database.SolutionDBHelper;
 
 
 public class SolutionsActivity2 extends Activity {
+
+    /*
+    this allows for choosing of 2 solutions, it chooses the first one
+     */
     private SolutionDBHelper mDbHelper = new SolutionDBHelper(this);
     boolean file;
     int ids;

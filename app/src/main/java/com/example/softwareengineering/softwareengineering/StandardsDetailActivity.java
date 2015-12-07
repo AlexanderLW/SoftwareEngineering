@@ -20,7 +20,9 @@ import domain.StandardAddition;
  * Created by Alexander on 11/17/2015.
  */
 public class StandardsDetailActivity extends Activity {
-
+/*
+this displays details of a specific standard from a set
+ */
     String[] details, data;
     int numberOfDetails;
 

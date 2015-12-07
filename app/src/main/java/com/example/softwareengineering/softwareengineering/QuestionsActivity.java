@@ -85,7 +85,7 @@ public class QuestionsActivity extends Activity {
             if(this.file) {
                 this.data = type.getStringArray("data");
                 this.sol = new Solution(data);
-                if(id > 3) {
+                if(id > 3) {//only need 2 solutions for internal and standard addition
                     this.data2 = type.getStringArray("data2");
                     this.sol2 = new Solution(data2);
                 }

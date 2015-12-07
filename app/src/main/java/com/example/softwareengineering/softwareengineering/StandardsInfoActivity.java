@@ -12,7 +12,9 @@ import android.widget.Toast;
  * Created by Alexander on 11/24/2015.
  */
 public class StandardsInfoActivity extends Activity {
-
+/*
+this class shows the set of solutions created for external, internal, and standard addition
+ */
     String[] details, data;
     int id, numberOfDetails;
 

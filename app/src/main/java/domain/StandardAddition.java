@@ -4,7 +4,9 @@ package domain;
  * Created by Alex on 4/25/2015.
  */
 public class StandardAddition extends SolutionSet implements Type {
-
+/*
+creates a set of standards using standard addition
+ */
 
     Solution unknownAnalyte, analyte;
 

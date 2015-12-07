@@ -4,6 +4,9 @@ package domain;
  * Created by User on 4/10/15.
  */
 public class Solution extends SolutionSet implements Type {
+    /*
+    this class creates a single solution
+     */
     private double volFlask = 0.0;
     private String solvent = "";
     private String solute = "";
@@ -61,7 +64,7 @@ public class Solution extends SolutionSet implements Type {
         super.setAnswers(answers);
     }
 
-    public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {
+    public Solution(String type, double volFlask, String solvent, String solute, double soluteMolWeight, double solMolarity) {//constructor from questions
         super(type,
                 new String[] {
                         "Change the vol of the last Dilution? (in mL)",
@@ -90,7 +93,7 @@ public class Solution extends SolutionSet implements Type {
         setAnswerValue(5, String.valueOf(solMass));
     }
 
-    public Solution(String[] data) {
+    public Solution(String[] data) {//constructor from loading saved solution
         super("Solution",
                 new String[]{
                         "What is the volume of the stock solution you are preparing? (in mL)",
@@ -106,7 +109,7 @@ public class Solution extends SolutionSet implements Type {
                         new Answer("String", false, data[2]),
                         new Answer("double", false, data[3]),
                         new Answer("double", false, data[4]),
-                        new Answer("double", true, data[5])//fixed this value  from 6 to 5 and the grams of solute now loads correctly
+                        new Answer("double", true, data[5])
                 });
         setValues(getAnswers(), 5);
     }
@@ -182,7 +185,7 @@ public class Solution extends SolutionSet implements Type {
         return 2;
     }
 
-    //calculate moles
+    //calculate moles of solute
     public void calcMol(double molarity, double volume) {
         solMol = molarity*(volume/1000);
     }

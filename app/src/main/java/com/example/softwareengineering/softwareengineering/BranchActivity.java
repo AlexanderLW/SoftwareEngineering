@@ -16,7 +16,9 @@ import android.widget.TextView;
  * Created by Samuel on 11/19/2015.
  */
 public class BranchActivity extends Activity{
-
+/*
+this class allows selection of a solute type for creation of single solutions
+ */
         int id;
 
         @Override
@@ -43,7 +45,7 @@ public class BranchActivity extends Activity{
 
         }
 
-        //on Neat button click, create new questionsActivity; pass 1 as id
+        //on Neat button click, create new questionsActivity; pass -1 as id
         public void onNeat(View view) {
             Intent nextScreen = new Intent(BranchActivity.this, QuestionsActivity.class);
             nextScreen.putExtra("id", -1);
@@ -58,7 +60,7 @@ public class BranchActivity extends Activity{
             nextScreen.putExtra("file", false);
             startActivity(nextScreen);
         }
-
+    //on Solid button click create QuestionsActivity, pass -2 as id
         public void onConcentrated(View view) {
             Intent nextScreen = new Intent(BranchActivity.this, QuestionsActivity.class);
             nextScreen.putExtra("id", -2);

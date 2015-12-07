@@ -5,7 +5,9 @@ package domain;
  */
 
 public class ConcentratedSolution extends SolutionSet implements Type {
-
+/*
+same as solution except for form of solute
+ */
     private double volFlask = 0.0;
     private String solvent = "";
     private String solute = "";

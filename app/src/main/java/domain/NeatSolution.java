@@ -5,7 +5,9 @@ package domain;
  * Created by Samuel on 11/2/2015.
  */
 public class NeatSolution extends SolutionSet implements Type {
-
+/*
+same as solution except for the form of the solute
+ */
     private double volFlask = 0.0;
     private String solvent = "";
     private String solute = "";
